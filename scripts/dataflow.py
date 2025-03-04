@@ -22,8 +22,14 @@ class DataFlow:
 
         tower1 = DummyTower(self.tower1,False,self.display_size)
         tower1_opp = DummyTower(self.tower2, False,self.display_size)
+        tower1_opp.deployable_troops = None
+        tower1_opp.total_elixir = None
+        tower1_opp.total_dark_elixir = None
         tower2 = DummyTower(self.tower2,True,self.display_size)
         tower2_opp = DummyTower(self.tower1,True,self.display_size)
+        tower2_opp.deployable_troops = None
+        tower2_opp.total_elixir = None
+        tower2_opp.total_dark_elixir = None
 
         self.tower1.dummy = tower2_opp
         self.tower2.dummy = tower1_opp
