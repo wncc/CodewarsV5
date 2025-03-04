@@ -8,7 +8,7 @@ class Troop:
         """
         Initialize a troop with essential attributes.
         """
-        self.name = name
+        self.name = name.lower()
         self.position = position
         self.prev_position = position
         self.elixir = elixir
@@ -31,8 +31,9 @@ class Troop:
         self.assets = images
         self.images = {}
 
-        self.attack_counter = attack_speed
-        self.orientation = "Front"
+        self.attack_counter = 0
+        self.orientation = "s"
+        self.run_counter = 0
 
         self.resize()
 
@@ -52,13 +53,14 @@ class Troop:
                     
                     self.update_orientation()
 
-                    if (self.attack_counter == self.attack_speed):
+                    if (self.attack_counter+1 == self.attack_speed*FRAMES):
                         self.attack()
-                        self.attack_counter = 0
-                        self.render_attack()
-                    else:
-                        self.attack_counter += 1
-                        self.render()
+                    #     self.attack_counter = 0
+                    #     self.render_attack()
+                    # else:
+                    #     self.attack_counter += 1
+                    #     self.render()
+                    self.render_attack()
                     return
                 self.target = None
                 self.attack_counter = 0
@@ -84,6 +86,7 @@ class Troop:
             if self.is_in_range(nearest_entity, self.discovery_range):
                 if self.is_in_range(nearest_entity, self.attack_range):
                     self.target = nearest_entity
+                    self.attack_counter = 0
                     return
                 self.move_towards(nearest_entity.position)
 
@@ -118,29 +121,36 @@ class Troop:
 
 
     def render(self):
+        frames = (TOP_SPEED-self.velocity)*FRAMES
+        rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
         x = self.position[0] - self.size + PADDING
         y = self.position[1] - self.size + PADDING
-        self.surf.blit(self.images[self.orientation],(x, y))
+        self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
+        self.run_counter = (self.run_counter+1)%frames
 
     def render_attack(self):
+        frames = (self.attack_speed)*FRAMES
+        rendering_frame = self.attack_counter//(self.attack_speed)
         x = self.position[0] - self.size + PADDING
         y = self.position[1] - self.size + PADDING
-        self.surf.blit(self.images[self.orientation+"Attack"],(x, y))
+        self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
+        self.attack_counter = (self.attack_counter+1)%frames
     
     # UTILITY FUNCTION
 
     def resize(self):
-        orientation = ["Front","Back"]
-        for orient in orientation:
-            image = self.assets[self.name+orient]
-            aspect_ratio = image.get_height() / image.get_width()
-            image_scaled = pygame.transform.scale(image, (2*self.size, int(2*self.size * aspect_ratio)))
-            self.images[orient] = image_scaled
+        orientation = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
+        for i in range(6):
+            for orient in orientation:
+                image = self.assets[self.name+"_run_"+orient+f'_{i+1}']
+                aspect_ratio = image.get_height() / image.get_width()
+                image_scaled = pygame.transform.scale(image, (2*self.size, int(2*self.size * aspect_ratio)))
+                self.images["_run_"+orient+f'_{i+1}'] = image_scaled
 
-            image_attack = self.assets[self.name+orient+"Attack"]
-            aspect_ratio = image_attack.get_height() / image_attack.get_width()
-            image_attack_scaled = pygame.transform.scale(image_attack, (2*self.size, int(2*self.size * aspect_ratio)))
-            self.images[orient+"Attack"] = image_attack_scaled
+                image_attack = self.assets[self.name+"_attack_"+orient+f'_{i+1}']
+                aspect_ratio = image_attack.get_height() / image_attack.get_width()
+                image_attack_scaled = pygame.transform.scale(image_attack, (2*self.size, int(2*self.size * aspect_ratio)))
+                self.images["_attack_"+orient+f'_{i+1}'] = image_attack_scaled
               
     def is_in_range(self, entity, range_):
         """Checks if an entity is within the troop's discovery or attack range."""
@@ -166,11 +176,26 @@ class Troop:
             dx, dy = self.target.position[0] - self.position[0], self.target.position[1] - self.position[1]
         else:
             dx, dy = target_position[0] - self.position[0], target_position[1] - self.position[1]
-        
-        if dy>0:
-            self.orientation = "Front"
-        elif dy<0:
-            self.orientation = "Back"
+
+        angle = math.degrees(math.atan2(-dy, dx))
+        angle = (angle + 360) % 360
+
+        if -22.5 <= angle < 22.5:
+            self.orientation = "e"
+        elif 22.5 <= angle < 67.5:
+            self.orientation = "ne"
+        elif 67.5 <= angle < 112.5:
+            self.orientation = "n"
+        elif 112.5 <= angle < 157.5:
+            self.orientation = "nw"
+        elif 157.5 <= angle < 202.5:
+            self.orientation = "w"
+        elif 202.5 <= angle < 247.5:
+            self.orientation = "sw"
+        elif 247.5 <= angle < 292.5:
+            self.orientation = "s"
+        elif 292.5 <= angle < 337.5:
+            self.orientation = "se"
 
     def apply_splash_damage(self):
         """Applies splash damage to all entities within the splash radius."""
