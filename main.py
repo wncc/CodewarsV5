@@ -19,7 +19,8 @@ class Game:
         self.display_size = (WIDTH,HEIGHT)
         # self.display_size_padded = (WIDTH+2*PADDING, HEIGHT+2*PADDING)
         self.tile_size = WIDTH//12
-        self.screen = pygame.display.set_mode((self.display_size))
+        self.main_screen = pygame.display.set_mode((FULL_WIDTH,FULL_HEIGHT))
+        self.screen = pygame.Surface(self.display_size)
         self.clock = pygame.time.Clock()
         self.fps = FPS
         self.game_counter = 0
@@ -50,20 +51,24 @@ class Game:
         self.tower2.oppTroops = self.tower1.myTroops
         self.data_provided1 = {}
         self.data_provided2 = {}
+    
+    def render_game_screen(self):
+        self.tilemap.render(self.screen)
+        self.rockmap.render(self.screen)
+        if 1830 > self.game_counter >= 30: # 5s
+            DataFlow.provide_data(self)
+            DataFlow.deployment(self)
+            DataFlow.attack_die(self)
+            Decoration.check_game_end(self)
+        elif self.game_counter < 28:
+            Decoration.entry_text(self)
+        elif self.game_counter >= 1830:
+            Decoration.outro_text(self)
+        self.main_screen.blit(self.screen, ((FULL_WIDTH-WIDTH)//2, 0))
 
     def run(self):
         while True:
-            self.tilemap.render(self.screen)
-            self.rockmap.render(self.screen)
-            if 1830 > self.game_counter >= 30: # 5s
-                DataFlow.provide_data(self)
-                DataFlow.deployment(self)
-                DataFlow.attack_die(self)
-                Decoration.check_game_end(self)
-            elif self.game_counter < 28:
-                Decoration.entry_text(self)
-            elif self.game_counter >= 1830:
-                Decoration.outro_text(self)
+            self.render_game_screen()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
