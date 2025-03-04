@@ -13,11 +13,13 @@ def load_assets():
         'RedTower': load_image('tower/RedTower.png'),
         'TowerDamaged': load_image('tower/TowerDamaged.png'),}
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
+    troops = ["barbarian","prince"]
     for team in ["Blue","Red"]:
         for dir in directions:
             for i in range(6):
-                assets[team][f'barbarian_attack_{dir}_{i+1}'] = load_image(f'troops/{team}/barbarian_attack_{dir}_{i+1}.png')
-                assets[team][f'barbarian_run_{dir}_{i+1}'] = load_image(f'troops/{team}/barbarian_run_{dir}_{i+1}.png')
+                for troop in troops:
+                    assets[team][f'{troop}_attack_{dir}_{i+1}'] = load_image(f'troops/{team}/{troop}_attack_{dir}_{i+1}.png')
+                    assets[team][f'{troop}_run_{dir}_{i+1}'] = load_image(f'troops/{team}/{troop}_run_{dir}_{i+1}.png')
     # assets = {
     #     # "Blue":{
     #     #     'ArcherBack': load_image('troops/Blue/BlueArcherBack.png'),
