@@ -160,20 +160,20 @@ class Tower:
     # ANIMATION FUNCTION
 
     def render(self,attack:bool = False):
-        # pygame.draw.rect(self.surf, (213,157,114), (self.position[0] - self.size + PADDING, self.position[1] - self.size + PADDING, self.size*2, self.size*2), 5)
+        # pygame.draw.rect(self.surf, (213,157,114), (self.position[0] - self.size , self.position[1] - self.size , self.size*2, self.size*2), 5)
         if self.health <= 0:
-            x = self.position[0] - 1.5*self.size + PADDING
-            y = self.position[1] + 2.5*self.size - self.image_tower_height + PADDING
+            x = self.position[0] - 1.5*self.size 
+            y = self.position[1] + 2.5*self.size - self.image_tower_height 
             self.surf.blit(self.image_destroyed, (x, y))
             return
         if self.troop2:
-            x = self.position[0] - 1.5*self.size + PADDING
-            y = self.position[1] + 2.5*self.size - self.image_tower_height + PADDING
+            x = self.position[0] - 1.5*self.size 
+            y = self.position[1] + 2.5*self.size - self.image_tower_height 
             self.surf.blit(self.image_tower, (x, y))
             self.surf.blit(self.image_cannon,(x,y - self.size*0.2))
         else:
-            x = self.position[0] - 1.5*self.size + PADDING
-            y = self.position[1] + 1.5*self.size - self.image_tower_height + PADDING
+            x = self.position[0] - 1.5*self.size 
+            y = self.position[1] + 1.5*self.size - self.image_tower_height 
             self.surf.blit(self.image_tower, (x, y))
             self.surf.blit(self.image_cannon,(x,y - self.size*0.8))
         if attack:

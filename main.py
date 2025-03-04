@@ -17,7 +17,6 @@ class Game:
         pygame.font.init()
         pygame.display.set_caption('Code Royale')
         self.display_size = (WIDTH,HEIGHT)
-        # self.display_size_padded = (WIDTH+2*PADDING, HEIGHT+2*PADDING)
         self.tile_size = WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,FULL_HEIGHT))
         self.screen = pygame.Surface(self.display_size)

@@ -92,13 +92,13 @@ class BuildingTroop:
     # ANIMATION FUNCTION
 
     def render(self):
-        x = self.position[0] + PADDING
-        y = self.position[1] + PADDING
+        x = self.position[0] 
+        y = self.position[1] 
         self.surf.blit(self.img, (x, y))
 
     def render_attack(self):
-        x = self.position[0] - self.size + PADDING
-        y = self.position[1] - self.size + PADDING
+        x = self.position[0] - self.size 
+        y = self.position[1] - self.size 
         self.surf.blit(self.image_attack, (x, y))
 
     # UTILITY FUNCTION

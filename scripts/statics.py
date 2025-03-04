@@ -10,7 +10,7 @@ class GrassTile:
 
     def render(self, surf):
         
-        for i in range(PADDING, self.display_size[1]+PADDING, 8*self.tile_size):
+        for i in range(0, self.display_size[1], 8*self.tile_size):
             surf.blit(self.img,(-2*self.tile_size,i))
             surf.blit(self.img,(6*self.tile_size,i))
 
@@ -23,6 +23,6 @@ class RockTile:
 
     def render(self, surf):
         
-        for i in range(PADDING-self.tile_size*4, self.display_size[0]+PADDING-self.tile_size*4, self.tile_size):
+        for i in range(-self.tile_size*4, self.display_size[0]-self.tile_size*4, self.tile_size):
             surf.blit(self.img,(i,-6*self.tile_size))
             surf.blit(self.img,(i,HEIGHT-7*self.tile_size))
