@@ -57,14 +57,14 @@ class Game:
     def render_game_screen(self):
         self.tilemap.render(self.screen)
         self.rockmap.render(self.screen)
-        if 1830 > self.game_counter >= 30: # 5s
+        if GAME_END_TIME > self.game_counter >= GAME_START_TIME: # 5s
             DataFlow.provide_data(self)
             DataFlow.deployment(self)
             DataFlow.attack_die(self)
             Decoration.check_game_end(self)
-        elif self.game_counter < 28:
+        elif self.game_counter < GAME_START_TIME - 2: # 2 -> BUFFER
             Decoration.entry_text(self)
-        elif self.game_counter >= 1830:
+        elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
         self.main_screen.blit(self.screen, ((FULL_WIDTH-WIDTH)//2, 0))
     

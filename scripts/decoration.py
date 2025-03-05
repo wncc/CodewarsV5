@@ -14,7 +14,7 @@ class Decoration:
     def outro_text(self):
         self.tower1.render()
         self.tower2.render()
-        font = pygame.font.Font(None, 36)  # Default font, size 36
+        font = pygame.font.Font("/Users/tusharsingharoy/coderoyale/data/font/clashroyale.ttf", 36)  # Default font, size 36
         if not self.winner:
             if self.tower1.health > self.tower2.health:
                 self.winner = self.team_name1
@@ -35,11 +35,11 @@ class Decoration:
 
     def check_game_end(self):
         if self.tower1.health <= 0 and self.tower2.health <= 0:
-            self.game_counter = 1830
+            self.game_counter = GAME_END_TIME
             self.winner = "Tie"
         if self.tower1.health <= 0:
-            self.game_counter = 1830
+            self.game_counter = GAME_END_TIME
             self.winner = self.team_name2
         if self.tower2.health <= 0:
-            self.game_counter = 1830
+            self.game_counter = GAME_END_TIME
             self.winner = self.team_name1
