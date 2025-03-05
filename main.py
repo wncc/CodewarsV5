@@ -20,6 +20,7 @@ class Game:
         self.tile_size = WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,FULL_HEIGHT))
         self.screen = pygame.Surface(self.display_size)
+        self.left_screen = pygame.Surface(self.display_size)
         self.clock = pygame.time.Clock()
         self.fps = FPS
         self.game_counter = 0
