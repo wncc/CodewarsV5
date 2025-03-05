@@ -17,9 +17,12 @@ class Game:
         pygame.font.init()
         pygame.display.set_caption('Code Royale')
         self.display_size = (WIDTH,HEIGHT)
+        self.side_display_size = ((FULL_WIDTH-WIDTH)//2, FULL_HEIGHT)
         self.tile_size = WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,FULL_HEIGHT))
         self.screen = pygame.Surface(self.display_size)
+        self.left_screen = pygame.Surface(self.side_display_size)
+        self.right_screen = pygame.Surface(self.side_display_size)
         self.clock = pygame.time.Clock()
         self.fps = FPS
         self.game_counter = 0
@@ -64,10 +67,20 @@ class Game:
         elif self.game_counter >= 1830:
             Decoration.outro_text(self)
         self.main_screen.blit(self.screen, ((FULL_WIDTH-WIDTH)//2, 0))
+    
+    def render_left_screen(self):
+        # Decoration.function() -- idhar likhna hai
+        self.main_screen.blit(self.left_screen, (0, 0))
+
+    def render_right_screen(self):
+        # Decoration.function() -- idhar likhna hai
+        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+WIDTH)//2, 0))
 
     def run(self):
         while True:
             self.render_game_screen()
+            self.render_left_screen()
+            self.render_right_screen()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
