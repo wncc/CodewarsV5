@@ -3,7 +3,7 @@ from scripts.config import *
 
 class Decoration:
     def entry_text(self):
-        font = pygame.font.Font(None, 36)  # Default font, size 36
+        font = pygame.font.Font("/Users/tusharsingharoy/coderoyale/data/font/clashroyale.ttf", 26)  # Default font, size 36
 
         texts = [self.team_name2,"v/s",self.team_name1]
         for i, text in enumerate(texts):
