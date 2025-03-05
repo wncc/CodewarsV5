@@ -57,7 +57,7 @@ class Game:
     def render_game_screen(self):
         self.tilemap.render(self.screen)
         self.rockmap.render(self.screen)
-        if GAME_END_TIME > self.game_counter >= GAME_START_TIME: # 5s
+        if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             DataFlow.provide_data(self)
             DataFlow.deployment(self)
             DataFlow.attack_die(self)
