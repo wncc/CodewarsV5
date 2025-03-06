@@ -4,7 +4,7 @@ from scripts.config import *
 from scripts.Troops.troops import *
 
 class Tower:
-    def __init__(self, name, position, assets, size, deploy_area, surf, deployable_troops, troop2 = False):
+    def __init__(self, name, position, assets, size, deploy_area, surf, middle_surf, deployable_troops, troop2 = False):
         """
         Initialize a tower with essential attributes.
 
@@ -35,6 +35,7 @@ class Tower:
         self.size = size        # size = radius i.e. distance from center
         self.deploy_area = deploy_area
         self.surf = surf
+        self.middle_surf = middle_surf
         self.attack_speed = MEDIUM_ATTACK
         self.deployable_troops = deployable_troops
         self.discovered_troops = {}
@@ -161,22 +162,25 @@ class Tower:
 
     def render(self,attack:bool = False):
         # pygame.draw.rect(self.surf, (213,157,114), (self.position[0] - self.size , self.position[1] - self.size , self.size*2, self.size*2), 5)
+        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT)/2
+        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH)/2
+
         if self.health <= 0:
-            x = self.position[0] - 1.5*self.size 
-            y = self.position[1] + 2.5*self.size - self.image_tower_height 
-            self.surf.blit(self.image_destroyed, (x, y))
+            x = self.position[0] - 1.5*self.size + DELTA_X
+            y = self.position[1] + 2.5*self.size - self.image_tower_height + DELTA_Y
+            self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         if self.troop2:
-            x = self.position[0] - 1.5*self.size 
-            y = self.position[1] + 2.5*self.size - self.image_tower_height 
-            self.surf.blit(self.image_tower, (x, y))
-            self.surf.blit(self.image_cannon,(x,y - self.size*0.2))
+            x = self.position[0] - 1.5*self.size + DELTA_X
+            y = self.position[1] + 2.5*self.size - self.image_tower_height + DELTA_Y
+            self.middle_surf.blit(self.image_tower, (x, y))
+            self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
         else:
-            x = self.position[0] - 1.5*self.size 
-            y = self.position[1] + 1.5*self.size - self.image_tower_height 
-            self.surf.blit(self.image_tower, (x, y))
-            self.surf.blit(self.image_cannon,(x,y - self.size*0.8))
+            x = self.position[0] - 1.5*self.size + DELTA_X
+            y = self.position[1] + 1.5*self.size - self.image_tower_height + DELTA_Y
+            self.middle_surf.blit(self.image_tower, (x, y))
+            self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.8))
         if attack:
-            self.surf.blit(self.image_king_attack, (x, y - self.size*0.5))
+            self.middle_surf.blit(self.image_king_attack, (x, y - self.size*0.5))
         else:
-            self.surf.blit(self.image_king,(x,y - self.size*0.5))
+            self.middle_surf.blit(self.image_king,(x,y - self.size*0.5))
