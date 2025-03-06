@@ -4,7 +4,7 @@ from scripts.utils import *
 from scripts.statics import *
 from scripts.assets import load_assets
 from scripts.Troops.tower import Tower
-from scripts.decoration import Decoration
+from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
 from scripts.dataflow import DataFlow
 from teams.team1 import deploy as deploy1, troops as troops1, team_name as team_name1
 from teams.team2 import deploy as deploy2, troops as troops2, team_name as team_name2
@@ -76,17 +76,11 @@ class Game:
         self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))        
     
     def render_left_screen(self):
-        img = pygame.image.load('data/images/decor/2.png')
-        img = pygame.transform.scale(img,self.side_display_size)
-        self.left_screen.blit(img,(0,0))
-        # Decoration.function() -- idhar likhna hai
+        Decoration_Left.render_background(self)
         self.main_screen.blit(self.left_screen, (0, 0))
 
     def render_right_screen(self):
-        img = pygame.image.load('data/images/decor/3.png')
-        img = pygame.transform.scale(img,self.side_display_size)
-        self.right_screen.blit(img,(0,0))
-        # Decoration.function() -- idhar likhna hai
+        Decoration_Right.render_background(self)
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):
