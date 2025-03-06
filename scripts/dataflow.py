@@ -1,6 +1,7 @@
 from scripts.Troops.dummies import *
 from teams.team1 import deploy as deploy1
 from teams.team2 import deploy as deploy2
+from scripts.utils import rescale_position
 
 class DataFlow: 
     def provide_data(self):
@@ -70,8 +71,10 @@ class DataFlow:
         self.data_provided1 = {}
         self.data_provided2 = {}
         for troop, position in troops1_list:
+            position = rescale_position(position)
             self.tower1.deploy(troop,position)
         for troop, position in troops2_list:
+            position = rescale_position(position)
             self.tower2.deploy(troop,convert_player2(position,self.arena_display_size))
 
     def attack_die(self):

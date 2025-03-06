@@ -4,6 +4,7 @@ def load_assets():
         'tiles': load_image('tiles/tile.png'),
         'rock' : load_image('tiles/rock.png'),
         'arena' : load_image('decor/arena.png'),
+        'middle_map' : load_image('decor/Arena-1 Middle.png'),
         'BlueCannon': load_image('tower/BlueCannon.png'),
         'RedCannon': load_image('tower/RedCannon.png'), 
         'BlueKing': load_image('tower/BlueKing.png'),

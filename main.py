@@ -17,7 +17,8 @@ class Game:
         pygame.font.init()
         pygame.display.set_caption('Code Royale')
         self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
-        self.side_display_size = ((FULL_WIDTH-ARENA_WIDTH)//2, FULL_HEIGHT)
+        self.side_display_size = ((FULL_WIDTH-MIDDLE_WIDTH)//2, FULL_HEIGHT)
+        self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
         self.tile_size = ARENA_WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,EXTRA_HEIGHT),pygame.RESIZABLE)
         self.screen = pygame.Surface(self.arena_display_size)
@@ -35,7 +36,7 @@ class Game:
         self.tilemap = GrassTile(self.assets['tiles'], tile_size=self.tile_size, display_size = self.arena_display_size)
         self.rockmap = RockTile(self.assets['rock'], tile_size=self.tile_size, display_size = self.arena_display_size)
         self.arena = Arena(self.assets['arena'])
-
+        self.middle_map = Middle_Map(self.assets["middle_map"])
         """
         NOTE
         TOWER 1's PERSPECTIVE IS GAME's PERSPECTIVE
@@ -58,6 +59,9 @@ class Game:
     def render_game_screen(self):
         # self.tilemap.render(self.screen)
         # self.rockmap.render(self.screen)
+
+        self.middle_map.render(self.middle_screen)
+        self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
         
         self.arena.render(self.screen)
         
@@ -71,6 +75,7 @@ class Game:
         elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
         self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
+        
     
     def render_left_screen(self):
         img = pygame.image.load('data/images/decor/2.png')
@@ -84,7 +89,7 @@ class Game:
         img = pygame.transform.scale(img,self.side_display_size)
         self.right_screen.blit(img,(0,0))
         # Decoration.function() -- idhar likhna hai
-        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+ARENA_WIDTH)//2, 0))
+        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):
         while True:
