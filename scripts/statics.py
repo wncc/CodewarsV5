@@ -25,4 +25,4 @@ class RockTile:
         
         for i in range(-self.tile_size*4, self.display_size[0]-self.tile_size*4, self.tile_size):
             surf.blit(self.img,(i,-6*self.tile_size))
-            surf.blit(self.img,(i,HEIGHT-7*self.tile_size))
+            surf.blit(self.img,(i,ARENA_HEIGHT-7*self.tile_size))

@@ -1,3 +1,7 @@
+import pygame
+pygame.init()
+info = pygame.display.Info()
+
 SLOW_ATTACK = 5
 MEDIUM_ATTACK = 3
 FAST_ATTACK = 1
@@ -7,11 +11,16 @@ MEDIUM_SPEED = 3
 FAST_SPEED = 5
 TOP_SPEED = 6
 
+
 FPS = 10
-WIDTH = 480
-HEIGHT = 960
-FULL_WIDTH = 1536
-FULL_HEIGHT = 960
+
+FULL_WIDTH = info.current_w
+EXTRA_HEIGHT  = info.current_h
+FULL_HEIGHT = int(FULL_WIDTH*9/16)
+
+ARENA_HEIGHT = int(422/540*FULL_HEIGHT)
+ARENA_WIDTH = ARENA_HEIGHT//2
+
 
 FRAMES = 6
 GAME_START_TIME = 3*FRAMES # 3 sec
