@@ -43,3 +43,16 @@ class Decoration:
         if self.tower2.health <= 0:
             self.game_counter = GAME_END_TIME
             self.winner = self.team_name1
+
+class Decoration_Left:
+    def render_background(self):
+        image = self.assets['left_side_image']
+        image = pygame.transform.scale(image,self.side_display_size)
+        self.left_screen.blit(image,(0,0))
+
+
+class Decoration_Right:
+    def render_background(self):
+        image = self.assets['right_side_image']
+        image = pygame.transform.scale(image,self.side_display_size)
+        self.right_screen.blit(image,(0,0))

@@ -1,7 +1,8 @@
 from scripts.utils import *
 def load_assets():
     assets = {"Blue":{},"Red":{},
-        'arena' : load_image('decor/arena.png'),
+        'left_side_image' : load_image('decor/left.png'),
+        'right_side_image' : load_image('decor/right.png'),
         'middle_map' : load_image('decor/Arena-1 Middle.png'),
         'BlueCannon': load_image('tower/BlueCannon.png'),
         'RedCannon': load_image('tower/RedCannon.png'), 
