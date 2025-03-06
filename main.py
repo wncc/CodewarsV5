@@ -16,6 +16,7 @@ class Game:
         pygame.init()
         pygame.font.init()
         pygame.display.set_caption('Code Royale')
+
         self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
         self.side_display_size = ((FULL_WIDTH-MIDDLE_WIDTH)//2, FULL_HEIGHT)
         self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
@@ -24,6 +25,7 @@ class Game:
         self.screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
         self.left_screen = pygame.Surface(self.side_display_size)
         self.right_screen = pygame.Surface(self.side_display_size)
+        
         self.clock = pygame.time.Clock()
         self.fps = FPS
         self.game_counter = 0
