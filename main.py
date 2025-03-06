@@ -55,8 +55,14 @@ class Game:
         self.data_provided2 = {}
     
     def render_game_screen(self):
-        self.tilemap.render(self.screen)
-        self.rockmap.render(self.screen)
+        # self.tilemap.render(self.screen)
+        # self.rockmap.render(self.screen)
+        
+        img = pygame.image.load('data/images/decor/Arena-1 Middle.png')
+        img = pygame.transform.scale(img,self.display_size)
+    
+        self.screen.blit(img,(0,0))
+        
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             DataFlow.provide_data(self)
             DataFlow.deployment(self)
@@ -69,10 +75,16 @@ class Game:
         self.main_screen.blit(self.screen, ((FULL_WIDTH-WIDTH)//2, 0))
     
     def render_left_screen(self):
+        img = pygame.image.load('data/images/decor/2.png')
+        img = pygame.transform.scale(img,self.side_display_size)
+        self.left_screen.blit(img,(0,0))
         # Decoration.function() -- idhar likhna hai
         self.main_screen.blit(self.left_screen, (0, 0))
 
     def render_right_screen(self):
+        img = pygame.image.load('data/images/decor/3.png')
+        img = pygame.transform.scale(img,self.side_display_size)
+        self.right_screen.blit(img,(0,0))
         # Decoration.function() -- idhar likhna hai
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+WIDTH)//2, 0))
 
