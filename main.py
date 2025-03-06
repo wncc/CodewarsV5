@@ -35,7 +35,6 @@ class Game:
         self.assets = load_assets()
         deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
 
-        self.arena = Arena(self.assets['arena'])
         self.middle_map = Middle_Map(self.assets["middle_map"])
         """
         NOTE
