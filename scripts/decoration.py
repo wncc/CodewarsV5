@@ -8,7 +8,7 @@ class Decoration:
         texts = [self.team_name2,"v/s",self.team_name1]
         for i, text in enumerate(texts):
             text_surface = font.render(text, True, (255,255,255))
-            text_rect = text_surface.get_rect(center=(WIDTH // 2 , HEIGHT // 2+ (i-1)*30))
+            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*30))
             self.screen.blit(text_surface, text_rect)
 
     def outro_text(self):
@@ -24,13 +24,13 @@ class Decoration:
                 self.winner = "Tie"
         if self.winner == "Tie":
             text_surface = font.render(self.winner, True, (255,255,255))
-            text_rect = text_surface.get_rect(center=(WIDTH // 2 , HEIGHT // 2))
+            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2))
             self.screen.blit(text_surface, text_rect)
         else:
             texts = ["Winner", self.winner]
             for i, text in enumerate(texts):
                 text_surface = font.render(text, True, (255,255,255))
-                text_rect = text_surface.get_rect(center=(WIDTH // 2 , HEIGHT // 2+ (i-1)*30))
+                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*30))
                 self.screen.blit(text_surface, text_rect)
 
     def check_game_end(self):

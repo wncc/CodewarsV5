@@ -16,11 +16,11 @@ class Game:
         pygame.init()
         pygame.font.init()
         pygame.display.set_caption('Code Royale')
-        self.display_size = (WIDTH,HEIGHT)
-        self.side_display_size = ((FULL_WIDTH-WIDTH)//2, FULL_HEIGHT)
-        self.tile_size = WIDTH//12
-        self.main_screen = pygame.display.set_mode((FULL_WIDTH,FULL_HEIGHT))
-        self.screen = pygame.Surface(self.display_size)
+        self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
+        self.side_display_size = ((FULL_WIDTH-ARENA_WIDTH)//2, FULL_HEIGHT)
+        self.tile_size = ARENA_WIDTH//12
+        self.main_screen = pygame.display.set_mode((FULL_WIDTH,EXTRA_HEIGHT),pygame.RESIZABLE)
+        self.screen = pygame.Surface(self.arena_display_size)
         self.left_screen = pygame.Surface(self.side_display_size)
         self.right_screen = pygame.Surface(self.side_display_size)
         self.clock = pygame.time.Clock()
@@ -28,12 +28,12 @@ class Game:
         self.game_counter = 0
         self.winner = None
         self.tower_size = 2*self.tile_size
-        towers_position = (self.display_size[0]/2,self.display_size[1]-self.tower_size)
+        towers_position = (self.arena_display_size[0]/2,self.arena_display_size[1]-self.tower_size)
         self.assets = load_assets()
-        deploy_area = (0,self.display_size[0],self.display_size[1]/2,self.display_size[1])
+        deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
 
-        self.tilemap = GrassTile(self.assets['tiles'], tile_size=self.tile_size, display_size = self.display_size)
-        self.rockmap = RockTile(self.assets['rock'], tile_size=self.tile_size, display_size = self.display_size)
+        self.tilemap = GrassTile(self.assets['tiles'], tile_size=self.tile_size, display_size = self.arena_display_size)
+        self.rockmap = RockTile(self.assets['rock'], tile_size=self.tile_size, display_size = self.arena_display_size)
 
         """
         NOTE
@@ -46,7 +46,7 @@ class Game:
         deployable_troops2 = troops2
         # random.shuffle(deployable_troops2)
         self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, deployable_troops1)
-        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.display_size), self.screen, deployable_troops2, troop2=True) # troop2 means you are player 2
+        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, deployable_troops2, troop2=True) # troop2 means you are player 2
         self.tower1.oppTower = self.tower2
         self.tower1.oppTroops = self.tower2.myTroops
         self.tower2.oppTower = self.tower1
@@ -72,7 +72,7 @@ class Game:
             Decoration.entry_text(self)
         elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
-        self.main_screen.blit(self.screen, ((FULL_WIDTH-WIDTH)//2, 0))
+        self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
     
     def render_left_screen(self):
         img = pygame.image.load('data/images/decor/2.png')
@@ -86,7 +86,7 @@ class Game:
         img = pygame.transform.scale(img,self.side_display_size)
         self.right_screen.blit(img,(0,0))
         # Decoration.function() -- idhar likhna hai
-        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+WIDTH)//2, 0))
+        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+ARENA_WIDTH)//2, 0))
 
     def run(self):
         while True:
