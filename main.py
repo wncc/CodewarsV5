@@ -28,7 +28,7 @@ class Game:
         self.fps = FPS
         self.game_counter = 0
         self.winner = None
-        self.tower_size = 2.5*self.tile_size
+        self.tower_size = 2.25*self.tile_size
         towers_position = (ARENA_WIDTH/2,ARENA_HEIGHT)
         self.assets = load_assets()
         deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
