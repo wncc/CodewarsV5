@@ -26,3 +26,9 @@ class RockTile:
         for i in range(-self.tile_size*4, self.display_size[0]-self.tile_size*4, self.tile_size):
             surf.blit(self.img,(i,-6*self.tile_size))
             surf.blit(self.img,(i,ARENA_HEIGHT-7*self.tile_size))
+
+class Arena:
+    def __init__(self, img):
+        self.img = pygame.transform.scale(img, (ARENA_WIDTH,ARENA_HEIGHT))
+    def render(self,surf):
+        surf.blit(self.img,(0,0))

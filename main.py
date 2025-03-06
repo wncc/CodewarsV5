@@ -34,6 +34,7 @@ class Game:
 
         self.tilemap = GrassTile(self.assets['tiles'], tile_size=self.tile_size, display_size = self.arena_display_size)
         self.rockmap = RockTile(self.assets['rock'], tile_size=self.tile_size, display_size = self.arena_display_size)
+        self.arena = Arena(self.assets['arena'])
 
         """
         NOTE
@@ -58,10 +59,7 @@ class Game:
         # self.tilemap.render(self.screen)
         # self.rockmap.render(self.screen)
         
-        img = pygame.image.load('data/images/decor/Arena-1 Middle.png')
-        img = pygame.transform.scale(img,self.display_size)
-    
-        self.screen.blit(img,(0,0))
+        self.arena.render(self.screen)
         
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             DataFlow.provide_data(self)
