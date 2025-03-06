@@ -1,14 +1,14 @@
-from scripts.utils import convert_player2, convert_player2_area
+from scripts.utils import convert_player2, convert_player2_area, rescale_position
 
 class DummyTower:
     def __init__(self, object, player2:bool,display_size):
         self.name = object.name
         if player2:
-            self.position = convert_player2(object.position,display_size)
-            self.deploy_area = convert_player2_area(object.deploy_area,display_size) # MAINLY USEFUL
+            self.position = rescale_position(convert_player2(object.position,display_size),reverse=True)
+            # self.deploy_area = convert_player2_area(object.deploy_area,display_size) # MAINLY USEFUL
         else:
-            self.position = object.position
-            self.deploy_area = object.deploy_area   # MAINLY USEFUL
+            self.position = rescale_position(object.position,reverse=True)
+            # self.deploy_area = object.deploy_area   # MAINLY USEFUL
         self.health = object.health # MAINLY USEFUL
         self.damage = object.damage
         self.attack_range = object.attack_range
@@ -23,9 +23,9 @@ class DummyTroop:
     def __init__(self, object, player2:bool,display_size):
         self.name = object.name
         if player2:
-            self.position = convert_player2(object.position,display_size) # MAINLY USEFUL
+            self.position = rescale_position(convert_player2(object.position,display_size),reverse=True) # MAINLY USEFUL
         else:
-            self.position = object.position
+            self.position = rescale_position(object.position,reverse=True)
         self.health = object.health # MAINLY USEFUL
         self.damage = object.damage
         self.attack_range = object.attack_range

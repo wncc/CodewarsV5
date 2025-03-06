@@ -1,6 +1,7 @@
 from scripts.Troops.dummies import *
 from teams.team1 import deploy as deploy1
 from teams.team2 import deploy as deploy2
+from scripts.utils import rescale_position
 
 class DataFlow: 
     def provide_data(self):
@@ -10,23 +11,23 @@ class DataFlow:
         tower2_oppTroops = []
 
         for troop in self.tower1.myTroops:
-            tower1_troops.append(DummyTroop(troop,False,self.display_size))
-            t1 = DummyTroop(troop,True,self.display_size)
+            tower1_troops.append(DummyTroop(troop,False,self.arena_display_size))
+            t1 = DummyTroop(troop,True,self.arena_display_size)
             troop.dummy = t1
             tower2_oppTroops.append(t1)
         for troop in self.tower2.myTroops:
-            tower2_troops.append(DummyTroop(troop,True,self.display_size))
-            t2 = DummyTroop(troop,False,self.display_size)
+            tower2_troops.append(DummyTroop(troop,True,self.arena_display_size))
+            t2 = DummyTroop(troop,False,self.arena_display_size)
             troop.dummy = t2
             tower1_oppTroops.append(t2)
 
-        tower1 = DummyTower(self.tower1,False,self.display_size)
-        tower1_opp = DummyTower(self.tower2, False,self.display_size)
+        tower1 = DummyTower(self.tower1,False,self.arena_display_size)
+        tower1_opp = DummyTower(self.tower2, False,self.arena_display_size)
         tower1_opp.deployable_troops = None
         tower1_opp.total_elixir = None
         tower1_opp.total_dark_elixir = None
-        tower2 = DummyTower(self.tower2,True,self.display_size)
-        tower2_opp = DummyTower(self.tower1,True,self.display_size)
+        tower2 = DummyTower(self.tower2,True,self.arena_display_size)
+        tower2_opp = DummyTower(self.tower1,True,self.arena_display_size)
         tower2_opp.deployable_troops = None
         tower2_opp.total_elixir = None
         tower2_opp.total_dark_elixir = None
@@ -70,9 +71,11 @@ class DataFlow:
         self.data_provided1 = {}
         self.data_provided2 = {}
         for troop, position in troops1_list:
+            position = rescale_position(position)
             self.tower1.deploy(troop,position)
         for troop, position in troops2_list:
-            self.tower2.deploy(troop,convert_player2(position,self.display_size))
+            position = rescale_position(position)
+            self.tower2.deploy(troop,convert_player2(position,self.arena_display_size))
 
     def attack_die(self):
         for troop in self.tower1.myTroops:

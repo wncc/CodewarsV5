@@ -1,5 +1,6 @@
 import os
 import pygame
+from scripts.config import *
 
 BASE_IMG_PATH = 'data/images/'
 
@@ -26,3 +27,13 @@ def convert_player2_area(area,display_size:tuple):
     y1 = display_size[1] - area[2]
     y2 = display_size[1] - area[3]
     return (x2,x1,y2,y1)  # bcz x2<x1 and y2<y1
+
+def rescale_position(position,reverse = False):
+    if reverse:
+        x = position[0]*50/ARENA_WIDTH
+        y = position[0]*100/ARENA_WIDTH
+        return(x,y)
+
+    x = position[0]*ARENA_WIDTH/50
+    y = position[1]*ARENA_HEIGHT/100
+    return (x,y)
