@@ -167,17 +167,17 @@ class Tower:
 
         if self.health <= 0:
             x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 2.5*self.size - self.image_tower_height + DELTA_Y
+            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
             self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         if self.troop2:
             x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 2.5*self.size - self.image_tower_height + DELTA_Y
+            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
             self.middle_surf.blit(self.image_tower, (x, y))
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
         else:
             x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 1.5*self.size - self.image_tower_height + DELTA_Y
+            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
             self.middle_surf.blit(self.image_tower, (x, y))
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.8))
         if attack:
