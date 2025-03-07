@@ -34,6 +34,7 @@ class Game:
         towers_position = (ARENA_WIDTH/2,ARENA_HEIGHT)
         self.assets = load_assets()
         deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
+        self.start_time = None
 
         self.middle_map = Middle_Map(self.assets["middle_map"])
         """
@@ -69,6 +70,8 @@ class Game:
             Decoration.entry_text(self)
         elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
+        elif self.game_counter == GAME_START_TIME - 1:
+            self.start_time = pygame.time.get_ticks()
 
         self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
 
@@ -77,6 +80,7 @@ class Game:
     def render_left_screen(self):
         Decoration_Left.render_background(self)
         Decoration_Left.render_troop_cards(self)
+        Decoration_Left.render_time(self)
         self.main_screen.blit(self.left_screen, (0, 0))
         
     def render_right_screen(self):

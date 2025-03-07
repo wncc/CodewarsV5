@@ -56,13 +56,12 @@ def get_positions(position, area, troop_deploy_radius, troop_number):
         deploy_y = position[1]
 
     arr = []
-    
     for _ in range(troop_number):
-        angle = random.uniform(0, 2 * math.pi)  # Random angle in radians
-        radius = random.uniform(5, troop_deploy_radius)  # Random distance from center
+        angle = random.uniform(0, 2 * math.pi)
+        radius = math.sqrt(random.uniform(0, troop_deploy_radius**2))
         rand_x = deploy_x + radius * math.cos(angle)
         rand_y = deploy_y + radius * math.sin(angle)
-        arr.append((rand_x,rand_y))
+        arr.append((rand_x, rand_y))
         
     return arr
     
