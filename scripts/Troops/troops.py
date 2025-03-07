@@ -26,7 +26,7 @@ class Balloon(Troop):
     def __init__(self,images , position, surf, myTower, std_size):
         super().__init__(name="Balloon", images  = images, position = position, elixir = 5,
                          health=1050, damage=120, velocity=FAST_SPEED, type_="air", attack_range = 3.5, surf = surf, discovery_range = 5, myTower = myTower,
-                         target_type = {"air": False, "ground": False, "building": True}, splash_range = 1, size = 0.7, std_size= std_size, attack_speed = FAST_ATTACK)
+                         target_type = {"air": False, "ground": False, "building": True}, splash_range = 1, size = 0.4, std_size= std_size, attack_speed = FAST_ATTACK)
 class Prince(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Prince", images = images, position = position, elixir = 5,
@@ -46,7 +46,7 @@ class Knight(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Knight", images = images, position = position, elixir = 3,
                          health=1766, damage=202, velocity=MEDIUM_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 5, myTower = myTower,
-                         target_type = {"air": False, "ground": True, "building": True}, splash_range = 0, size = 0.5,std_size= std_size, attack_speed = FAST_ATTACK)
+                         target_type = {"air": False, "ground": True, "building": True}, splash_range = 0, size = 0.25,std_size= std_size, attack_speed = FAST_ATTACK)
 class Minion(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Minion", images = images, position = position, elixir = 5,
