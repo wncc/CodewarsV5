@@ -3,7 +3,7 @@ import pygame
 from scripts.config import *
 import pandas as pd
 
-centers = pd.read_csv("/Users/tusharsingharoy/coderoyale/data/image_centers/troops_center.csv",index_col="troop")
+centers = pd.read_csv("data/image_centers/troops_center.csv",index_col="troop")
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
