@@ -23,7 +23,7 @@ def load_assets():
         'barbarian_card': load_image('decor/card-png/barbarians.png'),}
 
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
-    troops = ["barbarian","prince","giant","minion","dragon","skeleton"]
+    troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
     for team in ["Blue","Red"]:
         for dir in directions:
             for i in range(6):
