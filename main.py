@@ -76,10 +76,12 @@ class Game:
     
     def render_left_screen(self):
         Decoration_Left.render_background(self)
+        Decoration_Left.render_troop_cards(self)
         self.main_screen.blit(self.left_screen, (0, 0))
-
+        
     def render_right_screen(self):
         Decoration_Right.render_background(self)
+        Decoration_Right.render_troop_cards(self)
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):

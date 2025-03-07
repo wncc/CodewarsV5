@@ -12,7 +12,16 @@ def load_assets():
         'RedKingAttack': load_image('tower/RedKingAttack.png'),
         'BlueTower': load_image('tower/BlueTower.png'),
         'RedTower': load_image('tower/RedTower.png'),
-        'TowerDamaged': load_image('tower/TowerDamaged.png'),}
+        'TowerDamaged': load_image('tower/TowerDamaged.png'),
+        'archer_card': load_image('decor/card-png/archers.png'),
+        'giant_card': load_image('decor/card-png/giant.png'),
+        'dragon_card': load_image('decor/card-png/baby-dragon.png'),
+        'prince_card': load_image('decor/card-png/prince.png'),
+        'princes_card': load_image('decor/card-png/princess.png'),
+        'knight_card': load_image('decor/card-png/knight.png'),
+        'minion_card': load_image('decor/card-png/minions.png'),
+        'barbarian_card': load_image('decor/card-png/barbarians.png'),}
+
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
     troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
     for team in ["Blue","Red"]:
