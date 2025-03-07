@@ -132,8 +132,19 @@ class Tower:
             else:
                 troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size)
             if self.total_elixir >= troop_instance.elixir:
-                self.total_elixir -= troop_instance.elixir
-                self.myTroops.append(troop_instance)
+                troop_number = troop_instance.number-1
+                troop_deploy_radius = troop_instance.deploy_radius
+                if troop_number == 1:
+                    self.total_elixir -= troop_instance.elixir
+                    self.myTroops.append(troop_instance)
+                else:
+
+                    for _ in range(troop_number):
+                        if self.troop2:
+                            troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size)
+                        else:
+                            troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size)
+                        self.myTroops.append(troop_instance)
                 self.get_next_cycle(troop)
 
     # UTILITY FUNCTION

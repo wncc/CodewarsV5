@@ -1,6 +1,8 @@
 import os
 import pygame
 from scripts.config import *
+import math
+import random
 
 BASE_IMG_PATH = 'data/images/'
 
@@ -37,3 +39,22 @@ def rescale_position(position,reverse = False):
     x = position[0]*ARENA_WIDTH/50
     y = position[1]*ARENA_HEIGHT/100
     return (x,y)
+
+def get_positions(position, area, troop_deploy_radius):
+    if area[0] >= position[0] - troop_deploy_radius:
+        deploy_x = area[0] + troop_deploy_radius
+    elif position[0] + troop_deploy_radius >= area[1]:
+        deploy_y = area[1] - troop_deploy_radius
+
+    if area[2] >= position[1] - troop_deploy_radius:
+        deploy_x = area[2] + troop_deploy_radius
+    elif position[1] + troop_deploy_radius >= area[3]:
+        deploy_y = area[3] - troop_deploy_radius
+
+    angle = random.uniform(0, 2 * math.pi)  # Random angle in radians
+    radius = random.uniform(5, max_radius)  # Random distance from center
+
+            # Convert polar coordinates to (x, y)
+            rand_x = x + radius * math.cos(angle)
+            rand_y = y + radius * math.sin(angle)
+    
