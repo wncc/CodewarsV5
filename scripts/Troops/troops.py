@@ -45,5 +45,11 @@ class Knight(Troop):
 class Minion(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Minion", images = images, position = position, elixir = 5,
-                         health=837, damage=311, velocity=MEDIUM_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 4, myTower = myTower,
-                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 0, size = 0.3,std_size= std_size, attack_speed = MEDIUM_ATTACK)   
+                         health=837, damage=311, velocity=MEDIUM_SPEED, type_="air", attack_range = 0, surf = surf, discovery_range = 4, myTower = myTower,
+                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 0, size = 0.3,std_size= std_size, attack_speed = MEDIUM_ATTACK) 
+        
+class Skeleton(Troop):
+    def __init__(self, position, images , surf, myTower,std_size):
+        super().__init__(name="Skeleton", images = images, position = position, elixir = 1,
+                         health=89, damage=89, velocity=FAST_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 4, myTower = myTower,
+                         target_type = {"air": False, "ground": True, "building": True}, splash_range = 0, size = 0.5,std_size= std_size, attack_speed = FAST_ATTACK)     
