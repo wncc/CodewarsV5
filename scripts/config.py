@@ -1,6 +1,8 @@
 import pygame
 pygame.init()
 info = pygame.display.Info()
+import pygame
+import pandas as pd
 
 SLOW_ATTACK = 5
 MEDIUM_ATTACK = 3
@@ -10,7 +12,6 @@ SLOW_SPEED = 1
 MEDIUM_SPEED = 3
 FAST_SPEED = 5
 TOP_SPEED = 6
-
 
 FPS = 10
 
@@ -34,3 +35,5 @@ GAME_TOTAL_TIME = 1800 # 3 min
 GAME_END_TIME = GAME_START_TIME + GAME_TOTAL_TIME
 
 FRAMES = 6
+
+CENTERS = pd.read_csv("data/image_centers/troops_center.csv",index_col="troop")

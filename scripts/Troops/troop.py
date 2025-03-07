@@ -1,9 +1,6 @@
 import math
 import pygame
 from scripts.config import *
-import pandas as pd
-
-centers = pd.read_csv("data/image_centers/troops_center.csv",index_col="troop")
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
@@ -40,7 +37,7 @@ class Troop:
         self.orientation = "s"
         self.run_counter = 0
 
-        self.xx, self.yy, self.w, self. h = centers.loc[name.lower()]
+        self.xx, self.yy, self.w, self. h = CENTERS.loc[name.lower()]
 
         self.resize()
 
