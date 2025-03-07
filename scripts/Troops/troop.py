@@ -1,6 +1,9 @@
 import math
 import pygame
 from scripts.config import *
+import pandas as pd
+
+centers = pd.read_csv("/Users/tusharsingharoy/coderoyale/data/image_centers/troops_center.csv",index_col="troop")
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
@@ -34,6 +37,8 @@ class Troop:
         self.attack_counter = 0
         self.orientation = "s"
         self.run_counter = 0
+
+        self.xx, self.yy, self.w, self. h = centers.loc[name.lower()]
 
         self.resize()
 
@@ -123,39 +128,51 @@ class Troop:
     def render(self):
         frames = (TOP_SPEED-self.velocity)*FRAMES
         rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
-        x = self.position[0] - self.size 
-        y = self.position[1] - self.size 
+        x = self.position[0] -  self.xx - self.size
+        y = self.position[1] - self.yy - self.h + self.size/2
         self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.run_counter = (self.run_counter+1)%frames
 
     def render_attack(self):
         frames = (self.attack_speed)*FRAMES
         rendering_frame = self.attack_counter//(self.attack_speed)
-        x = self.position[0] - self.size 
-        y = self.position[1] - self.size 
+        x = self.position[0] - self.xx - self.size
+        y = self.position[1] - self.yy - self.h + self.size/2
         self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.attack_counter = (self.attack_counter+1)%frames
     
     # UTILITY FUNCTION
 
     def resize(self):
-        orientation = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
+        orientation = ["s", "e", "w", "ne", "nw", "se", "sw", "n"]
+        std_img = self.assets[self.name+"_run_n_6"]
+        original_Width = std_img.get_width()
+        original_Height = std_img.get_height()
+        aspect_ratio = self.h/self.w
+        new_width = 2*self.size
+        new_height = new_width*aspect_ratio
+        new_Width = new_width*original_Width/self.w
+        new_Height = new_height*original_Height/self.h
+        self.xx = self.xx * new_width/self.w
+        self.yy = self.yy * new_height/self.h
+        self.h = new_height
         for i in range(6):
             for orient in orientation:
                 image = self.assets[self.name+"_run_"+orient+f'_{i+1}']
-                aspect_ratio = image.get_height() / image.get_width()
-                image_scaled = pygame.transform.scale(image, (2*self.size, int(2*self.size * aspect_ratio)))
+                image_scaled = pygame.transform.scale(image, (new_Width, new_Height))
                 self.images["_run_"+orient+f'_{i+1}'] = image_scaled
 
                 image_attack = self.assets[self.name+"_attack_"+orient+f'_{i+1}']
-                aspect_ratio = image_attack.get_height() / image_attack.get_width()
-                image_attack_scaled = pygame.transform.scale(image_attack, (2*self.size, int(2*self.size * aspect_ratio)))
+                image_attack_scaled = pygame.transform.scale(image_attack, (new_Width, new_Height))
                 self.images["_attack_"+orient+f'_{i+1}'] = image_attack_scaled
               
     def is_in_range(self, entity, range_):
         """Checks if an entity is within the troop's discovery or attack range."""
         return self.calculate_distance(entity.position) <= range_ + self.size + entity.size
-
+    
+    def in_target_range(self, troop):
+        return ((self.target.position[0]-troop.position[0])**2+(self.target.position[1]-troop.position[1])**2) <= self.splash_range**2
+ 
     def calculate_distance(self, other_position):
         """Calculates the Euclidean distance to another position."""
         return math.sqrt((self.position[0] - other_position[0])**2 + (self.position[1] - other_position[1])**2)
@@ -200,5 +217,5 @@ class Troop:
     def apply_splash_damage(self):
         """Applies splash damage to all entities within the splash radius."""
         for entity in self.myTower.oppTroops + [self.myTower.oppTower]:
-            if self.is_in_range(entity, self.splash_range):
+            if self.in_target_range(entity):
                 entity.health -= self.damage
