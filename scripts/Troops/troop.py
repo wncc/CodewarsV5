@@ -144,7 +144,7 @@ class Troop:
     # UTILITY FUNCTION
 
     def resize(self):
-        orientation = ["s", "e", "w", "ne", "nw", "se", "sw", "n"]
+        orientation = ["n","s", "e", "w", "ne", "nw", "se", "sw"]
         std_img = self.assets[self.name+"_run_n_6"]
         original_Width = std_img.get_width()
         original_Height = std_img.get_height()
