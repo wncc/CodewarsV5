@@ -14,7 +14,7 @@ def load_assets():
         'RedTower': load_image('tower/RedTower.png'),
         'TowerDamaged': load_image('tower/TowerDamaged.png'),}
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
-    troops = ["barbarian","prince","giant","minion","dragon","skeleton"]
+    troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
     for team in ["Blue","Red"]:
         for dir in directions:
             for i in range(6):
