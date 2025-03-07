@@ -25,6 +25,9 @@ def rename_files_in_directory(directory, character, state, direction, flip):
             
             if flip:
                 with Image.open(old_path) as img:
+                    direction = direction[:-1]+"w"
+                    new_name = f"{character}_{state}_{direction}_{frame_number+1}.png"
+                    new_path = os.path.join(new_directory, new_name)
                     img = img.transpose(Image.FLIP_LEFT_RIGHT)
                     img.save(new_path)
             else:

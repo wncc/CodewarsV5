@@ -49,10 +49,47 @@ class Decoration_Left:
         image = self.assets['left_side_image']
         image = pygame.transform.scale(image,self.side_display_size)
         self.left_screen.blit(image,(0,0))
-
+        
+    troops_displayed = []
+    
+    def update_troops(self):
+        if len(Decoration_Left.troops_displayed) <=8:
+            troops = self.tower1.myTroops
+            for troop in troops:
+                if troop.name not in Decoration_Left.troops_displayed:
+                    Decoration_Left.troops_displayed.append(troop.name)
+                
+    def render_troop_cards(self):
+        Decoration_Left.update_troops(self)
+        troops = Decoration_Left.troops_displayed
+        for i in range(len(troops)):
+            image = self.assets[f'{troops[i]}_card']
+            image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
+            self.left_screen.blit(image,(CARD_PLATE_WIDTH*1//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))            
+        
+        
 
 class Decoration_Right:
     def render_background(self):
         image = self.assets['right_side_image']
         image = pygame.transform.scale(image,self.side_display_size)
         self.right_screen.blit(image,(0,0))
+        
+    troops_displayed = []
+    
+    def update_troops(self):
+        if len(Decoration_Right.troops_displayed) <=8:
+            troops = self.tower2.myTroops
+            for troop in troops:
+                if troop.name not in Decoration_Right.troops_displayed:
+                    Decoration_Right.troops_displayed.append(troop.name)
+                    
+    def render_troop_cards(self):
+        Decoration_Right.update_troops(self)
+        troops = Decoration_Right.troops_displayed
+        for i in range(len(troops)):
+            image = self.assets[f'{troops[i]}_card']
+            image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
+            self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))            
+
+
