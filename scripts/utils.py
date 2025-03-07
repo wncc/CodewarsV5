@@ -40,21 +40,29 @@ def rescale_position(position,reverse = False):
     y = position[1]*ARENA_HEIGHT/100
     return (x,y)
 
-def get_positions(position, area, troop_deploy_radius):
+def get_positions(position, area, troop_deploy_radius, troop_number):
     if area[0] >= position[0] - troop_deploy_radius:
         deploy_x = area[0] + troop_deploy_radius
     elif position[0] + troop_deploy_radius >= area[1]:
-        deploy_y = area[1] - troop_deploy_radius
+        deploy_x = area[1] - troop_deploy_radius
+    else:
+        deploy_x = position[0]
 
     if area[2] >= position[1] - troop_deploy_radius:
-        deploy_x = area[2] + troop_deploy_radius
+        deploy_y = area[2] + troop_deploy_radius
     elif position[1] + troop_deploy_radius >= area[3]:
         deploy_y = area[3] - troop_deploy_radius
+    else:
+        deploy_y = position[1]
 
-    angle = random.uniform(0, 2 * math.pi)  # Random angle in radians
-    radius = random.uniform(5, max_radius)  # Random distance from center
-
-            # Convert polar coordinates to (x, y)
-            rand_x = x + radius * math.cos(angle)
-            rand_y = y + radius * math.sin(angle)
+    arr = []
+    
+    for _ in range(troop_number):
+        angle = random.uniform(0, 2 * math.pi)  # Random angle in radians
+        radius = random.uniform(5, troop_deploy_radius)  # Random distance from center
+        rand_x = deploy_x + radius * math.cos(angle)
+        rand_y = deploy_y + radius * math.sin(angle)
+        arr.append((rand_x,rand_y))
+        
+    return arr
     

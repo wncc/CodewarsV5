@@ -7,7 +7,7 @@ centers = pd.read_csv("/Users/tusharsingharoy/coderoyale/data/image_centers/troo
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
-                 discovery_range, myTower, target_type, std_size, splash_range = 0, size = 0):
+                 discovery_range, myTower, target_type, std_size, splash_range = 0, size = 0, number = 1):
         """
         Initialize a troop with essential attributes.
         """
@@ -16,7 +16,9 @@ class Troop:
         self.prev_position = position
         self.elixir = elixir
         self.type = type_
+        self.number = number
         self.size = std_size*size
+        self.deploy_radius = 4*self.size
         self.dummy = None
         self.health = health
         self.max_health = health
