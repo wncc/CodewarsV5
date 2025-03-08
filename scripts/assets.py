@@ -19,7 +19,8 @@ def load_assets():
         'minion_card': load_image('decor/card-png/minions.png'),
         'barbarian_card': load_image('decor/card-png/barbarians.png'),
         'skeleton_card': load_image('decor/card-png/skeleton-army.png'),
-        'balloon_card': load_image('decor/card-png/balloon.png'),}
+        'balloon_card': load_image('decor/card-png/balloon.png'),
+        'elixir': load_image('decor/elixir_mult/ui_sprite_0225.png'),}
 
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
     troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
