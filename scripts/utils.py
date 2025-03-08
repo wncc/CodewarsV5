@@ -32,12 +32,12 @@ def convert_player2_area(area,display_size:tuple):
 
 def rescale_position(position,reverse = False):
     if reverse:
-        x = position[0]*50/ARENA_WIDTH
-        y = position[0]*100/ARENA_WIDTH
+        x = position[0]*50/ARENA_WIDTH - 25
+        y = 100 - position[1]*100/ARENA_WIDTH
         return(x,y)
 
-    x = position[0]*ARENA_WIDTH/50
-    y = position[1]*ARENA_HEIGHT/100
+    x = (position[0]+25)*ARENA_WIDTH/50
+    y = (100-position[1])*ARENA_HEIGHT/100
     return (x,y)
 
 def get_positions(position, area, troop_deploy_radius, troop_number, troop2):
