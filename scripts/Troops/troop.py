@@ -14,8 +14,9 @@ class Troop:
         self.elixir = elixir
         self.type = type_
         self.number = number
+        self.std_size = std_size
         self.size = std_size*size
-        self.deploy_radius = 4*self.size
+        self.deploy_radius = 3*self.size
         self.dummy = None
         self.health = health
         self.max_health = health
@@ -120,8 +121,8 @@ class Troop:
     # ANIMATION FUNCTION
 
     def render_health_bar(self):  # need to work on positioning since self.size is gonna have some new definition
-        pygame.draw.rect(self.surf, (255,0,0), (self.position[0] , self.position[1] + 0.5*self.size , 1*self.size, 0.05*self.size), 0)
-        pygame.draw.rect(self.surf, (0,255,0), (self.position[0] , self.position[1] + 0.5*self.size , 1*self.size * self.health/self.max_health, 0.05*self.size), 0)
+        pygame.draw.rect(self.surf, (255,0,0), (self.position[0] - self.size , self.position[1] - self.h , 2*self.size, 0.08*self.std_size), 0)
+        pygame.draw.rect(self.surf, (0,255,0), (self.position[0] - self.size, self.position[1] - self.h , 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
 
 
     def render(self):
@@ -131,6 +132,7 @@ class Troop:
         y = self.position[1] - self.yy - self.h + self.size/2
         self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.run_counter = (self.run_counter+1)%frames
+        self.render_health_bar()
 
     def render_attack(self):
         frames = (self.attack_speed)*FRAMES
@@ -139,6 +141,7 @@ class Troop:
         y = self.position[1] - self.yy - self.h + self.size/2
         self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.attack_counter = (self.attack_counter+1)%frames
+        self.render_health_bar()
     
     # UTILITY FUNCTION
 
