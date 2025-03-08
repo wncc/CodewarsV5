@@ -69,12 +69,13 @@ class Decoration_Left:
 
     def render_time(self):
         if self.start_time:
-            font = pygame.font.Font("data/font/clashroyale.ttf", 40)  # Default font, size 26
+            font = pygame.font.Font("data/font/clashroyale.ttf", 40)
             elapsed_seconds = (pygame.time.get_ticks() - self.start_time) // 1000
-            minutes = elapsed_seconds // 60
-            seconds = elapsed_seconds % 60
+            remaining_seconds = max(180 - elapsed_seconds, 0)  # Countdown from 180s
+            minutes = remaining_seconds // 60
+            seconds = remaining_seconds % 60
             timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
-            self.left_screen.blit(timer_text,(FULL_WIDTH*0.18,FULL_HEIGHT*0.933))            
+            self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.923))            
         
 class Decoration_Right:
     def render_background(self):
