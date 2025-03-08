@@ -116,8 +116,11 @@ class Troop:
     # ANIMATION FUNCTION
 
     def render_health_bar(self):  # need to work on positioning since self.size is gonna have some new definition
-        pygame.draw.rect(self.surf, (255,0,0), (self.position[0] - self.size , self.position[1] - self.h , 2*self.size, 0.08*self.std_size), 0)
-        pygame.draw.rect(self.surf, (0,255,0), (self.position[0] - self.size, self.position[1] - self.h , 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
+        pygame.draw.rect(self.surf, (65,76,78), (self.position[0] - self.size , self.position[1] - self.h , 2*self.size, 0.08*self.std_size), 0)
+        if self.myTower.troop2:
+            pygame.draw.rect(self.surf, (200, 57, 90), (self.position[0] - self.size, self.position[1] - self.h , 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
+        else:
+            pygame.draw.rect(self.surf, (73,152,196), (self.position[0] - self.size, self.position[1] - self.h , 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
 
 
     def render(self):
