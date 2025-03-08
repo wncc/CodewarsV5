@@ -197,7 +197,8 @@ class Tower:
         rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
         x = self.position[0] - 1.5*self.size + DELTA_X
         y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
-        self.middle_surf.blit(self.images["_run_"+f'{rendering_frame+1}'],(x, y))
+        print(x,y)
+        self.middle_surf.blit(self.images["_run_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
         self.run_counter = (self.run_counter+1)%frames
 
     def render_attack(self):
@@ -207,7 +208,7 @@ class Tower:
         rendering_frame = self.attack_counter//(self.attack_speed)
         x = self.position[0] - 1.5*self.size + DELTA_X
         y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
-        self.middle_surf.blit(self.images["_attack_"+f'{rendering_frame+1}'],(x, y))
+        self.middle_surf.blit(self.images["_attack_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
         self.attack_counter = (self.attack_counter+1)%frames
 
     # def render(self, attack: bool = False):
