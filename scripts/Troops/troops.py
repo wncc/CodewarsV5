@@ -37,7 +37,8 @@ class Barbarian(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Barbarian", images = images, position = position, elixir = 5,
                          health=1920, damage=392, velocity=FAST_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 5, myTower = myTower,
-                         target_type = {"air": False, "ground": True, "building": False}, splash_range = 0, size = 0.4,std_size= std_size, attack_speed = FAST_ATTACK)
+                         target_type = {"air": False, "ground": True, "building": False}, splash_range = 0, size = 0.25,std_size= std_size, attack_speed = FAST_ATTACK,
+                         number=5)
 class Princess(Troop):
     def __init__(self, position, images , surf, myTower,std_size):
         super().__init__(name="Princess", images = images, position = position, elixir = 5,
