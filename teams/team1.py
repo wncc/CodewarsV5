@@ -1,4 +1,4 @@
 team_name = "DHOLAKPUR"
-troops = ["Prince","Balloon","Knight","Archer","Dragon","Skeleton",'Barbarian',"Giant","Archer","Princess","Knight"]
+troops = ['Barbarian',"Prince","Minion","Dragon","Skeleton",'Barbarian',"Giant","Prince","Prince","Archer","Dragon","Giant","BombTower","Princess","Minion","Knight"]
 def deploy(arena_data:dict):
-    return [('Archer',(0,100))]
+    return []

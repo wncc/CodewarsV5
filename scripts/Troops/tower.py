@@ -17,13 +17,9 @@ class Tower:
         self.name = name
         self.assets = assets
         if troop2:
-            self.image_king = assets['RedKing']
-            self.image_king_attack = assets['RedKingAttack']
             self.image_tower = assets['RedTower']
             self.image_cannon = assets['RedCannon']
         else:
-            self.image_king = assets['BlueKing']
-            self.image_king_attack = assets['BlueKingAttack']
             self.image_tower = assets['BlueTower']
             self.image_cannon = assets['BlueCannon']
         self.image_destroyed = assets['TowerDamaged']
@@ -38,13 +34,15 @@ class Tower:
         self.surf = surf
         self.middle_surf = middle_surf
         self.attack_speed = MEDIUM_ATTACK
+        self.velocity = MEDIUM_SPEED
         self.deployable_troops = deployable_troops
         self.discovered_troops = {}
 
         self.troop2 = troop2        # rendering purpose only
         self.game_timer = 0
 
-        self.attack_counter = MEDIUM_ATTACK
+        self.attack_counter = 0
+        self.run_counter = 0
         
         # Initialize user resources
         self.total_elixir = 10 
@@ -54,11 +52,9 @@ class Tower:
         self.oppTroops = None
         self.level = 1
 
-        self.image_king, _ = self.resize(self.image_king)
-        self.image_king_attack, _ = self.resize(self.image_king_attack)
-        self.image_cannon,_ = self.resize(self.image_cannon)
-        self.image_destroyed, _ = self.resize(self.image_destroyed)
-        self.image_tower, self.image_tower_height = self.resize(self.image_tower)
+        self.images = {}
+
+        self.resize()
 
     # CORE FUNCTIONS
 
@@ -73,13 +69,9 @@ class Tower:
                 self.target = None
             else:
                 if self.is_in_range(self.target, self.attack_range):
-                    if (self.attack_counter == self.attack_speed):
+                    if (self.attack_counter+1 == self.attack_speed*FRAMES):
                         self.attack()
-                        self.attack_counter = 0
-                        self.render(True)
-                    else:
-                        self.attack_counter += 1
-                        self.render()
+                    self.render_attack()
                     return
                 self.target = None
                 self.attack_counter = 0
@@ -165,35 +157,58 @@ class Tower:
     def special_power(self, power):
         pass
 
-    def resize(self,image):
-        aspect_ratio = image.get_height() / image.get_width()
-        img = pygame.transform.scale(image, (3*self.size, int(3*self.size * aspect_ratio)))
-        img_height = img.get_height()
-        return img, img_height
+    def resize(self):
+        team = "Red" if self.troop2 else "Blue"
+        for i in range(1,7):
+            image = self.assets[team][f"{team}King_{i}"]
+            aspect_ratio = image.get_height() / image.get_width()
+            image_scaled = pygame.transform.scale(image, (3*self.size, int(3*self.size * aspect_ratio)))
+            self.images["_run_"+f'{i}'] = image_scaled
+            
+            image_attack = self.assets[team][f"{team}KingAttack_{i}"]
+            aspect_ratio = image_attack.get_height() / image_attack.get_width()
+            image_attack_scaled = pygame.transform.scale(image_attack, (3*self.size, int(3*self.size * aspect_ratio)))
+            self.images["_attack_"+f'{i}'] = image_attack_scaled
+
+        aspect_ratio = self.image_cannon.get_height() / self.image_cannon.get_width()
+        self.image_cannon = pygame.transform.scale(self.image_cannon, (3*self.size, int(3*self.size * aspect_ratio)))
+
+        aspect_ratio = self.image_tower.get_height() / self.image_tower.get_width()
+        self.image_tower = pygame.transform.scale(self.image_tower, (3*self.size, int(3*self.size * aspect_ratio)))
+
+        aspect_ratio = self.image_cannon.get_height() / self.image_destroyed.get_width()
+        self.image_destroyed = pygame.transform.scale(self.image_destroyed, (3*self.size, int(3*self.size * aspect_ratio)))
+
+        self.image_tower_height = self.image_tower.get_height()
 
     # ANIMATION FUNCTION
 
-    def render(self,attack:bool = False):
-        # pygame.draw.rect(self.surf, (213,157,114), (self.position[0] - self.size , self.position[1] - self.size , self.size*2, self.size*2), 5)
-        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT)/2
-        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH)/2
-
-        if self.health <= 0:
-            x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
-            self.middle_surf.blit(self.image_destroyed, (x, y))
-            return
+    def render(self):
+        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT) / 2
+        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH) / 2
+        frames = (TOP_SPEED-self.velocity)*FRAMES
+        rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
+        x = self.position[0] - 1.5*self.size + DELTA_X
+        y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
+        self.middle_surf.blit(self.image_tower, (x, y))
         if self.troop2:
-            x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
-            self.middle_surf.blit(self.image_tower, (x, y))
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
         else:
-            x = self.position[0] - 1.5*self.size + DELTA_X
-            y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
-            self.middle_surf.blit(self.image_tower, (x, y))
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.8))
-        if attack:
-            self.middle_surf.blit(self.image_king_attack, (x, y - self.size*0.5))
+        self.middle_surf.blit(self.images["_run_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
+        self.run_counter = (self.run_counter+1)%frames
+
+    def render_attack(self):
+        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT) / 2
+        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH) / 2
+        frames = (self.attack_speed)*FRAMES
+        rendering_frame = self.attack_counter//(self.attack_speed)
+        x = self.position[0] - 1.5*self.size + DELTA_X
+        y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
+        self.middle_surf.blit(self.image_tower, (x, y))
+        if self.troop2:
+            self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.2 + 0.05 * (rendering_frame % 6))))
         else:
-            self.middle_surf.blit(self.image_king,(x,y - self.size*0.5))
+            self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.8 - 0.05 * (rendering_frame % 6))))
+        self.middle_surf.blit(self.images["_attack_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
+        self.attack_counter = (self.attack_counter+1)%frames
