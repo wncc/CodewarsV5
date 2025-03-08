@@ -40,7 +40,7 @@ def rescale_position(position,reverse = False):
     y = position[1]*ARENA_HEIGHT/100
     return (x,y)
 
-def get_positions(position, area, troop_deploy_radius, troop_number):
+def get_positions(position, area, troop_deploy_radius, troop_number, troop2):
     if area[0] >= position[0] - troop_deploy_radius:
         deploy_x = area[0] + troop_deploy_radius
     elif position[0] + troop_deploy_radius >= area[1]:
@@ -56,12 +56,27 @@ def get_positions(position, area, troop_deploy_radius, troop_number):
         deploy_y = position[1]
 
     arr = []
-    for _ in range(troop_number):
-        angle = random.uniform(0, 2 * math.pi)
-        radius = math.sqrt(random.uniform(0, troop_deploy_radius**2))
-        rand_x = deploy_x + radius * math.cos(angle)
-        rand_y = deploy_y + radius * math.sin(angle)
-        arr.append((rand_x, rand_y))
-        
+    
+    grid_rows = math.ceil(math.sqrt(troop_number))
+    grid_cols = (troop_number + grid_rows - 1) // grid_rows
+    
+    spacing_x = troop_deploy_radius / (grid_cols - 1) if grid_cols > 1 else 0
+    spacing_y = troop_deploy_radius / (grid_rows - 1) if grid_rows > 1 else 0
+
+    flip_y = 1 if troop2 else -1
+    flip_x = 1 if troop2 else -1
+    
+    start_x = deploy_x - (grid_cols // 2) * spacing_x * flip_x
+    start_y = deploy_y - (grid_rows // 2) * spacing_y * flip_y
+
+    count = 0
+    for i in range(grid_rows):
+        for j in range(grid_cols):
+            if count < troop_number:
+                x = start_x + (j * spacing_x * flip_x)
+                y = start_y + (i * spacing_y * flip_y)
+                arr.append((x, y))
+                count += 1
+
     return arr
     

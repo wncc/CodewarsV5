@@ -70,25 +70,25 @@ class DataFlow:
         troops2_list = deploy2(self.data_provided2)
         self.data_provided1 = {}
         self.data_provided2 = {}
-        for troop, position in troops1_list:
-            position = rescale_position(position)
-            self.tower1.deploy(troop,position)
         for troop, position in troops2_list:
             position = rescale_position(position)
             self.tower2.deploy(troop,convert_player2(position,self.arena_display_size))
+        for troop, position in troops1_list:
+            position = rescale_position(position)
+            self.tower1.deploy(troop,position)
 
     def attack_die(self):
-        for troop in self.tower1.myTroops:
-            troop.update_position()
         for troop in self.tower2.myTroops:
             troop.update_position()
         for troop in self.tower1.myTroops:
-            troop.do_work()
+            troop.update_position()
         for troop in self.tower2.myTroops:
             troop.do_work()
-        self.tower1.do_work()
+        for troop in self.tower1.myTroops:
+            troop.do_work()
         self.tower2.do_work()
-        for troop in self.tower1.myTroops:
-            troop.die()
+        self.tower1.do_work()
         for troop in self.tower2.myTroops:
+            troop.die()
+        for troop in self.tower1.myTroops:
             troop.die()
