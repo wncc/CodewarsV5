@@ -75,7 +75,15 @@ class Decoration_Left:
             minutes = remaining_seconds // 60
             seconds = remaining_seconds % 60
             timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
-            self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.923))            
+            self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.923)) 
+    
+            if minutes<3:
+                text = font.render(f'x{3-minutes}',True,(182,93,255))
+                self.left_screen.blit(text,(FULL_WIDTH*0.29,FULL_HEIGHT*0.923))
+                
+                img = self.assets[f'elixir']
+                img = pygame.transform.scale(img,(FULL_WIDTH*0.026,FULL_HEIGHT*0.056))
+                self.left_screen.blit(img,(FULL_WIDTH*0.335,FULL_HEIGHT*0.93))
         
 class Decoration_Right:
     def render_background(self):
