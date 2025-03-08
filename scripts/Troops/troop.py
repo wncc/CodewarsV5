@@ -59,11 +59,6 @@ class Troop:
 
                     if (self.attack_counter+1 == self.attack_speed*FRAMES):
                         self.attack()
-                    #     self.attack_counter = 0
-                    #     self.render_attack()
-                    # else:
-                    #     self.attack_counter += 1
-                    #     self.render()
                     self.render_attack()
                     return
                 self.target = None
