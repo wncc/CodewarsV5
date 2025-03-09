@@ -101,7 +101,7 @@ class Game:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.fps += 5
+                        self.fps = min(70,self.fps+5)
                     if event.key == pygame.K_DOWN:
                         self.fps = max(5,self.fps - 5)
             pygame.display.update()
