@@ -25,6 +25,7 @@ class Tower:
         self.image_destroyed = assets['TowerDamaged']
         self.position = position
         self.health = 4824
+        self.max_health = 4824
         self.damage = 109
         self.attack_range = 7 * size/4
         self.dummy = None
@@ -183,6 +184,13 @@ class Tower:
 
     # ANIMATION FUNCTION
 
+    def render_health_bar(self,position):  # need to work on positioning since self.size is gonna have some new definition
+        pygame.draw.rect(self.middle_surf, (65,76,78), (position[0], position[1] , 2*self.size, 0.15*self.size), 0)
+        if self.troop2:
+            pygame.draw.rect(self.middle_surf, (200, 57, 90), (position[0], position[1], 2*self.size * self.health/self.max_health, 0.15*self.size), 0)
+        else:
+            pygame.draw.rect(self.middle_surf, (73,152,196), (position[0], position[1], 2*self.size * self.health/self.max_health, 0.15*self.size), 0)
+
     def render(self):
         DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT) / 2
         DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH) / 2
@@ -196,9 +204,11 @@ class Tower:
         self.middle_surf.blit(self.image_tower, (x, y))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
+            self.render_health_bar((x+self.size/2,y))
         else:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.8))
-        self.middle_surf.blit(self.images["_run_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
+            self.render_health_bar((x+self.size/2,y+2*self.size))
+        self.middle_surf.blit(self.images["_run_"+f'{rendering_frame+1}'],(x, y - self.size*0.4))
         self.run_counter = (self.run_counter+1)%frames
 
     def render_attack(self):
@@ -214,7 +224,9 @@ class Tower:
         self.middle_surf.blit(self.image_tower, (x, y))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.2 + 0.05 * (rendering_frame % 6))))
+            self.render_health_bar((x+self.size/2,y))
         else:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.8 - 0.05 * (rendering_frame % 6))))
-        self.middle_surf.blit(self.images["_attack_"+f'{rendering_frame+1}'],(x, y - self.size*0.5))
+            self.render_health_bar((x+self.size/2,y+2*self.size))
+        self.middle_surf.blit(self.images["_attack_"+f'{rendering_frame+1}'],(x, y - self.size*0.4))
         self.attack_counter = (self.attack_counter+1)%frames
