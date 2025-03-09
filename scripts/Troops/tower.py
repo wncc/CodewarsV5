@@ -26,10 +26,10 @@ class Tower:
             self.image_cannon = assets['BlueCannon']
         self.image_destroyed = assets['TowerDamaged']
         self.position = position
-        self.health = 4824
-        self.max_health = 4824
-        self.damage = 109
-        self.attack_range = 7 * size/4
+        self.health = 7032
+        self.max_health = 7032
+        self.damage = 158
+        self.attack_range = 10 * size/4
         self.dummy = None
         self.target = None
         self.size = size        # size = radius i.e. distance from center
@@ -37,8 +37,8 @@ class Tower:
         self.surf = surf
         self.shadow_surf = surf_shadow
         self.middle_surf = middle_surf
-        self.attack_speed = MEDIUM_ATTACK
-        self.velocity = MEDIUM_SPEED
+        self.attack_speed = FAST_ATTACK
+        self.velocity = FAST_SPEED
         self.deployable_troops = deployable_troops
         self.discovered_troops = {}
 

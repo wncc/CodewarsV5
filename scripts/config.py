@@ -4,8 +4,8 @@ info = pygame.display.Info()
 import pygame
 import pandas as pd
 
-SLOW_ATTACK = 5
-MEDIUM_ATTACK = 3
+SLOW_ATTACK = 3
+MEDIUM_ATTACK = 2
 FAST_ATTACK = 1
 
 SLOW_SPEED = 1
