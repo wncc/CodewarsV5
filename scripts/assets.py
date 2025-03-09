@@ -20,7 +20,18 @@ def load_assets():
         'barbarian_card': load_image('decor/card-png/barbarians.png'),
         'skeleton_card': load_image('decor/card-png/skeleton-army.png'),
         'balloon_card': load_image('decor/card-png/balloon.png'),
-        'elixir': load_image('decor/elixir_mult/ui_sprite_0225.png'),}
+        'elixir': load_image('decor/elixir_mult/ui_sprite_0225.png'),
+        'bar_0': load_image('decor/elixir_bar/1.png'),
+        'bar_1': load_image('decor/elixir_bar/1.png'),
+        'bar_2': load_image('decor/elixir_bar/2.png'),
+        'bar_3': load_image('decor/elixir_bar/3.png'),
+        'bar_4': load_image('decor/elixir_bar/4.png'),
+        'bar_5': load_image('decor/elixir_bar/5.png'),
+        'bar_6': load_image('decor/elixir_bar/6.png'),
+        'bar_7': load_image('decor/elixir_bar/7.png'),
+        'bar_8': load_image('decor/elixir_bar/8.png'),
+        'bar_9': load_image('decor/elixir_bar/9.png'),
+        'bar_10': load_image('decor/elixir_bar/10.png'),}
 
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
     troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]

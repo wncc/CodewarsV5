@@ -66,6 +66,7 @@ class Decoration_Left:
             image = self.assets[f'{troops[i]}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.left_screen.blit(image,(CARD_PLATE_WIDTH*1//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
+        Decoration_Left.render_elixir_bar(self)
 
     def render_time(self):
         if self.start_time:
@@ -83,6 +84,11 @@ class Decoration_Left:
             img = self.assets[f'elixir']
             img = pygame.transform.scale(img,(FULL_WIDTH*0.026,FULL_HEIGHT*0.056))
             self.left_screen.blit(img,(FULL_WIDTH*0.3,FULL_HEIGHT*0.93))
+            
+    def render_elixir_bar(self):
+        img = self.assets[f'bar_{int(self.tower1.total_elixir)}']
+        img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
+        self.left_screen.blit(img,(FULL_WIDTH*0.10,FULL_HEIGHT*0.2))
         
 class Decoration_Right:
     def render_background(self):
@@ -98,6 +104,7 @@ class Decoration_Right:
             for troop in troops:
                 if troop.name not in Decoration_Right.troops_displayed:
                     Decoration_Right.troops_displayed.append(troop.name)
+
                     
     def render_troop_cards(self):
         Decoration_Right.update_troops(self)
@@ -105,6 +112,12 @@ class Decoration_Right:
         for i in range(len(troops)):
             image = self.assets[f'{troops[i]}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
-            self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))            
+            self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
+        Decoration_Right.render_elixir_bar(self) 
+            
+    def render_elixir_bar(self):
+        img = self.assets[f'bar_{int(self.tower2.total_elixir)}']
+        img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
+        self.right_screen.blit(img,(FULL_WIDTH*0.05,FULL_HEIGHT*0.2))          
 
 
