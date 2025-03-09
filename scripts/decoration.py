@@ -127,6 +127,12 @@ class Decoration_Right:
         text = font.render(f'{self.team_name2}',True,((200, 57, 90)))
         self.right_screen.blit(text,(FULL_WIDTH*0.05,FULL_HEIGHT*0.15)) 
 
+    def render_game_speed(self):
+        game_speed = self.fps/FPS
+        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        text = font.render(f'Game Speed: x{game_speed}',True,((255, 255, 255)))
+        self.right_screen.blit(text,(FULL_WIDTH*0.06,FULL_HEIGHT*0.93)) 
+
 
 
 

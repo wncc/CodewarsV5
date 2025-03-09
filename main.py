@@ -87,6 +87,7 @@ class Game:
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             Decoration_Right.render_troop_cards(self)
             Decoration_Right.render_name(self)
+            Decoration_Right.render_game_speed(self)
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):
@@ -98,11 +99,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_UP]:
-                self.fps += 5
-            if keys[pygame.K_DOWN]:
-                self.fps -= 5
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.fps += 5
+                    if event.key == pygame.K_DOWN:
+                        self.fps -= 5
             pygame.display.update()
             self.clock.tick(self.fps)
             self.game_counter += 1
