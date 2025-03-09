@@ -69,26 +69,29 @@ class Decoration_Left:
         Decoration_Left.render_elixir_bar(self)
 
     def render_time(self):
-        if self.start_time:
-            font = pygame.font.Font("data/font/clashroyale.ttf", 40)
-            elapsed_seconds = (pygame.time.get_ticks() - self.start_time) // 1000
-            remaining_seconds = max(180 - elapsed_seconds, 0)  # Countdown from 180s
-            minutes = remaining_seconds // 60
-            seconds = remaining_seconds % 60
-            timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
-            self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.933)) 
+        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        remaining_seconds = (GAME_END_TIME - self.game_counter)//10
+        minutes = remaining_seconds // 60
+        seconds = remaining_seconds % 60
+        timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
+        self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.933)) 
 
-            text = font.render(f'x{max(3-minutes,1)}',True,(220,68,220))
-            self.left_screen.blit(text,(FULL_WIDTH*0.33,FULL_HEIGHT*0.93))
-            
-            img = self.assets[f'elixir']
-            img = pygame.transform.scale(img,(FULL_WIDTH*0.026,FULL_HEIGHT*0.056))
-            self.left_screen.blit(img,(FULL_WIDTH*0.3,FULL_HEIGHT*0.93))
+        text = font.render(f'x{max(3-minutes,1)}',True,(220,68,220))
+        self.left_screen.blit(text,(FULL_WIDTH*0.33,FULL_HEIGHT*0.93))
+        
+        img = self.assets[f'elixir']
+        img = pygame.transform.scale(img,(FULL_WIDTH*0.026,FULL_HEIGHT*0.056))
+        self.left_screen.blit(img,(FULL_WIDTH*0.3,FULL_HEIGHT*0.93))
             
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower1.total_elixir)}']
         img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
         self.left_screen.blit(img,(FULL_WIDTH*0.10,FULL_HEIGHT*0.2))
+
+    def render_name(self):
+        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        text = font.render(f'{self.team_name1}',True,((73,152,196)))
+        self.left_screen.blit(text,(FULL_WIDTH*0.10,FULL_HEIGHT*0.15)) 
         
 class Decoration_Right:
     def render_background(self):
@@ -104,8 +107,7 @@ class Decoration_Right:
             for troop in troops:
                 if troop.name not in Decoration_Right.troops_displayed:
                     Decoration_Right.troops_displayed.append(troop.name)
-
-                    
+                 
     def render_troop_cards(self):
         Decoration_Right.update_troops(self)
         troops = Decoration_Right.troops_displayed
@@ -118,6 +120,13 @@ class Decoration_Right:
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower2.total_elixir)}']
         img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
-        self.right_screen.blit(img,(FULL_WIDTH*0.05,FULL_HEIGHT*0.2))          
+        self.right_screen.blit(img,(FULL_WIDTH*0.05,FULL_HEIGHT*0.2))
+
+    def render_name(self):
+        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        text = font.render(f'{self.team_name2}',True,((200, 57, 90)))
+        self.right_screen.blit(text,(FULL_WIDTH*0.05,FULL_HEIGHT*0.15)) 
+
+
 
 

@@ -26,16 +26,14 @@ class Game:
         self.shadow_screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
         self.left_screen = pygame.Surface(self.side_display_size)
         self.right_screen = pygame.Surface(self.side_display_size)
-        
-        self.clock = pygame.time.Clock()
         self.fps = FPS
+        self.clock = pygame.time.Clock()
         self.game_counter = 0
         self.winner = None
         self.tower_size = 2.25*self.tile_size
         towers_position = (ARENA_WIDTH/2,ARENA_HEIGHT)
         self.assets = load_assets()
         deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
-        self.start_time = None
 
         self.middle_map = Middle_Map(self.assets["middle_map"])
         """
@@ -72,8 +70,6 @@ class Game:
             Decoration.entry_text(self)
         elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
-        elif self.game_counter == GAME_START_TIME - 1:
-            self.start_time = pygame.time.get_ticks()
 
         self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
         self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
@@ -84,12 +80,13 @@ class Game:
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             Decoration_Left.render_troop_cards(self)
             Decoration_Left.render_time(self)
+            Decoration_Left.render_name(self)
         self.main_screen.blit(self.left_screen, (0, 0))
-        
     def render_right_screen(self):
         Decoration_Right.render_background(self)
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             Decoration_Right.render_troop_cards(self)
+            Decoration_Right.render_name(self)
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):
@@ -101,6 +98,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_UP]:
+                self.fps += 5
+            if keys[pygame.K_DOWN]:
+                self.fps -= 5
             pygame.display.update()
             self.clock.tick(self.fps)
             self.game_counter += 1

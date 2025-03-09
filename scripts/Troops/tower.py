@@ -64,6 +64,16 @@ class Tower:
 
     def do_work(self):
 
+        if self.total_elixir < 10:
+            if self.game_timer < FPS * 60:
+                self.total_elixir += 0.1  # Increasing elixir x1 in each frame
+            elif self.game_timer < FPS * 120:
+                self.total_elixir += 0.2  # Increasing elixir x2 in each frame
+            elif self.game_timer < FPS * 180:
+                self.total_elixir += 0.3  # Increasing elixir x3 in each frame
+        if self.total_dark_elixir < 10:
+            self.total_dark_elixir += 0.1  # Increasing dark elixir
+
         self.game_timer += 1
 
         self.discover_targets()
@@ -82,16 +92,6 @@ class Tower:
 
         self.render()
         self.find_target()
-
-        if self.total_elixir < 10:
-            if self.game_timer < FPS * 60:
-                self.total_elixir += 0.1  # Increasing elixir x1 in each frame
-            elif self.game_timer < FPS * 120:
-                self.total_elixir += 0.2  # Increasing elixir x2 in each frame
-            elif self.game_timer < FPS * 180:
-                self.total_elixir += 0.3  # Increasing elixir x3 in each frame
-        if self.total_dark_elixir < 10:
-            self.total_dark_elixir += 0.1  # Increasing dark elixir
 
     def get_next_cycle(self,troop):
         self.deployable_troops.remove(troop)
