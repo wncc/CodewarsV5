@@ -103,7 +103,7 @@ class Game:
                     if event.key == pygame.K_UP:
                         self.fps += 5
                     if event.key == pygame.K_DOWN:
-                        self.fps -= 5
+                        self.fps = max(5,self.fps - 5)
             pygame.display.update()
             self.clock.tick(self.fps)
             self.game_counter += 1
