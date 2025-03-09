@@ -9,6 +9,8 @@ def load_assets():
         'RedCannon': load_image('tower/Red/RedCannon.png'), 
         'BlueTower': load_image('tower/Blue/BlueTower.png'),
         'RedTower': load_image('tower/Red/RedTower.png'),
+        'BlueTower_shadow': load_image('tower/Blue/BlueTower_shadow.png'),
+        'RedTower_shadow': load_image('tower/Red/RedTower_shadow.png'),
         'TowerDamaged': load_image('tower/TowerDamaged.png'),
         'archer_card': load_image('decor/card-png/archers.png'),
         'giant_card': load_image('decor/card-png/giant.png'),
@@ -30,6 +32,8 @@ def load_assets():
                 for troop in troops:
                     assets[team][f'{troop}_attack_{dir}_{i+1}'] = load_image(f'troops/{team}/{troop}_attack_{dir}_{i+1}.png')
                     assets[team][f'{troop}_run_{dir}_{i+1}'] = load_image(f'troops/{team}/{troop}_run_{dir}_{i+1}.png')
+                    assets[team][f'{troop}_attack_{dir}_{i+1}_shadow'] = load_image(f'troops/{team}_shadows/{troop}_attack_{dir}_{i+1}.png')
+                    assets[team][f'{troop}_run_{dir}_{i+1}_shadow'] = load_image(f'troops/{team}_shadows/{troop}_run_{dir}_{i+1}.png')
                                  
     for team in ["Blue","Red"]:
         for i in range(1, 7):

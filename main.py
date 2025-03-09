@@ -6,8 +6,8 @@ from scripts.assets import load_assets
 from scripts.Troops.tower import Tower
 from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
 from scripts.dataflow import DataFlow
-from teams.team1 import deploy as deploy1, troops as troops1, team_name as team_name1
-from teams.team2 import deploy as deploy2, troops as troops2, team_name as team_name2
+from teams.team1 import troops as troops1, team_name as team_name1
+from teams.team2 import troops as troops2, team_name as team_name2
 import random
 from scripts.config import *
 
@@ -23,6 +23,7 @@ class Game:
         self.tile_size = ARENA_WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,EXTRA_HEIGHT),pygame.RESIZABLE)
         self.screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
+        self.shadow_screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
         self.left_screen = pygame.Surface(self.side_display_size)
         self.right_screen = pygame.Surface(self.side_display_size)
         
@@ -47,8 +48,8 @@ class Game:
         # random.shuffle(deployable_troops1)
         deployable_troops2 = troops2
         # random.shuffle(deployable_troops2)
-        self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.middle_screen, deployable_troops1)
-        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
+        self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
+        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
         self.tower1.oppTower = self.tower2
         self.tower1.oppTroops = self.tower2.myTroops
         self.tower2.oppTower = self.tower1
@@ -60,6 +61,7 @@ class Game:
         self.middle_map.render(self.middle_screen)
         
         self.screen.fill((0, 0, 0, 0)) # clear screen
+        self.shadow_screen.fill((0, 0, 0, 0)) # clear screen
         
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             DataFlow.provide_data(self)
@@ -74,7 +76,7 @@ class Game:
             self.start_time = pygame.time.get_ticks()
 
         self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
-
+        self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
         self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))        
     
     def render_left_screen(self):
