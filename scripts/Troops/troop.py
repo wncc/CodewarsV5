@@ -30,6 +30,7 @@ class Troop:
         self.target = None
         self.myTower = myTower
         self.surf = surf
+        self.shadow_surf = self.myTower.shadow_surf
         self.discovered_troops = {}
         self.assets = images
         self.images = {}
@@ -128,6 +129,11 @@ class Troop:
         rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
         x = self.position[0] -  self.xx - self.size
         y = self.position[1] - self.yy - self.h + self.size/2
+        y_shadow = y
+        if self.type == 'air':
+            y -= AIR_HEIGHT/2
+            y_shadow += AIR_HEIGHT/2
+        self.shadow_surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x, y_shadow))
         self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.run_counter = (self.run_counter+1)%frames
         self.render_health_bar()
@@ -137,6 +143,11 @@ class Troop:
         rendering_frame = self.attack_counter//(self.attack_speed)
         x = self.position[0] - self.xx - self.size
         y = self.position[1] - self.yy - self.h + self.size/2
+        y_shadow = y
+        if self.type == 'air':
+            y -= AIR_HEIGHT/2
+            y_shadow += AIR_HEIGHT/2
+        self.shadow_surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x, y_shadow))
         self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
         self.attack_counter = (self.attack_counter+1)%frames
         self.render_health_bar()
@@ -165,6 +176,14 @@ class Troop:
                 image_attack = self.assets[self.name+"_attack_"+orient+f'_{i+1}']
                 image_attack_scaled = pygame.transform.scale(image_attack, (new_Width, new_Height))
                 self.images["_attack_"+orient+f'_{i+1}'] = image_attack_scaled
+
+                image_shadow = self.assets[self.name+"_run_"+orient+f'_{i+1}_shadow']
+                image_shadow_scaled = pygame.transform.scale(image_shadow, (new_Width, new_Height*1.3))
+                self.images["_run_"+orient+f'_{i+1}_shadow'] = image_shadow_scaled
+
+                image_attack_shadow = self.assets[self.name+"_attack_"+orient+f'_{i+1}_shadow']
+                image_attack_shadow_scaled = pygame.transform.scale(image_attack_shadow, (new_Width, new_Height*1.3))
+                self.images["_attack_"+orient+f'_{i+1}_shadow'] = image_attack_shadow_scaled
               
     def is_in_range(self, entity, range_):
         """Checks if an entity is within the troop's discovery or attack range."""

@@ -5,7 +5,7 @@ from scripts.Troops.troops import *
 from scripts.utils import get_positions
 
 class Tower:
-    def __init__(self, name, position, assets, size, deploy_area, surf, middle_surf, deployable_troops, troop2 = False):
+    def __init__(self, name, position, assets, size, deploy_area, surf, surf_shadow, middle_surf, deployable_troops, troop2 = False):
         """
         Initialize a tower with essential attributes.
 
@@ -18,9 +18,11 @@ class Tower:
         self.assets = assets
         if troop2:
             self.image_tower = assets['RedTower']
+            self.image_tower_shadow = assets['RedTower_shadow']
             self.image_cannon = assets['RedCannon']
         else:
             self.image_tower = assets['BlueTower']
+            self.image_tower_shadow = assets['BlueTower_shadow']
             self.image_cannon = assets['BlueCannon']
         self.image_destroyed = assets['TowerDamaged']
         self.position = position
@@ -33,6 +35,7 @@ class Tower:
         self.size = size        # size = radius i.e. distance from center
         self.deploy_area = deploy_area
         self.surf = surf
+        self.shadow_surf = surf_shadow
         self.middle_surf = middle_surf
         self.attack_speed = FAST_ATTACK
         self.velocity = FAST_SPEED
@@ -176,6 +179,7 @@ class Tower:
 
         aspect_ratio = self.image_tower.get_height() / self.image_tower.get_width()
         self.image_tower = pygame.transform.scale(self.image_tower, (3*self.size, int(3*self.size * aspect_ratio)))
+        self.image_tower_shadow = pygame.transform.scale(self.image_tower_shadow, (3*self.size, int(3*1.3*self.size * aspect_ratio)))
 
         aspect_ratio = self.image_destroyed.get_height() / self.image_destroyed.get_width()
         self.image_destroyed = pygame.transform.scale(self.image_destroyed, (3*self.size, int(3*self.size * aspect_ratio)))
@@ -202,6 +206,7 @@ class Tower:
             self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         self.middle_surf.blit(self.image_tower, (x, y))
+        self.middle_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
             self.render_health_bar((x+self.size/2,y))
@@ -222,6 +227,7 @@ class Tower:
             self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         self.middle_surf.blit(self.image_tower, (x, y))
+        self.middle_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.2 + 0.05 * (rendering_frame % 6))))
             self.render_health_bar((x+self.size/2,y))
