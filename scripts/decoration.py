@@ -1,6 +1,5 @@
 import pygame
 from scripts.config import *
-from game import Game
 
 class Decoration:
     def entry_text(self):
@@ -15,12 +14,15 @@ class Decoration:
     def outro_text(self):
         self.tower1.render()
         self.tower2.render()
-        font = pygame.font.Font("data/font/clashroyale.ttf", 36)  # Default font, size 36
+        font = pygame.font.Font("data/font/clashroyale.ttf", 36)
+        font2 = pygame.font.Font("data/font/clashroyale.ttf", 12)  # Default font, size 36
         if not self.winner:
             if self.tower1.health > self.tower2.health:
                 self.winner = self.team_name1
+                self.message = "DECIDED BY TIE BREAKER"
             elif self.tower1.health < self.tower2.health:
                 self.winner = self.team_name2
+                self.message = "DECIDED BY TIE BREAKER"
             else:
                 self.winner = "Tie"
         if self.winner == "Tie":
@@ -33,8 +35,12 @@ class Decoration:
                 text_surface = font.render(text, True, (255,255,255))
                 text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*40))
                 self.screen.blit(text_surface, text_rect)
+        if self.message:
+            text_surface = font2.render(self.message, True, (255,0,0))
+            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2 + 40))
+            self.screen.blit(text_surface, text_rect)
 
-    def check_game_end(self:Game):
+    def check_game_end(self):
         if self.tower1.health <= 0 and self.tower2.health <= 0:
             self.game_counter = GAME_END_TIME
             self.winner = "Tie"
@@ -46,13 +52,16 @@ class Decoration:
             self.winner = self.team_name1
         if self.team1_script_test and not self.team2_script_test:
             self.winner = self.team_name1
-            print(f"RULES BROKEN BY {self.team_name2}")
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY {self.team_name2}"
         if not self.team1_script_test and self.team2_script_test:
             self.winner = self.team_name2
-            print(f"RULES BROKEN BY {self.team_name1}")
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY {self.team_name1}"
         if not self.team1_script_test and not self.team2_script_test:
             self.winner = "Tie"
-            print(f"RULES BROKEN BY BOTH {self.team_name1} and {self.team_name2}")
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY BOTH {self.team_name1} and {self.team_name2}"
 
 class Decoration_Left:
     def render_background(self):

@@ -18,6 +18,7 @@ class DummyTower:
         self.total_elixir = object.total_elixir # MAINLY USEFUL
         self.total_dark_elixir = object.total_dark_elixir   # MAINLY USEFUL
         self.level = object.level   # MAINLY USEFUL
+        self.game_timer = object.game_timer # MAINLY USEFUL
 
 class DummyTroop:
     def __init__(self, object, player2:bool,display_size):

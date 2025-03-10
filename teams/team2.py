@@ -11,7 +11,10 @@ def deploy(arena_data:dict):
     logic(arena_data)
     return deploy_list.list_, team_signal
 def logic(arena_data:dict):
-    deploy_list.deploy_minion((0,0))
+    global team_signal
+    mytower = arena_data["MyTower"]
+    if mytower.game_timer < 10:
+        deploy_list.deploy_minion((0,0))
     """
     WRITE YOUR CODE HERE 
     """

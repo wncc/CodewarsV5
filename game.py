@@ -29,6 +29,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.game_counter = 0
         self.winner = None
+        self.message = None
         self.tower_size = 2.25*self.tile_size
         towers_position = (ARENA_WIDTH/2,ARENA_HEIGHT)
         self.assets = load_assets()
