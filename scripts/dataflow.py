@@ -2,6 +2,7 @@ from scripts.Troops.dummies import *
 from teams.team1 import deploy as deploy1
 from teams.team2 import deploy as deploy2
 from scripts.utils import rescale_position
+from scripts.config import *
 
 class DataFlow: 
     def provide_data(self):
@@ -76,9 +77,9 @@ class DataFlow:
         for troop, position in troops1_list:
             position = rescale_position(position)
             self.tower1.deploy(troop,position)
-        if len(team_signal1) > 200:
+        if len(team_signal1) > SIGNAL_LENGTH:
             self.team1_script_test = False
-        if len(team_signal2) > 200:
+        if len(team_signal2) > SIGNAL_LENGTH:
             self.team2_script_test = False
 
     def attack_die(self):

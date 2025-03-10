@@ -8,7 +8,6 @@ from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
 from scripts.dataflow import DataFlow
 import random
 from scripts.config import *
-SEED = random.randint(0, 10**6)  # Generate a random seed
 
 class Game:
     def __init__(self, troops1, troops2, team_name1, team_name2):
@@ -43,10 +42,8 @@ class Game:
         self.team_name1 = team_name1
         self.team_name2 = team_name2
         deployable_troops1 = troops1
-        random.seed(SEED)
         random.shuffle(deployable_troops1)
         deployable_troops2 = troops2
-        random.seed(SEED)
         random.shuffle(deployable_troops2)
         self.team1_script_test = True
         self.team2_script_test = True

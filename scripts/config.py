@@ -37,5 +37,6 @@ GAME_TOTAL_TIME = 1800 # 3 min
 GAME_END_TIME = GAME_START_TIME + GAME_TOTAL_TIME
 
 FRAMES = 6
+SIGNAL_LENGTH = 200
 
 CENTERS = pd.read_csv("data/image_centers/troops_center.csv",index_col="troop")

@@ -3,7 +3,7 @@ from scripts.config import *
 
 class Decoration:
     def entry_text(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", 26)  # Default font, size 26
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//37)  # Default font, size 26
 
         texts = [self.team_name2,"v/s",self.team_name1]
         for i, text in enumerate(texts):
@@ -14,8 +14,8 @@ class Decoration:
     def outro_text(self):
         self.tower1.render()
         self.tower2.render()
-        font = pygame.font.Font("data/font/clashroyale.ttf", 36)
-        font2 = pygame.font.Font("data/font/clashroyale.ttf", 12)  # Default font, size 36
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//27)
+        font2 = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//80)  # Default font, size 36
         if not self.winner:
             if self.tower1.health > self.tower2.health:
                 self.winner = self.team_name1
@@ -33,11 +33,11 @@ class Decoration:
             texts = ["Winner", self.winner]
             for i, text in enumerate(texts):
                 text_surface = font.render(text, True, (255,255,255))
-                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*40))
+                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*(FULL_HEIGHT//24)))
                 self.screen.blit(text_surface, text_rect)
         if self.message:
             text_surface = font2.render(self.message, True, (255,0,0))
-            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2 + 40))
+            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2 + (FULL_HEIGHT//24)))
             self.screen.blit(text_surface, text_rect)
 
     def check_game_end(self):
@@ -89,7 +89,7 @@ class Decoration_Left:
         Decoration_Left.render_current_cards(self)
 
     def render_time(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
         remaining_seconds = (GAME_END_TIME - self.game_counter)//10
         minutes = remaining_seconds // 60
         seconds = remaining_seconds % 60
@@ -109,9 +109,29 @@ class Decoration_Left:
         self.left_screen.blit(img,(FULL_WIDTH*0.10,FULL_HEIGHT*0.2))
 
     def render_name(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
-        text = font.render(f'{self.team_name1}',True,((73,152,196)))
-        self.left_screen.blit(text,(FULL_WIDTH*0.10,FULL_HEIGHT*0.15)) 
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
+        text = font.render(f'{self.team_name1}', True, (73, 152, 196))
+
+        text_width, text_height = text.get_size()
+
+        x = FULL_WIDTH * 0.115
+        y = FULL_HEIGHT * 0.30
+
+        bg_color = (0, 0, 0, 200)
+        padding = int(FULL_WIDTH * 0.02)
+        rect_x = int(x - padding // 2)
+        rect_y = int(y - padding // 2)
+        rect_width = text_width + padding
+        rect_height = text_height + padding
+        border_radius = int(FULL_WIDTH * 0.01)
+
+        transparent_surface = pygame.Surface((rect_width, rect_height), pygame.SRCALPHA)
+        
+        pygame.draw.rect(transparent_surface, bg_color, (0, 0, rect_width, rect_height), border_radius=border_radius)
+        
+        self.left_screen.blit(transparent_surface, (rect_x, rect_y))
+
+        self.left_screen.blit(text, (x, y))
         
     def render_current_cards(self):
         img = self.assets['card_slot']
@@ -155,14 +175,34 @@ class Decoration_Right:
         self.right_screen.blit(img,(FULL_WIDTH*0.05,FULL_HEIGHT*0.2))
 
     def render_name(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
         text = font.render(f'{self.team_name2}',True,((200, 57, 90)))
-        self.right_screen.blit(text,(FULL_WIDTH*0.05,FULL_HEIGHT*0.15)) 
+
+        text_width, text_height = text.get_size()
+
+        x = FULL_WIDTH * 0.065
+        y = FULL_HEIGHT * 0.30
+
+        bg_color = (0, 0, 0, 200)
+        padding = int(FULL_WIDTH * 0.02)
+        rect_x = int(x - padding // 2)
+        rect_y = int(y - padding // 2)
+        rect_width = text_width + padding
+        rect_height = text_height + padding
+        border_radius = int(FULL_WIDTH * 0.01)
+
+        transparent_surface = pygame.Surface((rect_width, rect_height), pygame.SRCALPHA)
+        
+        pygame.draw.rect(transparent_surface, bg_color, (0, 0, rect_width, rect_height), border_radius=border_radius)
+        
+        self.right_screen.blit(transparent_surface, (rect_x, rect_y))
+
+        self.right_screen.blit(text, (x, y))
 
     def render_game_speed(self):
         game_speed = self.fps/FPS
-        font = pygame.font.Font("data/font/clashroyale.ttf", 40)
-        text = font.render(f'Game Speed: x{game_speed}',True,((255, 255, 255)))
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
+        text = font.render(f'Game Speed: x{game_speed}',True,((244,196,76)))
         self.right_screen.blit(text,(FULL_WIDTH*0.06,FULL_HEIGHT*0.93)) 
         
     def render_current_cards(self):
