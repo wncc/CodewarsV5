@@ -1,5 +1,6 @@
 import pygame
 from scripts.config import *
+from game import Game
 
 class Decoration:
     def entry_text(self):
@@ -33,7 +34,7 @@ class Decoration:
                 text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*40))
                 self.screen.blit(text_surface, text_rect)
 
-    def check_game_end(self):
+    def check_game_end(self:Game):
         if self.tower1.health <= 0 and self.tower2.health <= 0:
             self.game_counter = GAME_END_TIME
             self.winner = "Tie"
@@ -43,6 +44,15 @@ class Decoration:
         if self.tower2.health <= 0:
             self.game_counter = GAME_END_TIME
             self.winner = self.team_name1
+        if self.team1_script_test and not self.team2_script_test:
+            self.winner = self.team_name1
+            print(f"RULES BROKEN BY {self.team_name2}")
+        if not self.team1_script_test and self.team2_script_test:
+            self.winner = self.team_name2
+            print(f"RULES BROKEN BY {self.team_name1}")
+        if not self.team1_script_test and not self.team2_script_test:
+            self.winner = "Tie"
+            print(f"RULES BROKEN BY BOTH {self.team_name1} and {self.team_name2}")
 
 class Decoration_Left:
     def render_background(self):
