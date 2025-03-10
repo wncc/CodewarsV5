@@ -1,6 +1,6 @@
 from teams.helper_function import Deploy, Utils
 team_name = "DHOLAKPUR"
-troops = ["Minion", "Knight", "Barbarian", "Prince", "Archer", "Princess", "Giant", "Wizard"]
+troops = [Deploy.minion]
 deploy_list = Deploy([])
 team_signal = ""
 def deploy(arena_data:dict):
@@ -11,6 +11,7 @@ def deploy(arena_data:dict):
     logic(arena_data)
     return deploy_list.list_
 def logic(arena_data:dict):
+    deploy_list.deploy_minion((0,0))
     """
-    WRITE YOUR CODE HERE
+    WRITE YOUR CODE HERE 
     """

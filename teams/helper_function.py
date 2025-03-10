@@ -2,6 +2,18 @@ import math
 
 class Deploy:
 
+    minion = "Minion"
+    archer = "Archer"
+    giant = "Giant"
+    dragon = "Dragon"
+    balloon = "Balloon"
+    prince = "Prince"
+    barbarian = "Barbarian"
+    princess ="Princess"
+    knight = "Knight"
+    minion = "Minion"
+    skeleton = "Skeleton"
+
     def __init__(self, list_):
         self.list_ = list_
 
