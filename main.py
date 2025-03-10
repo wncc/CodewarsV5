@@ -1,114 +1,58 @@
-import pygame
-import sys
-from scripts.utils import *
-from scripts.statics import *
-from scripts.assets import load_assets
-from scripts.Troops.tower import Tower
-from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
-from scripts.dataflow import DataFlow
-from teams.team1 import troops as troops1, team_name as team_name1
-from teams.team2 import troops as troops2, team_name as team_name2
-import random
-from scripts.config import *
-SEED = random.randint(0, 10**6)  # Generate a random seed
+from game import Game
+import inspect
+from teams import team1
+from teams import team2
 
-class Game:
-    def __init__(self):
-        pygame.init()
-        pygame.font.init()
-        pygame.display.set_caption('Code Royale')
-
-        self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
-        self.side_display_size = ((FULL_WIDTH-MIDDLE_WIDTH)//2, FULL_HEIGHT)
-        self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
-        self.tile_size = ARENA_WIDTH//12
-        self.main_screen = pygame.display.set_mode((FULL_WIDTH,EXTRA_HEIGHT),pygame.RESIZABLE)
-        self.screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
-        self.shadow_screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
-        self.left_screen = pygame.Surface(self.side_display_size)
-        self.right_screen = pygame.Surface(self.side_display_size)
-        self.fps = FPS
-        self.clock = pygame.time.Clock()
-        self.game_counter = 0
-        self.winner = None
-        self.tower_size = 2.25*self.tile_size
-        towers_position = (ARENA_WIDTH/2,ARENA_HEIGHT)
-        self.assets = load_assets()
-        deploy_area = (0,self.arena_display_size[0],self.arena_display_size[1]/2,self.arena_display_size[1])
-
-        self.middle_map = Middle_Map(self.assets["middle_map"])
-        """
-        NOTE
-        TOWER 1's PERSPECTIVE IS GAME's PERSPECTIVE
-        """
-        self.team_name1 = team_name1
-        self.team_name2 = team_name2
-        deployable_troops1 = troops1
-        random.seed(SEED)
-        random.shuffle(deployable_troops1)
-        deployable_troops2 = troops2
-        random.seed(SEED)
-        random.shuffle(deployable_troops2)
-        self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
-        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
-        self.tower1.oppTower = self.tower2
-        self.tower1.oppTroops = self.tower2.myTroops
-        self.tower2.oppTower = self.tower1
-        self.tower2.oppTroops = self.tower1.myTroops
-        self.data_provided1 = {}
-        self.data_provided2 = {}
+def validate_module(module, name):
+    attributes = dir(module)
     
-    def render_game_screen(self):
-        self.middle_map.render(self.middle_screen)
-        
-        self.screen.fill((0, 0, 0, 0)) # clear screen
-        self.shadow_screen.fill((0, 0, 0, 0)) # clear screen
-        
-        if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            DataFlow.provide_data(self)
-            DataFlow.deployment(self)
-            DataFlow.attack_die(self)
-            Decoration.check_game_end(self)
-        elif self.game_counter < GAME_START_TIME - 2: # 2 -> BUFFER
-            Decoration.entry_text(self)
-        elif self.game_counter >= GAME_END_TIME:
-            Decoration.outro_text(self)
-
-        self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
-        self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
-        self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))        
+    # Expected variables and classes
+    expected_variables = {"team_name", "troops", "deploy_list", "team_signal"}
+    expected_classes = {"Deploy", "Utils"}
     
-    def render_left_screen(self):
-        Decoration_Left.render_background(self)
-        if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            Decoration_Left.render_troop_cards(self)
-            Decoration_Left.render_time(self)
-            Decoration_Left.render_name(self)
-        self.main_screen.blit(self.left_screen, (0, 0))
-    def render_right_screen(self):
-        Decoration_Right.render_background(self)
-        if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            Decoration_Right.render_troop_cards(self)
-            Decoration_Right.render_name(self)
-            Decoration_Right.render_game_speed(self)
-        self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
+    # Extract variables (excluding functions, classes, and modules)
+    variables = {
+        attr for attr in attributes
+        if not callable(getattr(module, attr))
+        and not attr.startswith("__")
+        and not inspect.ismodule(getattr(module, attr))
+        and not inspect.isclass(getattr(module, attr))
+    }
+    
+    # Extract classes
+    classes = {
+        attr for attr in attributes
+        if inspect.isclass(getattr(module, attr))
+    }
+    
+    # Condition 1: Check for exact variables and classes
+    if variables != expected_variables:
+        print(f"Fail: Variables do not match. Found: {variables} for {name}")
+        return False
+    
+    if classes != expected_classes:
+        print(f"Fail: Classes do not match. Found: {classes} for {name}")
+        return False
+    
+    # Condition 3: Check len(team_signal) <= 200
+    if len(module.team_signal) > 200:
+        print(f"Fail: team_signal length exceeds 200 for {name}")
+        return False
+    
+    # Condition 4: Check len(set(troops)) == 8
+    if len(set(module.troops)) != 8:
+        print(f"Fail: troops does not contain exactly 8 unique elements for {name}")
+        return False
+    
+    print(f"Pass: All conditions met for {name} : {module.team_name}!")
 
-    def run(self):
-        while True:
-            self.render_game_screen()
-            self.render_left_screen()
-            self.render_right_screen()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
-                        self.fps = min(70,self.fps+5)
-                    if event.key == pygame.K_DOWN:
-                        self.fps = max(5,self.fps - 5)
-            pygame.display.update()
-            self.clock.tick(self.fps)
-            self.game_counter += 1
+    return True
 
-Game().run()
+team1_test_pass = False
+team2_test_pass = False
+
+team1_test_pass = validate_module(team1, "TEAM 1") or team1_test_pass
+team2_test_pass = validate_module(team2, "TEAM 2") or team2_test_pass
+
+if team1_test_pass and team2_test_pass:
+    Game(team1.troops,team2.troops,team1.team_name,team2.team_name).run()
