@@ -82,7 +82,7 @@ class Decoration_Left:
         Decoration_Left.update_troops(self)
         troops = Decoration_Left.troops_displayed
         for i in range(len(troops)):
-            image = self.assets[f'{troops[i]}_card']
+            image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.left_screen.blit(image,(CARD_PLATE_WIDTH*1//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
         Decoration_Left.render_elixir_bar(self)
@@ -131,7 +131,7 @@ class Decoration_Right:
         Decoration_Right.update_troops(self)
         troops = Decoration_Right.troops_displayed
         for i in range(len(troops)):
-            image = self.assets[f'{troops[i]}_card']
+            image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
         Decoration_Right.render_elixir_bar(self) 
