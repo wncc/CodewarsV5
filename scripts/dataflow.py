@@ -66,8 +66,8 @@ class DataFlow:
         self.data_provided2["OppTroops"] = tower2_oppTroops
 
     def deployment(self):
-        troops1_list = deploy1(self.data_provided1)
-        troops2_list = deploy2(self.data_provided2)
+        troops1_list, team_signal1 = deploy1(self.data_provided1)
+        troops2_list, team_signal2 = deploy2(self.data_provided2)
         self.data_provided1 = {}
         self.data_provided2 = {}
         for troop, position in troops2_list:
@@ -76,6 +76,10 @@ class DataFlow:
         for troop, position in troops1_list:
             position = rescale_position(position)
             self.tower1.deploy(troop,position)
+        if len(team_signal1) > 200:
+            self.team1_script_test = False
+        if len(team_signal2) > 200:
+            self.team2_script_test = False
 
     def attack_die(self):
         for troop in self.tower2.myTroops:

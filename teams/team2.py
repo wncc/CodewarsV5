@@ -9,7 +9,7 @@ def deploy(arena_data:dict):
     """
     deploy_list.list_ = []
     logic(arena_data)
-    return deploy_list.list_
+    return deploy_list.list_, team_signal
 def logic(arena_data:dict):
     deploy_list.deploy_minion((0,0))
     """

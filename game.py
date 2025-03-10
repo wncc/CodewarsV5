@@ -47,6 +47,8 @@ class Game:
         deployable_troops2 = troops2
         random.seed(SEED)
         random.shuffle(deployable_troops2)
+        self.team1_script_test = True
+        self.team2_script_test = True
         self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
         self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
         self.tower1.oppTower = self.tower2
