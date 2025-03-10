@@ -10,7 +10,6 @@ from teams.team1 import troops as troops1, team_name as team_name1
 from teams.team2 import troops as troops2, team_name as team_name2
 import random
 from scripts.config import *
-SEED = random.randint(0, 10**6)  # Generate a random seed
 
 class Game:
     def __init__(self):
@@ -44,10 +43,8 @@ class Game:
         self.team_name1 = team_name1
         self.team_name2 = team_name2
         deployable_troops1 = troops1
-        random.seed(SEED)
         random.shuffle(deployable_troops1)
         deployable_troops2 = troops2
-        random.seed(SEED)
         random.shuffle(deployable_troops2)
         self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
         self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
