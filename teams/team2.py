@@ -1,4 +1,20 @@
+from teams.helper_function import Deploy, Utils
 team_name = "DHOLAKPUR"
-troops = ["Minion", "Knight", "Barbarian", "Prince"]
+troops = [Deploy.minion]
+deploy_list = Deploy([])
+team_signal = ""
 def deploy(arena_data:dict):
-    return [("Knight",(0,0))]
+    """
+    DON'T TEMPER DEPLOY FUCNTION
+    """
+    deploy_list.list_ = []
+    logic(arena_data)
+    return deploy_list.list_, team_signal
+def logic(arena_data:dict):
+    global team_signal
+    mytower = arena_data["MyTower"]
+    if mytower.game_timer < 10:
+        deploy_list.deploy_minion((0,0))
+    """
+    WRITE YOUR CODE HERE 
+    """
