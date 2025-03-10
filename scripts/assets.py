@@ -33,7 +33,8 @@ def load_assets():
         'bar_7': load_image('decor/elixir_bar/7.png'),
         'bar_8': load_image('decor/elixir_bar/8.png'),
         'bar_9': load_image('decor/elixir_bar/9.png'),
-        'bar_10': load_image('decor/elixir_bar/10.png'),}
+        'bar_10': load_image('decor/elixir_bar/10.png'),
+        'card_slot': load_image('decor/card-png/Deck Plank.png'),}
 
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
     troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
