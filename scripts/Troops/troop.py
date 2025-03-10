@@ -8,7 +8,7 @@ class Troop:
         """
         Initialize a troop with essential attributes.
         """
-        self.name = name.lower()
+        self.name = name
         self.position = position
         self.prev_position = position
         self.elixir = elixir
@@ -159,7 +159,7 @@ class Troop:
 
     def resize(self):
         orientation = ["n","s", "e", "w", "ne", "nw", "se", "sw"]
-        std_img = self.assets[self.name+"_run_n_6"]
+        std_img = self.assets[self.name.lower()+"_run_n_6"]
         original_Width = std_img.get_width()
         original_Height = std_img.get_height()
         aspect_ratio = self.h/self.w
@@ -172,19 +172,19 @@ class Troop:
         self.h = new_height
         for i in range(6):
             for orient in orientation:
-                image = self.assets[self.name+"_run_"+orient+f'_{i+1}']
+                image = self.assets[self.name.lower()+"_run_"+orient+f'_{i+1}']
                 image_scaled = pygame.transform.scale(image, (new_Width, new_Height))
                 self.images["_run_"+orient+f'_{i+1}'] = image_scaled
 
-                image_attack = self.assets[self.name+"_attack_"+orient+f'_{i+1}']
+                image_attack = self.assets[self.name.lower()+"_attack_"+orient+f'_{i+1}']
                 image_attack_scaled = pygame.transform.scale(image_attack, (new_Width, new_Height))
                 self.images["_attack_"+orient+f'_{i+1}'] = image_attack_scaled
 
-                image_shadow = self.assets[self.name+"_run_"+orient+f'_{i+1}_shadow']
+                image_shadow = self.assets[self.name.lower()+"_run_"+orient+f'_{i+1}_shadow']
                 image_shadow_scaled = pygame.transform.scale(image_shadow, (new_Width, new_Height*1.3))
                 self.images["_run_"+orient+f'_{i+1}_shadow'] = image_shadow_scaled
 
-                image_attack_shadow = self.assets[self.name+"_attack_"+orient+f'_{i+1}_shadow']
+                image_attack_shadow = self.assets[self.name.lower()+"_attack_"+orient+f'_{i+1}_shadow']
                 image_attack_shadow_scaled = pygame.transform.scale(image_attack_shadow, (new_Width, new_Height*1.3))
                 self.images["_attack_"+orient+f'_{i+1}_shadow'] = image_attack_shadow_scaled
               

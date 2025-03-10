@@ -14,12 +14,15 @@ class Decoration:
     def outro_text(self):
         self.tower1.render()
         self.tower2.render()
-        font = pygame.font.Font("data/font/clashroyale.ttf", 36)  # Default font, size 36
+        font = pygame.font.Font("data/font/clashroyale.ttf", 36)
+        font2 = pygame.font.Font("data/font/clashroyale.ttf", 12)  # Default font, size 36
         if not self.winner:
             if self.tower1.health > self.tower2.health:
                 self.winner = self.team_name1
+                self.message = "DECIDED BY TIE BREAKER"
             elif self.tower1.health < self.tower2.health:
                 self.winner = self.team_name2
+                self.message = "DECIDED BY TIE BREAKER"
             else:
                 self.winner = "Tie"
         if self.winner == "Tie":
@@ -30,8 +33,12 @@ class Decoration:
             texts = ["Winner", self.winner]
             for i, text in enumerate(texts):
                 text_surface = font.render(text, True, (255,255,255))
-                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*30))
+                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*40))
                 self.screen.blit(text_surface, text_rect)
+        if self.message:
+            text_surface = font2.render(self.message, True, (255,0,0))
+            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2 + 40))
+            self.screen.blit(text_surface, text_rect)
 
     def check_game_end(self):
         if self.tower1.health <= 0 and self.tower2.health <= 0:
@@ -43,6 +50,18 @@ class Decoration:
         if self.tower2.health <= 0:
             self.game_counter = GAME_END_TIME
             self.winner = self.team_name1
+        if self.team1_script_test and not self.team2_script_test:
+            self.winner = self.team_name1
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY {self.team_name2}"
+        if not self.team1_script_test and self.team2_script_test:
+            self.winner = self.team_name2
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY {self.team_name1}"
+        if not self.team1_script_test and not self.team2_script_test:
+            self.winner = "Tie"
+            self.game_counter = GAME_END_TIME
+            self.message = f"RULES BROKEN BY BOTH {self.team_name1} and {self.team_name2}"
 
 class Decoration_Left:
     def render_background(self):
@@ -63,7 +82,7 @@ class Decoration_Left:
         Decoration_Left.update_troops(self)
         troops = Decoration_Left.troops_displayed
         for i in range(len(troops)):
-            image = self.assets[f'{troops[i]}_card']
+            image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.left_screen.blit(image,(CARD_PLATE_WIDTH*1//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
         Decoration_Left.render_elixir_bar(self)
@@ -124,7 +143,7 @@ class Decoration_Right:
         Decoration_Right.update_troops(self)
         troops = Decoration_Right.troops_displayed
         for i in range(len(troops)):
-            image = self.assets[f'{troops[i]}_card']
+            image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
         Decoration_Right.render_elixir_bar(self) 
