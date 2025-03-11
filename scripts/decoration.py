@@ -8,8 +8,8 @@ class Decoration:
         texts = [self.team_name2,"v/s",self.team_name1]
         for i, text in enumerate(texts):
             text_surface = font.render(text, True, (255,255,255))
-            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*30))
-            self.screen.blit(text_surface, text_rect)
+            text_rect = text_surface.get_rect(center=(MIDDLE_WIDTH // 2 , MIDDLE_HEIGHT // 2+ (i-1)*FULL_HEIGHT//37))
+            self.middle_screen.blit(text_surface, text_rect)
 
     def outro_text(self):
         self.tower1.render()
@@ -27,18 +27,18 @@ class Decoration:
                 self.winner = "Tie"
         if self.winner == "Tie":
             text_surface = font.render(self.winner, True, (255,255,255))
-            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2))
-            self.screen.blit(text_surface, text_rect)
+            text_rect = text_surface.get_rect(center=(MIDDLE_WIDTH // 2 , MIDDLE_HEIGHT // 2))
+            self.middle_screen.blit(text_surface, text_rect)
         else:
             texts = ["Winner", self.winner]
             for i, text in enumerate(texts):
                 text_surface = font.render(text, True, (255,255,255))
-                text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2+ (i-1)*(FULL_HEIGHT//24)))
-                self.screen.blit(text_surface, text_rect)
+                text_rect = text_surface.get_rect(center=(MIDDLE_WIDTH // 2 , MIDDLE_HEIGHT // 2+ (i-1)*(FULL_HEIGHT//24)))
+                self.middle_screen.blit(text_surface, text_rect)
         if self.message:
             text_surface = font2.render(self.message, True, (255,0,0))
-            text_rect = text_surface.get_rect(center=(ARENA_WIDTH // 2 , ARENA_HEIGHT // 2 + (FULL_HEIGHT//24)))
-            self.screen.blit(text_surface, text_rect)
+            text_rect = text_surface.get_rect(center=(MIDDLE_WIDTH // 2 , MIDDLE_HEIGHT // 2 + (FULL_HEIGHT//24)))
+            self.middle_screen.blit(text_surface, text_rect)
 
     def check_game_end(self):
         if self.tower1.health <= 0 and self.tower2.health <= 0:

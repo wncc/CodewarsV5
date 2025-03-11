@@ -17,11 +17,11 @@ class Game:
 
         self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
         self.side_display_size = ((FULL_WIDTH-MIDDLE_WIDTH)//2, FULL_HEIGHT)
-        self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
         self.tile_size = ARENA_WIDTH//12
         self.main_screen = pygame.display.set_mode((FULL_WIDTH,EXTRA_HEIGHT),pygame.RESIZABLE)
-        self.screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
-        self.shadow_screen = pygame.Surface(self.arena_display_size,pygame.SRCALPHA)
+        self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
+        self.arena_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT),pygame.SRCALPHA)
+        self.shadow_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT),pygame.SRCALPHA)
         self.left_screen = pygame.Surface(self.side_display_size)
         self.right_screen = pygame.Surface(self.side_display_size)
         self.fps = FPS
@@ -47,8 +47,8 @@ class Game:
         random.shuffle(deployable_troops2)
         self.team1_script_test = True
         self.team2_script_test = True
-        self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
-        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
+        self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.arena_screen, self.shadow_screen, self.middle_screen, deployable_troops1)
+        self.tower2 = Tower("Tower 2", convert_player2(towers_position,self.arena_display_size), self.assets ,self.tower_size, convert_player2_area(deploy_area,self.arena_display_size), self.arena_screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True) # troop2 means you are player 2
         self.tower1.oppTower = self.tower2
         self.tower1.oppTroops = self.tower2.myTroops
         self.tower2.oppTower = self.tower1
@@ -59,7 +59,7 @@ class Game:
     def render_game_screen(self):
         self.middle_map.render(self.middle_screen)
         
-        self.screen.fill((0, 0, 0, 0)) # clear screen
+        self.arena_screen.fill((0, 0, 0, 0)) # clear screen
         self.shadow_screen.fill((0, 0, 0, 0)) # clear screen
         
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
@@ -73,8 +73,8 @@ class Game:
             Decoration.outro_text(self)
 
         self.main_screen.blit(self.middle_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
-        self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))
-        self.main_screen.blit(self.screen, ((FULL_WIDTH-ARENA_WIDTH)//2, (FULL_HEIGHT-ARENA_HEIGHT)//2))        
+        self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))
+        self.main_screen.blit(self.arena_screen, ((FULL_WIDTH-MIDDLE_WIDTH)//2, 0))        
     
     def render_left_screen(self):
         Decoration_Left.render_background(self)
