@@ -79,14 +79,12 @@ class Game:
     def render_left_screen(self):
         Decoration_Left.render_background(self)
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            Decoration_Left.render_troop_cards(self)
-            Decoration_Left.render_time(self)
+            Decoration_Left.render_screen(self)
         self.main_screen.blit(self.left_screen, (0, 0))
     def render_right_screen(self):
         Decoration_Right.render_background(self)
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            Decoration_Right.render_troop_cards(self)
-            Decoration_Right.render_game_speed(self)
+            Decoration_Right.render_screen(self)       
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH+MIDDLE_WIDTH)//2, 0))
 
     def run(self):

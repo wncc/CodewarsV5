@@ -1,6 +1,6 @@
 from teams.helper_function import Troops, Utils
 
-team_name = "DELHIvevefb"
+team_name = "DELHI"
 troops = [Troops.wizard,Troops.minion,Troops.archer,Troops.giant,Troops.dragon,Troops.skeleton,Troops.balloon,Troops.barbarian]
 deploy_list = Troops([])
 team_signal = ""

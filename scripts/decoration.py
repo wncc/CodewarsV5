@@ -68,6 +68,13 @@ class Decoration_Left:
         image = self.assets['left_side_image']
         image = pygame.transform.scale(image,self.side_display_size)
         self.left_screen.blit(image,(0,0))
+                
+    def render_screen(self):
+        Decoration_Left.render_troop_cards(self)
+        Decoration_Left.render_time(self)
+        Decoration_Left.render_elixir_bar(self)
+        Decoration_Left.render_current_cards(self)
+        Decoration_Left.render_team_name(self)
         
     troops_displayed = []
     
@@ -85,9 +92,6 @@ class Decoration_Left:
             image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.left_screen.blit(image,(CARD_PLATE_WIDTH*1//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
-        Decoration_Left.render_elixir_bar(self)
-        Decoration_Left.render_current_cards(self)
-        Decoration_Left.render_team_name(self)
 
     def render_time(self):
         font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//39)
@@ -121,12 +125,18 @@ class Decoration_Left:
         text = font.render(f'{name}',True,(255,255,255))
         self.left_screen.blit(text,(FULL_WIDTH*(0.2-0.0055*len(name)),FULL_HEIGHT*0.114))
         
-        
 class Decoration_Right:
     def render_background(self):
         image = self.assets['right_side_image']
         image = pygame.transform.scale(image,self.side_display_size)
         self.right_screen.blit(image,(0,0))
+        
+    def render_screen(self):
+        Decoration_Right.render_troop_cards(self)
+        Decoration_Right.render_elixir_bar(self)
+        Decoration_Right.render_current_cards(self)
+        Decoration_Right.render_team_name(self)
+        Decoration_Right.render_game_speed(self)
         
     troops_displayed = []
     
@@ -144,9 +154,6 @@ class Decoration_Right:
             image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
             self.right_screen.blit(image,(int(FULL_WIDTH*69/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
-        Decoration_Right.render_elixir_bar(self) 
-        Decoration_Right.render_current_cards(self)
-        Decoration_Right.render_team_name(self)
             
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower2.total_elixir)}']
