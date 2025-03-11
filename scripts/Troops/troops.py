@@ -18,11 +18,6 @@ class Dragon(Troop):
         super().__init__(name="Dragon", images  = images, position = position, elixir = 4,
                          health=1267, damage=176, velocity=FAST_SPEED, type_="air", attack_range = 3.5, surf = surf, discovery_range = 5, myTower = myTower,
                          target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.4, std_size= std_size, uid = uid, attack_speed = FAST_ATTACK)
-class BombTower(BuildingTroop):
-    def __init__(self, position, image_front, image_back, image_attack, surf, myTower,std_size, uid):
-        super().__init__(name="BombTower", image_front = image_front, image_back=image_back, image_attack = image_attack, position = position, elixir = 5,
-                         health=1670, damage=176, type_="building", attack_range = 3.5, surf = surf, myTower = myTower,
-                         splash_range = 1, size = 1.2,std_size= std_size, uid = uid, attack_speed = MEDIUM_ATTACK)
 class Balloon(Troop):
     def __init__(self,images , position, surf, myTower, std_size, uid):
         super().__init__(name="Balloon", images  = images, position = position, elixir = 5,
