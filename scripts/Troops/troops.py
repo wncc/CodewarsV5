@@ -62,4 +62,10 @@ class Wizard(Troop):
                          health=1100, damage=410, velocity=MEDIUM_SPEED, type_="ground", attack_range = 5.5, surf = surf, discovery_range = 8, myTower = myTower,
                          target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.25,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
                          number = 1) 
+class Valkyrie(Troop):
+    def __init__(self,images , position, surf, myTower,std_size, uid):
+        super().__init__(name="Valkyrie", images = images, position = position, elixir = 4,
+                         health=2097, damage=195, velocity=MEDIUM_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 7, myTower = myTower,
+                         target_type = {"air": False, "ground": True, "building": False}, splash_range = 1, size = 0.25,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
+                         number = 1) 
 

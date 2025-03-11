@@ -23,6 +23,7 @@ def load_assets():
         'skeleton_card': load_image('decor/card-png/skeleton-army.png'),
         'balloon_card': load_image('decor/card-png/balloon.png'),
         'wizard_card': load_image('decor/card-png/wizard.png'),
+        'valkyrie_card': load_image('decor/card-png/valkyrie.png'),
         'bar_0': load_image('decor/elixir_bar/1.png'),
         'bar_1': load_image('decor/elixir_bar/1.png'),
         'bar_2': load_image('decor/elixir_bar/2.png'),

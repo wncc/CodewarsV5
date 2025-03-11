@@ -13,6 +13,7 @@ class Troops:
     minion = "Minion"
     skeleton = "Skeleton"
     wizard = "Wizard"
+    valkyrie = "Valkyrie"
 
     def __init__(self, list_):
         self.list_ = list_
@@ -51,6 +52,9 @@ class Troops:
         self.list_.append(("Balloon",location))
 
     def deploy_skeleton(self,location):
+        self.list_.append(("Skeleton",location))
+        
+    def deploy_valkyrie(self,location):
         self.list_.append(("Skeleton",location))
 
 
