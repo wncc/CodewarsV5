@@ -89,49 +89,24 @@ class Decoration_Left:
         Decoration_Left.render_current_cards(self)
 
     def render_time(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//39)
         remaining_seconds = (GAME_END_TIME - self.game_counter)//10
         minutes = remaining_seconds // 60
         seconds = remaining_seconds % 60
         timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
-        self.left_screen.blit(timer_text,(FULL_WIDTH*0.17,FULL_HEIGHT*0.933)) 
+        self.left_screen.blit(timer_text,(FULL_WIDTH*0.125,FULL_HEIGHT*0.96)) 
 
         text = font.render(f'x{max(3-minutes,1)}',True,(220,68,220))
-        self.left_screen.blit(text,(FULL_WIDTH*0.33,FULL_HEIGHT*0.93))
+        self.left_screen.blit(text,(FULL_WIDTH*0.205,FULL_HEIGHT*0.96))
         
         img = self.assets[f'elixir']
-        img = pygame.transform.scale(img,(FULL_WIDTH*0.026,FULL_HEIGHT*0.056))
-        self.left_screen.blit(img,(FULL_WIDTH*0.3,FULL_HEIGHT*0.93))
+        img = pygame.transform.scale(img,(FULL_WIDTH*0.015,FULL_HEIGHT*0.03))
+        self.left_screen.blit(img,(FULL_WIDTH*0.225,FULL_HEIGHT*0.96))
             
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower1.total_elixir)}']
         img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
         self.left_screen.blit(img,(FULL_WIDTH*0.10,FULL_HEIGHT*0.2))
-
-    def render_name(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
-        text = font.render(f'{self.team_name1}', True, (73, 152, 196))
-
-        text_width, text_height = text.get_size()
-
-        x = FULL_WIDTH * 0.115
-        y = FULL_HEIGHT * 0.30
-
-        bg_color = (0, 0, 0, 200)
-        padding = int(FULL_WIDTH * 0.02)
-        rect_x = int(x - padding // 2)
-        rect_y = int(y - padding // 2)
-        rect_width = text_width + padding
-        rect_height = text_height + padding
-        border_radius = int(FULL_WIDTH * 0.01)
-
-        transparent_surface = pygame.Surface((rect_width, rect_height), pygame.SRCALPHA)
-        
-        pygame.draw.rect(transparent_surface, bg_color, (0, 0, rect_width, rect_height), border_radius=border_radius)
-        
-        self.left_screen.blit(transparent_surface, (rect_x, rect_y))
-
-        self.left_screen.blit(text, (x, y))
         
     def render_current_cards(self):
         img = self.assets['card_slot']
@@ -174,36 +149,11 @@ class Decoration_Right:
         img = pygame.transform.scale(img,(FULL_WIDTH*0.26,FULL_HEIGHT*0.086))
         self.right_screen.blit(img,(FULL_WIDTH*0.05,FULL_HEIGHT*0.2))
 
-    def render_name(self):
-        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
-        text = font.render(f'{self.team_name2}',True,((200, 57, 90)))
-
-        text_width, text_height = text.get_size()
-
-        x = FULL_WIDTH * 0.065
-        y = FULL_HEIGHT * 0.30
-
-        bg_color = (0, 0, 0, 200)
-        padding = int(FULL_WIDTH * 0.02)
-        rect_x = int(x - padding // 2)
-        rect_y = int(y - padding // 2)
-        rect_width = text_width + padding
-        rect_height = text_height + padding
-        border_radius = int(FULL_WIDTH * 0.01)
-
-        transparent_surface = pygame.Surface((rect_width, rect_height), pygame.SRCALPHA)
-        
-        pygame.draw.rect(transparent_surface, bg_color, (0, 0, rect_width, rect_height), border_radius=border_radius)
-        
-        self.right_screen.blit(transparent_surface, (rect_x, rect_y))
-
-        self.right_screen.blit(text, (x, y))
-
     def render_game_speed(self):
         game_speed = self.fps/FPS
-        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//24)
-        text = font.render(f'Game Speed: x{game_speed}',True,((244,196,76)))
-        self.right_screen.blit(text,(FULL_WIDTH*0.06,FULL_HEIGHT*0.93)) 
+        font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//39)
+        text = font.render(f'x{game_speed}',True,((244,196,76)))
+        self.right_screen.blit(text,(FULL_WIDTH*0.31,FULL_HEIGHT*0.96)) 
         
     def render_current_cards(self):
         img = self.assets['card_slot']

@@ -2,8 +2,8 @@ from scripts.utils import *
 import pandas as pd
 def load_assets():
     assets = {"Blue":{},"Red":{},
-        'left_side_image' : load_image('decor/left.png'),
-        'right_side_image' : load_image('decor/right.png'),
+        'left_side_image' : load_image('decor/4.jpg'),
+        'right_side_image' : load_image('decor/5.jpg'),
         'middle_map' : load_image('decor/area middle.png'),
         'BlueCannon': load_image('tower/Blue/BlueCannon.png'),
         'RedCannon': load_image('tower/Red/RedCannon.png'), 

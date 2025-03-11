@@ -37,6 +37,9 @@ class Troops:
 
     def deploy_princess(self,location):
         self.list_.append(("Princess",location))
+        
+    def deploy_wizard(self,location):
+        self.list_.append(("Wizard",location))
 
     def deploy_wizard(self,location):
         self.list_.append(("Wizard",location))
