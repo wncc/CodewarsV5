@@ -66,12 +66,13 @@ class Tower:
     def do_work(self):
 
         if self.total_elixir < 10:
+            update_rate = 0.05
             if self.game_timer < FPS * 60:
-                self.total_elixir += 0.1  # Increasing elixir x1 in each frame
+                self.total_elixir += update_rate  # Increasing elixir x1 in each frame
             elif self.game_timer < FPS * 120:
-                self.total_elixir += 0.2  # Increasing elixir x2 in each frame
+                self.total_elixir += 2*update_rate  # Increasing elixir x2 in each frame
             elif self.game_timer < FPS * 180:
-                self.total_elixir += 0.3  # Increasing elixir x3 in each frame
+                self.total_elixir += 3*update_rate  # Increasing elixir x3 in each frame
         if self.total_dark_elixir < 10:
             self.total_dark_elixir += 0.1  # Increasing dark elixir
 
