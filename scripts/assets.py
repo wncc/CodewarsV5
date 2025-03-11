@@ -22,6 +22,7 @@ def load_assets():
         'barbarian_card': load_image('decor/card-png/barbarians.png'),
         'skeleton_card': load_image('decor/card-png/skeleton-army.png'),
         'balloon_card': load_image('decor/card-png/balloon.png'),
+        'wizard_card': load_image('decor/card-png/wizard.png'),
         'elixir': load_image('decor/elixir_mult/ui_sprite_0225.png'),
         'bar_0': load_image('decor/elixir_bar/1.png'),
         'bar_1': load_image('decor/elixir_bar/1.png'),
@@ -37,7 +38,7 @@ def load_assets():
         'card_slot': load_image('decor/card-png/Deck Plank.png'),}
 
     directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
-    troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon"]
+    troops = ["barbarian","prince","giant","minion","dragon","skeleton","archer","knight","princess","balloon","wizard"]
     for team in ["Blue","Red"]:
         for dir in directions:
             for i in range(6):

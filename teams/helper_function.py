@@ -2,7 +2,6 @@ import math
 
 class Troops:
 
-    minion = "Minion"
     archer = "Archer"
     giant = "Giant"
     dragon = "Dragon"
@@ -13,6 +12,7 @@ class Troops:
     knight = "Knight"
     minion = "Minion"
     skeleton = "Skeleton"
+    wizard = "Wizard"
 
     def __init__(self, list_):
         self.list_ = list_
@@ -37,6 +37,18 @@ class Troops:
 
     def deploy_princess(self,location):
         self.list_.append(("Princess",location))
+
+    def deploy_wizard(self,location):
+        self.list_.append(("Wizard",location))
+
+    def deploy_dragon(self,location):
+        self.list_.append(("Dragon",location))
+
+    def deploy_balloon(self,location):
+        self.list_.append(("Balloon",location))
+
+    def deploy_skeleton(self,location):
+        self.list_.append(("Skeleton",location))
 
 
 class Utils:

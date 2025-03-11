@@ -60,4 +60,10 @@ class Skeleton(Troop):
         super().__init__(name="Skeleton", images = images, position = position, elixir = 3,
                          health=89, damage=89, velocity=FAST_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 4, myTower = myTower,
                          target_type = {"air": False, "ground": True, "building": True}, splash_range = 0, size = 0.15,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
-                         number=10)     
+                         number=10)    
+class Wizard(Troop):
+    def __init__(self,images , position, surf, myTower,std_size, uid):
+        super().__init__(name="Wizard", images = images, position = position, elixir = 5,
+                         health=1100, damage=410, velocity=MEDIUM_SPEED, type_="ground", attack_range = 5.5, surf = surf, discovery_range = 8, myTower = myTower,
+                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.3,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
+                         number = 1) 
