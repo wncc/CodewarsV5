@@ -1,6 +1,6 @@
 from scripts.Troops.dummies import *
-from teams.team1 import deploy as deploy1
-from teams.team2 import deploy as deploy2
+from scripts.config import TEAM1
+from scripts.config import TEAM2
 from scripts.utils import rescale_position
 from scripts.config import *
 
@@ -67,8 +67,8 @@ class DataFlow:
         self.data_provided2["OppTroops"] = tower2_oppTroops
 
     def deployment(self):
-        troops1_list, team_signal1 = deploy1(self.data_provided1)
-        troops2_list, team_signal2 = deploy2(self.data_provided2)
+        troops1_list, team_signal1 = TEAM1.deploy(self.data_provided1)
+        troops2_list, team_signal2 = TEAM2.deploy(self.data_provided2)
         self.data_provided1 = {}
         self.data_provided2 = {}
         for troop, position in troops2_list:

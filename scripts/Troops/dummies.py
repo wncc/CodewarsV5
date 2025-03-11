@@ -28,12 +28,12 @@ class DummyTroop:
         else:
             self.position = rescale_position(object.position,reverse=True)
         self.health = object.health # MAINLY USEFUL
-        self.damage = object.damage
-        self.attack_range = object.attack_range
+        self.damage = object.damage # MAINLY USEFUL
         self.target = None # MAINLY USEFUL
-        self.size = object.size
+        self.uid = object.uid # MAINLY USEFUL
+        self.size = object.size # MAINLY USEFUL
         self.elixir = object.elixir
-        self.type = object.type
-        self.attack_range = object.attack_range
+        self.type = object.type # MAINLY USEFUL
+        self.attack_range = object.attack_range # MAINLY USEFUL
         self.splash_range = object.splash_range
-        self.target_type = object.target_type.copy()
+        self.target_type = object.target_type.copy() # MAINLY USEFUL

@@ -55,6 +55,7 @@ class Tower:
         self.myTroops = []
         self.oppTroops = None
         self.level = 1
+        self.uid_maker = 1
 
         self.images = {}
 
@@ -125,24 +126,26 @@ class Tower:
         if troop in self.deployable_troops[:4] and area[0] <= position[0] <= area[1] and area[2] <= position[1] <= area[3]:  # Correcting the area indexing
             troop_class = globals()[troop]
             if self.troop2:
-                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size)
+                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
             else:
-                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size)
+                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
             if self.total_elixir >= troop_instance.elixir:
                 self.total_elixir -= troop_instance.elixir
                 troop_number = troop_instance.number
                 troop_deploy_radius = troop_instance.deploy_radius
                 if troop_number == 1:
                     self.myTroops.append(troop_instance)
+                    self.uid_maker += 1
                 else:
                     del troop_instance
                     positions = get_positions(position,area,troop_deploy_radius,troop_number, self.troop2)
                     for pos in positions:
                         if self.troop2:
-                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size)
+                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
                         else:
-                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size)
+                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
                         self.myTroops.append(troop_instance)
+                        self.uid_maker += 1
                 self.get_next_cycle(troop)
 
     # UTILITY FUNCTION

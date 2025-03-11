@@ -4,7 +4,7 @@ from scripts.config import *
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
-                 discovery_range, myTower, target_type, std_size, splash_range = 0, size = 0, number = 1):
+                 discovery_range, myTower, target_type, std_size, uid, splash_range = 0, size = 0, number = 1):
         """
         Initialize a troop with essential attributes.
         """
@@ -34,6 +34,7 @@ class Troop:
         self.discovered_troops = {}
         self.assets = images
         self.images = {}
+        self.uid = uid
 
         self.attack_counter = 0
         self.orientation = "s"

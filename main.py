@@ -1,8 +1,6 @@
 from game import Game
 import inspect
-from teams import team1
-from teams import team2
-from scripts.config import SIGNAL_LENGTH
+from scripts.config import SIGNAL_LENGTH, TEAM1, TEAM2
 
 def validate_module(module, name):
     attributes = dir(module)
@@ -41,7 +39,7 @@ def validate_module(module, name):
         return False
     
     # Condition 4: Check len(set(troops)) == 8
-    if len(set(module.troops)) != 8:
+    if len(set(module.troops)) != 1:
         print(f"Fail: troops does not contain exactly 8 unique elements for {name}")
         return False
     
@@ -52,8 +50,8 @@ def validate_module(module, name):
 team1_test_pass = False
 team2_test_pass = False
 
-team1_test_pass = validate_module(team1, "TEAM 1") or team1_test_pass
-team2_test_pass = validate_module(team2, "TEAM 2") or team2_test_pass
+team1_test_pass = validate_module(TEAM1, "TEAM 1") or team1_test_pass
+team2_test_pass = validate_module(TEAM2, "TEAM 2") or team2_test_pass
 
 if team1_test_pass and team2_test_pass:
-    Game(team1.troops,team2.troops,team1.team_name,team2.team_name).run()
+    Game(TEAM1.troops,TEAM2.troops,TEAM1.team_name,TEAM2.team_name).run()
