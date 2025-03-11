@@ -22,9 +22,9 @@ class Troop:
         self.max_health = health
         self.damage = damage
         self.velocity = velocity
-        self.attack_range = attack_range * std_size/4
-        self.discovery_range = discovery_range * std_size/4
-        self.splash_range = splash_range * std_size/4
+        self.attack_range = attack_range * std_size/5
+        self.discovery_range = discovery_range * std_size/5
+        self.splash_range = splash_range * std_size/5
         self.target_type = target_type
         self.attack_speed = attack_speed
         self.target = None
@@ -93,12 +93,18 @@ class Troop:
                 self.move_towards(nearest_entity.position)
 
             else:
-                straight_position = (self.position[0],self.myTower.oppTower.position[1])
-                self.move_towards(self.myTower.oppTower.position)
+                if abs(self.position[1] - self.myTower.oppTower.position[1]) >= ARENA_HEIGHT/2:
+                    straight_position = (self.position[0],self.myTower.oppTower.position[1])
+                    self.move_towards(straight_position)
+                else:
+                    self.move_towards(self.myTower.oppTower.position)
 
         else:
-            straight_position = (self.position[0],self.myTower.oppTower.position[1])
-            self.move_towards(self.myTower.oppTower.position)
+            if abs(self.position[1] - self.myTower.oppTower.position[1]) >= ARENA_HEIGHT/2:
+                    straight_position = (self.position[0],self.myTower.oppTower.position[1])
+                    self.move_towards(straight_position)
+            else:
+                self.move_towards(self.myTower.oppTower.position)
 
 
     def attack(self):
