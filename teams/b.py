@@ -1,7 +1,7 @@
 from teams.helper_function import Troops, Utils
 
 team_name = "DELHI"
-troops = [Troops.skeleton,Troops.wizard,Troops.minion,Troops.archer,Troops.giant,Troops.dragon,Troops.balloon,Troops.barbarian]
+troops = [Troops.dragon,Troops.skeleton,Troops.wizard,Troops.minion,Troops.archer,Troops.giant,Troops.balloon,Troops.barbarian]
 deploy_list = Troops([])
 team_signal = ""
 
@@ -15,4 +15,4 @@ def deploy(arena_data:dict):
 
 def logic(arena_data:dict):
     global team_signal
-    deploy_list.deploy_skeleton((0,0))
+    deploy_list.deploy_dragon((0,0))
