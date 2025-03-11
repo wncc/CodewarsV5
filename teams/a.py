@@ -1,7 +1,7 @@
-from teams.helper_function import Deploy, Utils
+from teams.helper_function import Troops, Utils
 team_name = "MUMBAI"
-troops = [Deploy.minion]
-deploy_list = Deploy([])
+troops = [Troops.minion]
+deploy_list = Troops([])
 team_signal = "h"
 def deploy(arena_data:dict):
     """

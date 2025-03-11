@@ -1,6 +1,6 @@
 import math
 
-class Deploy:
+class Troops:
 
     minion = "Minion"
     archer = "Archer"

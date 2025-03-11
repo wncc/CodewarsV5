@@ -139,7 +139,7 @@ class Decoration_Left:
         self.left_screen.blit(img,(FULL_WIDTH*0.115,FULL_HEIGHT*0.125))
         
         for i in range(len(self.tower1.deployable_troops)):
-            img = self.assets[f'{self.tower1.deployable_troops[i].lower()}_card']
+            img = self.assets[f'{self.tower1.deployable_troops[i][:4].lower()}_card']
             img = pygame.transform.scale(img,(FULL_WIDTH*0.046,FULL_HEIGHT*0.10))
             self.left_screen.blit(img,(FULL_WIDTH*0.118 + i*FULL_WIDTH*0.046,FULL_HEIGHT*0.134))
         
@@ -211,7 +211,7 @@ class Decoration_Right:
         self.right_screen.blit(img,(FULL_WIDTH*0.065,FULL_HEIGHT*0.125))
         
         for i in range(len(self.tower2.deployable_troops)):
-            img = self.assets[f'{self.tower2.deployable_troops[i].lower()}_card']
+            img = self.assets[f'{self.tower2.deployable_troops[i][:4].lower()}_card']
             img = pygame.transform.scale(img,(FULL_WIDTH*0.046,FULL_HEIGHT*0.10))
             self.right_screen.blit(img,(FULL_WIDTH*0.068 + i*FULL_WIDTH*0.046,FULL_HEIGHT*0.134))
 
