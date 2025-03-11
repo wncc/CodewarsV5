@@ -164,7 +164,3 @@ class Decoration_Right:
             img = self.assets[f'{self.tower2.deployable_troops[i].lower()}_card']
             img = pygame.transform.scale(img,(FULL_WIDTH*0.046,FULL_HEIGHT*0.10))
             self.right_screen.blit(img,(FULL_WIDTH*0.068 + i*FULL_WIDTH*0.046,FULL_HEIGHT*0.134))
-
-
-
-
