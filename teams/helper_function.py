@@ -14,6 +14,7 @@ class Troops:
     skeleton = "Skeleton"
     wizard = "Wizard"
     valkyrie = "Valkyrie"
+    musketeer = "Musketeer"
 
     def __init__(self, list_):
         self.list_ = list_
@@ -56,6 +57,9 @@ class Troops:
         
     def deploy_valkyrie(self,location):
         self.list_.append(("Valkyrie",location))
+    
+    def deploy_musketeer(self,location):
+        self.list_.append(("Musketeer",location))
 
 
 class Utils:
