@@ -39,7 +39,7 @@ def validate_module(module, name):
         return False
     
     # Condition 4: Check len(set(troops)) == 8
-    if len(set(module.troops)) != 1:
+    if len(set(module.troops)) != 8:
         print(f"Fail: troops does not contain exactly 8 unique elements for {name}")
         return False
     
