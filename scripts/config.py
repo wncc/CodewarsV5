@@ -3,6 +3,10 @@ pygame.init()
 info = pygame.display.Info()
 import pygame
 import pandas as pd
+from teams import a,b
+
+TEAM1 = a
+TEAM2 = b
 
 SLOW_ATTACK = 3
 MEDIUM_ATTACK = 2
