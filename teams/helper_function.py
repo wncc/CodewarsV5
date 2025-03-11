@@ -55,7 +55,7 @@ class Troops:
         self.list_.append(("Skeleton",location))
         
     def deploy_valkyrie(self,location):
-        self.list_.append(("Skeleton",location))
+        self.list_.append(("Valkyrie",location))
 
 
 class Utils:
