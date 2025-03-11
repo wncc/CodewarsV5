@@ -96,12 +96,8 @@ class Decoration_Left:
         timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
         self.left_screen.blit(timer_text,(FULL_WIDTH*0.125,FULL_HEIGHT*0.96)) 
 
-        text = font.render(f'x{max(3-minutes,1)}',True,(220,68,220))
+        text = font.render(f'x{max(3-minutes,1)} Elixir',True,(244,196,76))
         self.left_screen.blit(text,(FULL_WIDTH*0.205,FULL_HEIGHT*0.96))
-        
-        img = self.assets[f'elixir']
-        img = pygame.transform.scale(img,(FULL_WIDTH*0.015,FULL_HEIGHT*0.03))
-        self.left_screen.blit(img,(FULL_WIDTH*0.225,FULL_HEIGHT*0.96))
             
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower1.total_elixir)}']
