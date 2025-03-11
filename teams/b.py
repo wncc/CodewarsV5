@@ -15,9 +15,4 @@ def deploy(arena_data:dict):
 
 def logic(arena_data:dict):
     global team_signal
-    mytower = arena_data["MyTower"]
-    if mytower.game_timer < 10:
-        deploy_list.deploy_minion((0,0))
-    """
-    WRITE YOUR CODE HERE 
-    """
+    deploy_list.deploy_minion((0,0))
