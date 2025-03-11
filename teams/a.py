@@ -15,7 +15,7 @@ def deploy(arena_data:dict):
 
 def logic(arena_data:dict):
     global team_signal
-    deploy_list.deploy_balloon((0,0))
+    deploy_list.deploy_wizard((0,0))
     """
     WRITE YOUR CODE HERE 
     """

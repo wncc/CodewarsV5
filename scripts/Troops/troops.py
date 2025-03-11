@@ -65,6 +65,6 @@ class Wizard(Troop):
     def __init__(self,images , position, surf, myTower,std_size, uid):
         super().__init__(name="Wizard", images = images, position = position, elixir = 5,
                          health=1100, damage=410, velocity=MEDIUM_SPEED, type_="ground", attack_range = 5.5, surf = surf, discovery_range = 8, myTower = myTower,
-                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.3,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
+                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.25,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
                          number = 1) 
 
