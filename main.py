@@ -7,7 +7,7 @@ def validate_module(module, name):
     
     # Expected variables and classes
     expected_variables = {"team_name", "troops", "deploy_list", "team_signal"}
-    expected_classes = {"Deploy", "Utils"}
+    expected_classes = {"Troops", "Utils"}
     
     # Extract variables (excluding functions, classes, and modules)
     variables = {
@@ -39,7 +39,7 @@ def validate_module(module, name):
         return False
     
     # Condition 4: Check len(set(troops)) == 8
-    if len(set(module.troops)) != 8:
+    if len(set(module.troops)) != 8 or len(module.troops) != 8:
         print(f"Fail: troops does not contain exactly 8 unique elements for {name}")
         return False
     
