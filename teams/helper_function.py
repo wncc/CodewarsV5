@@ -65,11 +65,11 @@ class Troops:
 class Utils:
 
     @staticmethod
-    def calculate_distance(A, B, type_troop = False):
+    def calculate_distance(A, B, type_troop = True):
         if type_troop:
             return math.sqrt((A.position[0] - B.position[0])**2 + (A.position[1] - B.position[1])**2)
         return math.sqrt((A[0] - B[0])**2 + (A[1] - B[1])**2)
     
     @staticmethod
     def is_in_range(troop1, troop2, troop1_range):
-        return Utils.calculate_distance(troop1.position, troop2.position, type_troop = True) <= troop1.size + troop2.size + troop1_range
+        return Utils.calculate_distance(troop1, troop2) <= troop1.size + troop2.size + troop1_range
