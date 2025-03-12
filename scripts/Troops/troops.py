@@ -11,7 +11,7 @@ class Archer(Troop):
 class Giant(Troop):
     def __init__(self,images , position, surf, myTower,std_size, uid):
         super().__init__(name="Giant", images  = images,position = position, elixir = 5,
-                         health=4496, damage=186, velocity=SLOW_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 7, myTower = myTower,
+                         health=4940, damage=207, velocity=SLOW_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 7, myTower = myTower,
                          target_type = {"air": False, "ground": False, "building": True}, splash_range = 0, size = 0.5,std_size= std_size, uid = uid, attack_speed = SLOW_ATTACK)       
 class Dragon(Troop):
     def __init__(self,images , position, surf, myTower, std_size, uid):
@@ -21,12 +21,12 @@ class Dragon(Troop):
 class Balloon(Troop):
     def __init__(self,images , position, surf, myTower, std_size, uid):
         super().__init__(name="Balloon", images  = images, position = position, elixir = 5,
-                         health=1848, damage=352, velocity=MEDIUM_SPEED, type_="air", attack_range = 0, surf = surf, discovery_range = 5, myTower = myTower,
+                         health=2026, damage=386, velocity=MEDIUM_SPEED, type_="air", attack_range = 0, surf = surf, discovery_range = 5, myTower = myTower,
                          target_type = {"air": False, "ground": False, "building": True}, splash_range = 1, size = 0.4, std_size= std_size, uid = uid, attack_speed = MEDIUM_ATTACK)
 class Prince(Troop):
     def __init__(self, position, images , surf, myTower,std_size, uid):
         super().__init__(name="Prince", images = images, position = position, elixir = 5,
-                         health=1920, damage=392, velocity=FAST_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 6, myTower = myTower,
+                         health=2112, damage=307, velocity=FAST_SPEED, type_="ground", attack_range = 0, surf = surf, discovery_range = 6, myTower = myTower,
                          target_type = {"air": False, "ground": True, "building": False}, splash_range = 0, size = 0.3,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK)
 class Barbarian(Troop):
     def __init__(self, position, images , surf, myTower,std_size, uid):
