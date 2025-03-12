@@ -8,7 +8,6 @@ class Troops:
     balloon = "Balloon"
     prince = "Prince"
     barbarian = "Barbarian"
-    princess ="Princess"
     knight = "Knight"
     minion = "Minion"
     skeleton = "Skeleton"
@@ -36,9 +35,6 @@ class Troops:
 
     def deploy_knight(self,location):
         self.list_.append(("Knight",location))
-
-    def deploy_princess(self,location):
-        self.list_.append(("Princess",location))
         
     def deploy_wizard(self,location):
         self.list_.append(("Wizard",location))
