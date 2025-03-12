@@ -42,6 +42,7 @@ class Tower:
         self.velocity = FAST_SPEED
         self.deployable_troops = deployable_troops
         self.discovered_troops = {}
+        self.tower_in_range = 0.0
 
         self.troop2 = troop2        # rendering purpose only
         self.game_timer = 0
@@ -65,7 +66,9 @@ class Tower:
     # CORE FUNCTIONS
 
     def do_work(self):
-
+        
+        self.check_tie2()
+        
         if self.total_elixir < 10:
             update_rate = 0.05
             if self.game_timer < FPS * 60:
@@ -118,6 +121,11 @@ class Tower:
         self.target.health -= self.damage
         if self.target.health <= 0:
             self.target = None
+            
+    def check_tie2(self):
+        for troop in self.myTroops:
+            if troop.is_in_range(self.oppTower,troop.attack_range):
+                self.tower_in_range += 1/(troop.attack_range+1)
 
     def deploy(self, troop: str, position): # replace it with self.assets and then take name as key to get the corresponding image
         area = self.deploy_area
@@ -159,8 +167,6 @@ class Tower:
         else:
             if VALUE_ERROR:
                 raise ValueError(f"Invalid Troop Deployment: {troop} is not in current deployable cycle")
-
-
 
     # UTILITY FUNCTION
 

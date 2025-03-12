@@ -19,10 +19,16 @@ class Decoration:
         if not self.winner:
             if self.tower1.health > self.tower2.health:
                 self.winner = self.team_name1
-                self.message = "DECIDED BY TIE BREAKER"
+                self.message = "DECIDED BY TIE BREAKER 1"
             elif self.tower1.health < self.tower2.health:
                 self.winner = self.team_name2
-                self.message = "DECIDED BY TIE BREAKER"
+                self.message = "DECIDED BY TIE BREAKER 1"
+            elif self.tower1.tower_in_range > self.tower2.tower_in_range:
+                self.winner = self.team_name1
+                self.message = "DECIDED BY TIE BREAKER 2"
+            elif self.tower1.tower_in_range < self.tower2.tower_in_range:
+                self.winner = self.team_name2
+                self.message = "DECIDED BY TIE BREAKER 2"
             else:
                 self.winner = "Tie"
         if self.winner == "Tie":
