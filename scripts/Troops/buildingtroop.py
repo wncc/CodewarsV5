@@ -1,6 +1,6 @@
 import math
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 
 class BuildingTroop:
     def __init__(self, name, position, image, image_attack, elixir, health, damage, type_, size, surf, attack_range, attack_speed, std_size,myTower, splash_range=0):

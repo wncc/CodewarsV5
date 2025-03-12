@@ -1,6 +1,6 @@
 import os
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 import math
 import random
 

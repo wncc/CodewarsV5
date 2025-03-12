@@ -1,5 +1,5 @@
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 
 class Decoration:
     def entry_text(self):
@@ -106,8 +106,11 @@ class Decoration_Left:
         seconds = remaining_seconds % 60
         timer_text = font.render(f"{minutes:02}:{seconds:02}", True, (244,196,76))
         self.left_screen.blit(timer_text,(FULL_WIDTH*0.125,FULL_HEIGHT*0.96)) 
-
-        text = font.render(f'x{max(3-minutes,1)} Elixir',True,(244,196,76))
+        if minutes>0:
+            elixer = 1
+        else:
+            elixer = 2
+        text = font.render(f'x{elixer} Elixir',True,(244,196,76))
         self.left_screen.blit(text,(FULL_WIDTH*0.205,FULL_HEIGHT*0.96))
             
     def render_elixir_bar(self):
