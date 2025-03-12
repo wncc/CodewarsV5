@@ -3,7 +3,7 @@ import pygame
 from scripts.config import *
 
 class Troop:
-    def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed, surf,
+    def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed,
                  discovery_range, myTower, target_type, std_size, uid, splash_range = 0, size = 0, number = 1):
         """
         Initialize a troop with essential attributes.
@@ -29,7 +29,7 @@ class Troop:
         self.attack_speed = attack_speed
         self.target = None
         self.myTower = myTower
-        self.surf = surf
+        self.surf = self.myTower.arena_surf
         self.shadow_surf = self.myTower.shadow_surf
         self.discovered_troops = {}
         self.assets = images
@@ -127,11 +127,11 @@ class Troop:
         y_health_bar = self.position[1] - self.h
         if self.type == 'air':
             y_health_bar -= AIR_HEIGHT/2
-        pygame.draw.rect(self.surf, (65,76,78), (self.position[0] - self.size , y_health_bar, 2*self.size, 0.08*self.std_size), 0)
+        pygame.draw.rect(self.surf, (65,76,78), (self.position[0] - self.size + PADDING_X, y_health_bar + PADDING_Y, 2*self.size, 0.08*self.std_size), 0)
         if self.myTower.troop2:
-            pygame.draw.rect(self.surf, (200, 57, 90), (self.position[0] - self.size, y_health_bar, 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
+            pygame.draw.rect(self.surf, (200, 57, 90), (self.position[0] - self.size + PADDING_X, y_health_bar + PADDING_Y, 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
         else:
-            pygame.draw.rect(self.surf, (73,152,196), (self.position[0] - self.size, y_health_bar, 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
+            pygame.draw.rect(self.surf, (73,152,196), (self.position[0] - self.size + PADDING_X, y_health_bar + PADDING_Y, 2*self.size * self.health/self.max_health, 0.08*self.std_size), 0)
 
 
     def render(self):
@@ -143,8 +143,8 @@ class Troop:
         if self.type == 'air':
             y -= AIR_HEIGHT/2
             y_shadow += AIR_HEIGHT/2
-        self.shadow_surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x, y_shadow))
-        self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
+        self.shadow_surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x + PADDING_X, y_shadow + PADDING_Y))
+        self.surf.blit(self.images["_run_"+self.orientation+f"_{rendering_frame+1}"],(x + PADDING_X, y + PADDING_Y))
         self.run_counter = (self.run_counter+1)%frames
         self.render_health_bar()
 
@@ -157,8 +157,8 @@ class Troop:
         if self.type == 'air':
             y -= AIR_HEIGHT/2
             y_shadow += AIR_HEIGHT/2
-        self.shadow_surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x, y_shadow))
-        self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x, y))
+        self.shadow_surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}_shadow"],(x + PADDING_X, y_shadow + PADDING_Y))
+        self.surf.blit(self.images["_attack_"+self.orientation+f"_{rendering_frame+1}"],(x + PADDING_X, y + PADDING_Y))
         self.attack_counter = (self.attack_counter+1)%frames
         self.render_health_bar()
     

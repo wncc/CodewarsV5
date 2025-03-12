@@ -5,7 +5,7 @@ from scripts.Troops.troops import *
 from scripts.utils import get_positions
 
 class Tower:
-    def __init__(self, name, position, assets, size, deploy_area, surf, surf_shadow, middle_surf, deployable_troops, troop2 = False):
+    def __init__(self, name, position, assets, size, deploy_area, arena_surf, surf_shadow, middle_surf, deployable_troops, troop2 = False):
         """
         Initialize a tower with essential attributes.
 
@@ -34,9 +34,9 @@ class Tower:
         self.target = None
         self.size = size        # size = radius i.e. distance from center
         self.deploy_area = deploy_area
-        self.surf = surf
         self.shadow_surf = surf_shadow
         self.middle_surf = middle_surf
+        self.arena_surf = arena_surf
         self.attack_speed = FAST_ATTACK
         self.velocity = FAST_SPEED
         self.deployable_troops = deployable_troops
@@ -127,9 +127,9 @@ class Tower:
         if troop in self.deployable_troops[:4] and area[0] <= position[0] <= area[1] and area[2] <= position[1] <= area[3]:  # Correcting the area indexing
             troop_class = globals()[troop]
             if self.troop2:
-                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
+                troop_instance = troop_class(position=position, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
             else:
-                troop_instance = troop_class(position=position, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
+                troop_instance = troop_class(position=position, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
             if self.total_elixir >= troop_instance.elixir:
                 self.total_elixir -= troop_instance.elixir
                 troop_number = troop_instance.number
@@ -142,9 +142,9 @@ class Tower:
                     positions = get_positions(position,area,troop_deploy_radius,troop_number, self.troop2)
                     for pos in positions:
                         if self.troop2:
-                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
+                            troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
                         else:
-                            troop_instance = troop_class(position=pos, myTower=self, surf = self.surf, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
+                            troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
                         self.myTroops.append(troop_instance)
                         self.uid_maker += 1
                 self.get_next_cycle(troop)
@@ -200,17 +200,15 @@ class Tower:
             pygame.draw.rect(self.middle_surf, (73,152,196), (position[0], position[1], 2*self.size * self.health/self.max_health, 0.15*self.size), 0)
 
     def render(self):
-        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT) / 2
-        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH) / 2
         frames = (TOP_SPEED-self.velocity)*FRAMES
         rendering_frame = self.run_counter//(TOP_SPEED-self.velocity)
-        x = self.position[0] - 1.5*self.size + DELTA_X
-        y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
+        x = self.position[0] - 1.5*self.size + PADDING_X
+        y = self.position[1] + 2*self.size - self.image_tower_height + PADDING_Y
         if self.health <= 0:
             self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         self.middle_surf.blit(self.image_tower, (x, y))
-        self.middle_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
+        self.shadow_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*0.2))
             self.render_health_bar((x+self.size/2,y))
@@ -221,17 +219,15 @@ class Tower:
         self.run_counter = (self.run_counter+1)%frames
 
     def render_attack(self):
-        DELTA_Y = (MIDDLE_HEIGHT - ARENA_HEIGHT) / 2
-        DELTA_X = (MIDDLE_WIDTH - ARENA_WIDTH) / 2
         frames = (self.attack_speed)*FRAMES
         rendering_frame = self.attack_counter//(self.attack_speed)
-        x = self.position[0] - 1.5*self.size + DELTA_X
-        y = self.position[1] + 2*self.size - self.image_tower_height + DELTA_Y
+        x = self.position[0] - 1.5*self.size + PADDING_X
+        y = self.position[1] + 2*self.size - self.image_tower_height + PADDING_Y
         if self.health <= 0:
             self.middle_surf.blit(self.image_destroyed, (x, y))
             return
         self.middle_surf.blit(self.image_tower, (x, y))
-        self.middle_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
+        self.shadow_surf.blit(self.image_tower_shadow, (x, y-self.size*0.2))
         if self.troop2:
             self.middle_surf.blit(self.image_cannon,(x,y - self.size*(0.2 + 0.05 * (rendering_frame % 6))))
             self.render_health_bar((x+self.size/2,y))
