@@ -25,8 +25,8 @@ from teams.helper_function import Troops, Utils
 
 team_name = "Pratyaksh"
 troops = [
-    Troops.wizard, Troops.minion, Troops.archer, Troops.giant,
-    Troops.dragon, Troops.skeleton, Troops.balloon, Troops.barbarian
+    Troops.wizard, Troops.minion, Troops.archer, Troops.musketeer,
+    Troops.dragon, Troops.skeleton, Troops.valkyrie, Troops.barbarian
 ]
 deploy_list = Troops([])
 team_signal = "h, Prince, Knight, Barbarian, Princess"
@@ -57,7 +57,7 @@ def logic(arena_data: dict):
     
     # --- Analyze Opponent's Deck Composition ---
     # Define opponent categories.
-    opponent_air = {"Minion", "Dragon", "Balloon"}
+    opponent_air = {"Minion", "Dragon", "Musketeer"}
     opponent_ground = {"Prince", "Knight", "Barbarian", "Princess"}
     
     tokens = [token.strip() for token in team_signal.split(",") if token.strip() != "h"]
@@ -78,10 +78,10 @@ def logic(arena_data: dict):
         Troops.wizard:    {"score": 3, "category": "air",    "name": "Wizard"},
         Troops.minion:    {"score": 2, "category": "air",    "name": "Minion"},
         Troops.archer:    {"score": 4, "category": "ground", "name": "Archer"},
-        Troops.giant:     {"score": 3, "category": "ground", "name": "Giant"},
+        Troops.musketeer:     {"score": 3, "category": "ground", "name": "Musketeer"},
         Troops.dragon:    {"score": 5, "category": "air",    "name": "Dragon"},
         Troops.skeleton:  {"score": 2, "category": "ground", "name": "Skeleton"},
-        Troops.balloon:   {"score": 4, "category": "air",    "name": "Balloon"},
+        Troops.valkyrie:   {"score": 4, "category": "air",    "name": "Valkyrie"},
         Troops.barbarian: {"score": 3, "category": "ground", "name": "Barbarian"}
     }
     
@@ -105,10 +105,10 @@ def logic(arena_data: dict):
         selected_category = troop_data[best_troop]["category"]
         if selected_category == "air":
             # Deploy air units further forward.
-            deploy_position = (random_x(15, 25), 0)
+            deploy_position = (random_x(-25, 25), 0)
         else:
             # Deploy ground units slightly closer for support.
-            deploy_position = (random_x(5, 10), 0)
+            deploy_position = (random_x(-10, 10), 0)
         deploy_list.list_.append((best_troop, deploy_position))
     else:
         # Fallback: If no deployable troop meets criteria, deploy the first available troop.

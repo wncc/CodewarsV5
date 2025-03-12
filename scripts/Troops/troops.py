@@ -11,7 +11,7 @@ class Archer(Troop):
 class Giant(Troop):
     def __init__(self,images , position,  myTower,std_size, uid):
         super().__init__(name="Giant", images  = images,position = position, elixir = 5,
-                         health=4496, damage=186, velocity=SLOW_SPEED, type_="ground", attack_range = 0, discovery_range = 7, myTower = myTower,
+                         health=5423, damage=337, velocity=SLOW_SPEED, type_="ground", attack_range = 0, discovery_range = 7, myTower = myTower,
                          target_type = {"air": False, "ground": False, "building": True}, splash_range = 0, size = 0.5,std_size= std_size, uid = uid, attack_speed = SLOW_ATTACK)       
 class Dragon(Troop):
     def __init__(self,images , position,  myTower, std_size, uid):
@@ -21,7 +21,7 @@ class Dragon(Troop):
 class Balloon(Troop):
     def __init__(self,images , position,  myTower, std_size, uid):
         super().__init__(name="Balloon", images  = images, position = position, elixir = 5,
-                         health=1848, damage=352, velocity=MEDIUM_SPEED, type_="air", attack_range = 0, discovery_range = 5, myTower = myTower,
+                         health=2226, damage=424, velocity=MEDIUM_SPEED, type_="air", attack_range = 0, discovery_range = 5, myTower = myTower,
                          target_type = {"air": False, "ground": False, "building": True}, splash_range = 1, size = 0.4, std_size= std_size, uid = uid, attack_speed = MEDIUM_ATTACK)
 class Prince(Troop):
     def __init__(self, position, images ,  myTower,std_size, uid):
@@ -66,7 +66,7 @@ class Valkyrie(Troop):
     def __init__(self,images , position,  myTower,std_size, uid):
         super().__init__(name="Valkyrie", images = images, position = position, elixir = 4,
                          health=2097, damage=195, velocity=MEDIUM_SPEED, type_="ground", attack_range = 0, discovery_range = 7, myTower = myTower,
-                         target_type = {"air": False, "ground": True, "building": False}, splash_range = 1, size = 0.25,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
+                         target_type = {"air": False, "ground": True, "building": False}, splash_range = 1, size = 0.20,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
                          number = 1)
 class Musketeer(Troop):
     def __init__(self,images , position,  myTower,std_size, uid):
