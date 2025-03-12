@@ -1,7 +1,8 @@
 import math
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 from scripts.Troops.troops import *
+from config import VALUE_ERROR
 from scripts.utils import get_positions
 
 class Tower:
@@ -70,9 +71,9 @@ class Tower:
             if self.game_timer < FPS * 60:
                 self.total_elixir += 1*update_rate  # Increasing elixir x1 in each frame
             elif self.game_timer < FPS * 120:
-                self.total_elixir += 1*update_rate  # Increasing elixir x2 in each frame
+                self.total_elixir += 1*update_rate  # Increasing elixir x1 in each frame
             elif self.game_timer < FPS * 180:
-                self.total_elixir += 2*update_rate  # Increasing elixir x3 in each frame
+                self.total_elixir += 2*update_rate  # Increasing elixir x2 in each frame
         if self.total_dark_elixir < 10:
             self.total_dark_elixir += 0.1  # Increasing dark elixir
 
@@ -124,30 +125,42 @@ class Tower:
         NOTE:
         4 TROOPS AVAILABLE ONLY
         """
-        if troop in self.deployable_troops[:4] and area[0] <= position[0] <= area[1] and area[2] <= position[1] <= area[3]:  # Correcting the area indexing
-            troop_class = globals()[troop]
-            if self.troop2:
-                troop_instance = troop_class(position=position, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
-            else:
-                troop_instance = troop_class(position=position, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
-            if self.total_elixir >= troop_instance.elixir:
-                self.total_elixir -= troop_instance.elixir
-                troop_number = troop_instance.number
-                troop_deploy_radius = troop_instance.deploy_radius
-                if troop_number == 1:
-                    self.myTroops.append(troop_instance)
-                    self.uid_maker += 1
+        if troop in self.deployable_troops[:4]:
+            if area[0] <= position[0] <= area[1] and area[2] <= position[1] <= area[3]:
+                troop_class = globals()[troop]
+                if self.troop2:
+                    troop_instance = troop_class(position=position, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
                 else:
-                    del troop_instance
-                    positions = get_positions(position,area,troop_deploy_radius,troop_number, self.troop2)
-                    for pos in positions:
-                        if self.troop2:
-                            troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
-                        else:
-                            troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
+                    troop_instance = troop_class(position=position, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
+                if self.total_elixir >= troop_instance.elixir:
+                    self.total_elixir -= troop_instance.elixir
+                    troop_number = troop_instance.number
+                    troop_deploy_radius = troop_instance.deploy_radius
+                    if troop_number == 1:
                         self.myTroops.append(troop_instance)
                         self.uid_maker += 1
-                self.get_next_cycle(troop)
+                    else:
+                        del troop_instance
+                        positions = get_positions(position,area,troop_deploy_radius,troop_number, self.troop2)
+                        for pos in positions:
+                            if self.troop2:
+                                troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Red"], std_size = self.size, uid = self.uid_maker)
+                            else:
+                                troop_instance = troop_class(position=pos, myTower=self, images = self.assets["Blue"], std_size = self.size, uid = self.uid_maker)
+                            self.myTroops.append(troop_instance)
+                            self.uid_maker += 1
+                    self.get_next_cycle(troop)
+                else:
+                    if VALUE_ERROR:
+                        raise ValueError(f"Invalid Troop Deployment: Current elixers are not enough for {troop}")
+            else:
+                if VALUE_ERROR:
+                    raise ValueError(f"Invalid Troop Deployment: {troop} is not in deployable area")
+        else:
+            if VALUE_ERROR:
+                raise ValueError(f"Invalid Troop Deployment: {troop} is not in current deployable cycle")
+
+
 
     # UTILITY FUNCTION
 

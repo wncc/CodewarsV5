@@ -1,6 +1,6 @@
 from scripts.Troops.troop import Troop
 from scripts.Troops.buildingtroop import BuildingTroop
-from scripts.config import *
+from scripts.game_config import *
 
 class Archer(Troop):
     def __init__(self,images , position,  myTower,std_size, uid):

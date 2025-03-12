@@ -1,8 +1,8 @@
 from scripts.Troops.dummies import *
-from scripts.config import TEAM1
-from scripts.config import TEAM2
+from config import TEAM1
+from config import TEAM2
 from scripts.utils import rescale_position
-from scripts.config import *
+from scripts.game_config import *
 
 class DataFlow: 
     def provide_data(self):
