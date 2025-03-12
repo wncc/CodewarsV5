@@ -1,6 +1,6 @@
 from game import Game
 import inspect
-from scripts.config import SIGNAL_LENGTH, TEAM1, TEAM2
+from config import TEAM1, TEAM2
 
 def validate_module(module, name):
     attributes = dir(module)
@@ -33,12 +33,7 @@ def validate_module(module, name):
         print(f"Fail: Classes do not match. Found: {classes} for {name}")
         return False
     
-    # Condition 3: Check len(team_signal) <= SIGNAL_LENGTH
-    if len(module.team_signal) > SIGNAL_LENGTH:
-        print(f"Fail: team_signal length exceeds 200 for {name}")
-        return False
-    
-    # Condition 4: Check len(set(troops)) == 8
+    # Condition 3: Check len(set(troops)) == 8
     if len(set(module.troops)) != 8 or len(module.troops) != 8:
         print(f"Fail: troops does not contain exactly 8 unique elements for {name}")
         return False

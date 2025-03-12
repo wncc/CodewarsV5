@@ -7,7 +7,7 @@ from scripts.Troops.tower import Tower
 from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
 from scripts.dataflow import DataFlow
 import random
-from scripts.config import *
+from scripts.game_config import *
 
 class Game:
     def __init__(self, troops1, troops2, team_name1, team_name2):

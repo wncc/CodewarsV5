@@ -1,5 +1,5 @@
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 
 class Middle_Map:
     def __init__(self, img):

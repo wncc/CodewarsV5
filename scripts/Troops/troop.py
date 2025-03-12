@@ -1,6 +1,6 @@
 import math
 import pygame
-from scripts.config import *
+from scripts.game_config import *
 
 class Troop:
     def __init__(self, name, images, position, elixir, health, damage, velocity, type_, attack_range, attack_speed,
