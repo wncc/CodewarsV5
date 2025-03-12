@@ -17,7 +17,7 @@ class DummyTower:
         self.size = object.size
         self.total_elixir = object.total_elixir # MAINLY USEFUL
         self.total_dark_elixir = object.total_dark_elixir   # MAINLY USEFUL
-        self.level = object.level   # MAINLY USEFUL
+        self.level = object.level
         self.game_timer = object.game_timer # MAINLY USEFUL
 
 class DummyTroop:
