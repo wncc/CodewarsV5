@@ -33,7 +33,7 @@ def convert_player2_area(area,display_size:tuple):
 def rescale_position(position,reverse = False):
     if reverse:
         x = position[0]*50/ARENA_WIDTH - 25
-        y = 100 - position[1]*100/ARENA_WIDTH
+        y = 100 - position[1]*100/ARENA_HEIGHT
         return(x,y)
 
     x = (position[0]+25)*ARENA_WIDTH/50

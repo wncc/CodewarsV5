@@ -46,7 +46,7 @@ class Knight(Troop):
                          target_type = {"air": False, "ground": True, "building": True}, splash_range = 0, size = 0.3,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK)
 class Minion(Troop):
     def __init__(self, position, images ,  myTower,std_size, uid):
-        super().__init__(name="Minion", images = images, position = position, elixir = 5,
+        super().__init__(name="Minion", images = images, position = position, elixir = 3,
                          health=252, damage=129, velocity=FAST_SPEED, type_="air", attack_range = 2, discovery_range = 4, myTower = myTower,
                          target_type = {"air": True, "ground": True, "building": True}, splash_range = 0, size = 0.15,std_size= std_size, uid = uid, attack_speed = FAST_ATTACK,
                          number=3) 
