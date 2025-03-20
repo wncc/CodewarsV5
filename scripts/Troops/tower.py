@@ -27,9 +27,9 @@ class Tower:
             self.image_cannon = assets['BlueCannon']
         self.image_destroyed = assets['TowerDamaged']
         self.position = position
-        self.health = 7032
-        self.max_health = 7032
-        self.damage = 158
+        self.health = 6408
+        self.max_health = 6408
+        self.damage = 144
         self.attack_range = 7 * size/5
         self.dummy = None
         self.target = None
