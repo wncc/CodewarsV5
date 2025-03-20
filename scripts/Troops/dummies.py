@@ -1,4 +1,5 @@
 from scripts.utils import convert_player2, convert_player2_area, rescale_position
+from scripts.game_config import ARENA_WIDTH
 
 class DummyTower:
     def __init__(self, object, player2:bool,display_size):
@@ -11,10 +12,10 @@ class DummyTower:
             # self.deploy_area = object.deploy_area   # MAINLY USEFUL
         self.health = object.health # MAINLY USEFUL
         self.damage = object.damage
-        self.attack_range = object.attack_range
+        self.attack_range = object.attack_range*50/ARENA_WIDTH
         self.target = None # MAINLY USEFUL
         self.deployable_troops = object.deployable_troops.copy()[:4]    # MAINLY USEFUL
-        self.size = object.size
+        self.size = object.size*50/ARENA_WIDTH
         self.total_elixir = object.total_elixir # MAINLY USEFUL
         self.total_dark_elixir = object.total_dark_elixir   # MAINLY USEFUL
         self.level = object.level
@@ -31,9 +32,9 @@ class DummyTroop:
         self.damage = object.damage # MAINLY USEFUL
         self.target = None # MAINLY USEFUL
         self.uid = object.uid # MAINLY USEFUL
-        self.size = object.size # MAINLY USEFUL
+        self.size = object.size*50/ARENA_WIDTH # MAINLY USEFUL
         self.elixir = object.elixir
         self.type = object.type # MAINLY USEFUL
-        self.attack_range = object.attack_range # MAINLY USEFUL
-        self.splash_range = object.splash_range
+        self.attack_range = object.attack_range*50/ARENA_WIDTH # MAINLY USEFUL
+        self.splash_range = object.splash_range*50/ARENA_WIDTH
         self.target_type = object.target_type.copy() # MAINLY USEFUL
