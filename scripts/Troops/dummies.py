@@ -35,5 +35,6 @@ class DummyTroop:
         self.elixir = object.elixir
         self.type = object.type # MAINLY USEFUL
         self.attack_range = rescale_length(object.attack_range)# MAINLY USEFUL
+        self.discovery_range = rescale_length(object.discovery_range)
         self.splash_range = rescale_length(object.splash_range)
         self.target_type = object.target_type.copy() # MAINLY USEFUL
