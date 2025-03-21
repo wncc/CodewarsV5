@@ -40,6 +40,9 @@ def rescale_position(position,reverse = False):
     y = (100-position[1])*ARENA_HEIGHT/100
     return (x,y)
 
+def rescale_length(size):
+    return size*50/ARENA_WIDTH
+
 def get_positions(position, area, troop_deploy_radius, troop_number, troop2):
     if area[0] >= position[0] - troop_deploy_radius:
         deploy_x = area[0] + troop_deploy_radius

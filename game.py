@@ -17,7 +17,7 @@ class Game:
 
         self.arena_display_size = (ARENA_WIDTH,ARENA_HEIGHT)
         self.side_display_size = ((FULL_WIDTH-MIDDLE_WIDTH)//2, FULL_HEIGHT)
-        self.tile_size = ARENA_WIDTH//12
+        self.tile_size = ARENA_WIDTH/12
         self.middle_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT))
         self.screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT),pygame.SRCALPHA)
         self.shadow_screen = pygame.Surface((MIDDLE_WIDTH,MIDDLE_HEIGHT),pygame.SRCALPHA)
