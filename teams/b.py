@@ -15,4 +15,3 @@ def deploy(arena_data:dict):
 
 def logic(arena_data:dict):
     global team_signal
-    print(arena_data["MyTower"].attack_range)
