@@ -43,9 +43,9 @@ class Game:
         self.team_name1 = team_name1
         self.team_name2 = team_name2
         deployable_troops1 = troops1
-        # random.shuffle(deployable_troops1)
+        random.shuffle(deployable_troops1)
         deployable_troops2 = troops2
-        # random.shuffle(deployable_troops2)
+        random.shuffle(deployable_troops2)
         self.team1_script_test = True
         self.team2_script_test = True
         self.tower1 = Tower("Tower 1", towers_position, self.assets,self.tower_size, deploy_area, self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
