@@ -34,11 +34,6 @@ class Barbarian(Troop):
                          health=736, damage=161, velocity=MEDIUM_SPEED, type_="ground", attack_range = 0, discovery_range = 5, myTower = myTower,
                          target_type = {"air": False, "ground": True, "building": False}, splash_range = 0, size = 0.25,std_size= std_size, uid = uid, attack_speed = MEDIUM_ATTACK,
                          number=3)
-class Princess(Troop):
-    def __init__(self, position, images ,  myTower,std_size, uid):
-        super().__init__(name="Princess", images = images, position = position, elixir = 3,
-                         health=287, damage=186, velocity=MEDIUM_SPEED, type_="ground", attack_range = 9, discovery_range = 10, myTower = myTower,
-                         target_type = {"air": True, "ground": True, "building": True}, splash_range = 1, size = 0.15,std_size= std_size, uid = uid, attack_speed = MEDIUM_ATTACK)
 class Knight(Troop):
     def __init__(self, position, images ,  myTower,std_size, uid):
         super().__init__(name="Knight", images = images, position = position, elixir = 3,
