@@ -13,11 +13,13 @@ class DataFlow:
 
         for troop in self.tower1.myTroops:
             tower1_troops.append(DummyTroop(troop,False,self.arena_display_size))
+            troop.dummy_original = DummyTroop(troop,False,self.arena_display_size)
             t1 = DummyTroop(troop,True,self.arena_display_size)
             troop.dummy = t1
             tower2_oppTroops.append(t1)
         for troop in self.tower2.myTroops:
             tower2_troops.append(DummyTroop(troop,True,self.arena_display_size))
+            troop.dummy_original = DummyTroop(troop,True,self.arena_display_size)
             t2 = DummyTroop(troop,False,self.arena_display_size)
             troop.dummy = t2
             tower1_oppTroops.append(t2)
@@ -34,16 +36,9 @@ class DataFlow:
         tower2_opp.total_dark_elixir = None
 
         self.tower1.dummy = tower2_opp
+        self.tower1.dummy_original = tower1
         self.tower2.dummy = tower1_opp
-        
-        if self.tower1.target:
-            tower1.target = self.tower1.target.dummy
-        else:
-            tower1.target = None
-        if self.tower2.target:
-            tower2.target = self.tower2.target.dummy
-        else:
-            tower2.target = None
+        self.tower2.dummy_original = tower2
 
         for dummy_troop, troop in zip(tower1_troops,self.tower1.myTroops):
             if troop.target:
@@ -55,6 +50,29 @@ class DataFlow:
                 dummy_troop.target = troop.target.dummy
             else:
                 dummy_troop.target = None
+        for dummy_troop, troop in zip(tower1_oppTroops,self.tower1.oppTroops):
+            if troop.target:
+                dummy_troop.target = troop.target.dummy_original
+            else:
+                dummy_troop.target = None
+        for dummy_troop, troop in zip(tower2_oppTroops,self.tower2.oppTroops):
+            if troop.target:
+                dummy_troop.target = troop.target.dummy_original
+            else:
+                dummy_troop.target = None
+
+        if self.tower1.target:
+            tower1.target = self.tower1.target.dummy
+            tower2_opp.target = self.tower1.target.dummy_original
+        else:
+            tower1.target = None
+            tower2_opp.target = None
+        if self.tower2.target:
+            tower2.target = self.tower2.target.dummy
+            tower1_opp.target = self.tower2.target.dummy_original
+        else:
+            tower2.target = None
+            tower1_opp.target = None
 
         self.data_provided1["MyTower"] = tower1
         self.data_provided1["OppTower"] = tower1_opp

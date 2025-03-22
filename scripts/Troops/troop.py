@@ -18,6 +18,7 @@ class Troop:
         self.size = std_size*size
         self.deploy_radius = 3*self.size
         self.dummy = None
+        self.dummy_original = None
         self.health = health
         self.max_health = health
         self.damage = damage
