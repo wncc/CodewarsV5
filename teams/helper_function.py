@@ -1,4 +1,5 @@
 import math
+from teams.troops_data import *
 
 class Troops:
 
@@ -14,6 +15,19 @@ class Troops:
     wizard = "Wizard"
     valkyrie = "Valkyrie"
     musketeer = "Musketeer"
+
+    troops_data = {'Archer': Archer(),
+                   'Giant': Giant(),
+                   'Dragon': Dragon(),
+                   'Ballon': Balloon(),
+                   'Prince': Prince(),
+                   'Barbarian': Barbarian(),
+                   'Knight': Knight(),
+                   'Minion': Minion(),
+                   'Skeleton': Skeleton(),
+                   'Wizard': Wizard(),
+                   'Valkyrie': Valkyrie(),
+                   'Musketeer': Musketeer(),}
 
     def __init__(self, list_):
         self.list_ = list_

@@ -22,6 +22,7 @@ def deploy(arena_data: dict):
 
 def logic(arena_data: dict):
     global team_signal
+    troops_data = Troops.troops_data
     my_tower = arena_data["MyTower"]
     opp_troops = arena_data["OppTroops"]
     
