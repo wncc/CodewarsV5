@@ -19,7 +19,7 @@ class Troops:
     troops_data = {'Archer': Archer(),
                    'Giant': Giant(),
                    'Dragon': Dragon(),
-                   'Ballon': Balloon(),
+                   'Balloon': Balloon(),
                    'Prince': Prince(),
                    'Barbarian': Barbarian(),
                    'Knight': Knight(),
