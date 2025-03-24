@@ -42,9 +42,9 @@ class Game:
         """
         self.team_name1 = team_name1
         self.team_name2 = team_name2
-        deployable_troops1 = troops1
+        deployable_troops1 = troops1.copy()
         random.shuffle(deployable_troops1)
-        deployable_troops2 = troops2
+        deployable_troops2 = troops2.copy()
         random.shuffle(deployable_troops2)
         self.team1_script_test = True
         self.team2_script_test = True
