@@ -97,7 +97,7 @@ class Decoration_Left:
         for i in range(len(troops)):
             image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
-            self.left_screen.blit(image,(CARD_PLATE_WIDTH*2.5//6,int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
+            self.left_screen.blit(image,(CARD_PLATE_WIDTH*2.5//6,int(FULL_WIDTH*9/108 + (CARD_PLATE_HEIGHT*93/832)*i)))
 
     def render_time(self):
         font = pygame.font.Font("data/font/clashroyale.ttf", FULL_HEIGHT//39)
@@ -162,7 +162,7 @@ class Decoration_Right:
         for i in range(len(troops)):
             image = self.assets[f'{troops[i].lower()}_card']
             image = pygame.transform.scale(image,(CARD_PLATE_WIDTH*2.2/3,CARD_PLATE_HEIGHT*99/832))
-            self.right_screen.blit(image,(int(FULL_WIDTH*66/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*11/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
+            self.right_screen.blit(image,(int(FULL_WIDTH*66/196 - CARD_PLATE_WIDTH*4.5/6),int(FULL_WIDTH*9/108 + (CARD_PLATE_HEIGHT*93/832)*i))) 
             
     def render_elixir_bar(self):
         img = self.assets[f'bar_{int(self.tower2.total_elixir)}']
