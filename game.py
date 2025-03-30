@@ -127,14 +127,17 @@ class Game:
         """Triggers full-screen fireworks animation after the game ends."""
         if self.fireworks_active and self.game_counter % 7 == 0:  # More frequent fireworks
             for _ in range(5):  # Create 5 fireworks at a time
-                x, y = random.randint(100, FULL_WIDTH - 100), random.randint(50, FULL_HEIGHT - 200)
+                x = random.randint(50, FULL_WIDTH - 50)  # Cover full screen width
+                y = random.randint(50, FULL_HEIGHT - 200)
                 color = (random.randint(150, 255), random.randint(50, 255), random.randint(50, 255))  # Bright colors
                 self.fireworks.append(Firework(x, y, color, num_particles=random.randint(25, 40)))
 
         for fw in self.fireworks:
             fw.update()
 
-        self.fireworks = [fw for fw in self.fireworks if len(fw.particles) > 0]  # Remove faded fireworks
+        # Remove faded fireworks
+        self.fireworks = [fw for fw in self.fireworks if len(fw.particles) > 0]
+
 
 
     def play_music(self, music_file, resume_from=0):
@@ -178,38 +181,50 @@ class Game:
             DataFlow.deployment(self)
             DataFlow.attack_die(self)
             Decoration.check_game_end(self)
-        elif self.game_counter < GAME_START_TIME - 2:  
+        elif self.game_counter < GAME_START_TIME - 2:
             Decoration.entry_text(self)
         elif self.game_counter >= GAME_END_TIME:
             Decoration.outro_text(self)
 
+        # Draw to respective screens
         self.main_screen.blit(self.middle_screen, ((FULL_WIDTH - MIDDLE_WIDTH) // 2, 0))
         self.main_screen.blit(self.shadow_screen, ((FULL_WIDTH - MIDDLE_WIDTH) // 2, 0))
         self.main_screen.blit(self.screen, ((FULL_WIDTH - MIDDLE_WIDTH) // 2, 0))
 
+        # Fireworks on all screens
         if self.fireworks_active:
-            # Create a deep dark overlay
-            dark_overlay = pygame.Surface((FULL_WIDTH, FULL_HEIGHT), pygame.SRCALPHA)
-            dark_overlay.fill((0, 0, 0, 50))  # Darker effect
-            self.main_screen.blit(dark_overlay, (0, 0))  
-
-            # Fireworks animation
             self.start_fireworks()
             for firework in self.fireworks:
-                firework.draw(self.main_screen)
+                firework.draw(self.main_screen)  # Middle screen
+                firework.draw(self.left_screen)  # Left screen
+                firework.draw(self.right_screen)  # Right screen
+
 
     def render_left_screen(self):
         Decoration_Left.render_background(self)
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
             Decoration_Left.render_screen(self)
+
+        # Draw fireworks on the left screen
+        if self.fireworks_active:
+            for firework in self.fireworks:
+                firework.draw(self.left_screen)
+
         self.main_screen.blit(self.left_screen, (0, 0))
+
 
     def render_right_screen(self):
         Decoration_Right.render_background(self)
         if GAME_END_TIME > self.game_counter >= GAME_START_TIME:
-            Decoration_Right.render_screen(self)       
-        self.main_screen.blit(self.right_screen, ((FULL_WIDTH + MIDDLE_WIDTH) // 2, 0))
+            Decoration_Right.render_screen(self)
 
+        # Draw fireworks on the right screen
+        if self.fireworks_active:
+            for firework in self.fireworks:
+                firework.draw(self.right_screen)
+
+        self.main_screen.blit(self.right_screen, ((FULL_WIDTH + MIDDLE_WIDTH) // 2, 0))
+    
     def run(self):
         while True:
             self.render_game_screen()  # Always render the middle screen
