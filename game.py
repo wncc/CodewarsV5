@@ -4,48 +4,13 @@ from scripts.utils import *
 from scripts.statics import *
 from scripts.assets import load_assets
 from scripts.Troops.tower import Tower
-from scripts.decoration import Decoration, Decoration_Left, Decoration_Right
+from scripts.decoration import Decoration, Decoration_Left, Decoration_Right, Firework
 from scripts.dataflow import DataFlow
 import random
 from scripts.game_config import *
-
-from random import randint, choice
-import math
-
-class Firework:
-    def __init__(self, x, y, color, num_particles=30):
-        self.particles = []
-        for _ in range(num_particles):
-            angle = random.uniform(0, 2 * math.pi)
-            speed = random.uniform(3, 7)  # Faster explosion effect
-            dx = speed * math.cos(angle)
-            dy = speed * math.sin(angle)
-            size = random.randint(2, 5)  # Random sizes
-            self.particles.append([x, y, dx, dy, 255, size])  # (x, y, dx, dy, alpha, size)
-        self.color = color
-
-    def update(self):
-        """Update positions, apply gravity, and fade out."""
-        for particle in self.particles:
-            particle[0] += particle[2]  # Move X
-            particle[1] += particle[3]  # Move Y
-            particle[3] += 0.1  # Simulate gravity
-            particle[4] -= random.randint(3, 7)  # Faster fade
-            particle[5] = max(1, particle[5] - 0.1)  # Shrink over time
-        self.particles = [p for p in self.particles if p[4] > 0]  # Remove faded particles
-
-    def draw(self, screen):
-        """Draw glowing particles."""
-        for particle in self.particles:
-            color = (
-                min(255, self.color[0] + random.randint(-20, 20)),
-                min(255, self.color[1] + random.randint(-20, 20)),
-                min(255, self.color[2] + random.randint(-20, 20)),
-                particle[4]
-            )
-            pygame.draw.circle(screen, color, (int(particle[0]), int(particle[1])), int(particle[5]))
-
-
+import cv2
+import numpy as np
+from ffpyplayer.player import MediaPlayer
 
 class Game:
     def __init__(self, troops1, troops2, team_name1, team_name2):
@@ -84,10 +49,10 @@ class Game:
         self.team1_script_test = True
         self.team2_script_test = True
         self.tower1 = Tower("Tower 1", towers_position, self.assets, self.tower_size, deploy_area,
-                            self.screen, self.shadow_screen, self.middle_screen, troops1)
+                            self.screen, self.shadow_screen, self.middle_screen, deployable_troops1)
         self.tower2 = Tower("Tower 2", convert_player2(towers_position, self.arena_display_size),
                             self.assets, self.tower_size, convert_player2_area(deploy_area, self.arena_display_size),
-                            self.screen, self.shadow_screen, self.middle_screen, troops2, troop2=True)
+                            self.screen, self.shadow_screen, self.middle_screen, deployable_troops2, troop2=True)
         
         self.tower1.oppTower = self.tower2
         self.tower1.oppTroops = self.tower2.myTroops
@@ -97,27 +62,27 @@ class Game:
         self.data_provided2 = {}
         
         pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=512)
-        self.final_music = "./audio/final_1x.mp3"
-        self.win_music = "./winner.mp3"
+        self.final_music = "./data/audio/final_1x.mp3"
+        self.win_music = "./data/audio/winner.mp3"
         self.current_music = None
         
         self.fireworks = []
         self.fireworks_active = False
         
         self.speed_to_music = {
-            1.0: "./audio/final_1x.mp3",
-            1.5: "./audio/final_1x.mp3",
-            2.0: "./audio/final_1x.mp3",
-            2.5: "./audio/final_1x.mp3",
-            3.0:"./audio/final_1x.mp3",
-            3.5: "./audio/final_1x.mp3",
-            4.0: "./audio/final_1x.mp3",
-            4.5: "./audio/final_1x.mp3",
-            5.0: "./audio/final_1x.mp3",
-            5.5: "./audio/final_1x.mp3",
-            6.0: "./audio/final_1x.mp3",
-            6.5: "./audio/final_1x.mp3",
-            7.0: "./audio/final_1x.mp3",
+            1.0: "./data/audio/final_1x.mp3",
+            1.5: "./data/audio/final_1x.mp3",
+            2.0: "./data/audio/final_1x.mp3",
+            2.5: "./data/audio/final_1x.mp3",
+            3.0:"./data/audio/final_1x.mp3",
+            3.5: "./data/audio/final_1x.mp3",
+            4.0: "./data/audio/final_1x.mp3",
+            4.5: "./data/audio/final_1x.mp3",
+            5.0: "./data/audio/final_1x.mp3",
+            5.5: "./data/audio/final_1x.mp3",
+            6.0: "./data/audio/final_1x.mp3",
+            6.5: "./data/audio/final_1x.mp3",
+            7.0: "./data/audio/final_1x.mp3",
         }
         self.speed_multiplier = 1.0  # Default speed
         self.song_length = 180  # 3 minutes in seconds
@@ -138,7 +103,50 @@ class Game:
         # Remove faded fireworks
         self.fireworks = [fw for fw in self.fireworks if len(fw.particles) > 0]
 
+    def play_intro_video(self, video_path):
+        cap = cv2.VideoCapture(video_path)
+        player = MediaPlayer(video_path)  # Load audio
 
+        if not cap.isOpened():
+            print("Error: Could not open video.")
+            return
+
+        fps = int(cap.get(cv2.CAP_PROP_FPS))
+        clock = pygame.time.Clock()
+
+        while cap.isOpened():
+            ret, frame = cap.read()
+            audio_frame, val = player.get_frame()  # Get audio frame
+
+            if not ret:
+                break  # End of video
+
+            # Fix the flipped video issue
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB
+            frame = np.flipud(frame)  # Flip vertically if needed (try removing if unnecessary)
+            frame = np.rot90(frame, -1)  # Rotate counterclockwise to correct orientation
+            
+            frame_surface = pygame.surfarray.make_surface(frame)
+
+            # Scale video to fit Pygame main screen
+            scaled_frame = pygame.transform.scale(frame_surface, self.main_screen.get_size())
+
+            # Display video in Pygame
+            self.main_screen.blit(scaled_frame, (0, 0))
+            pygame.display.update()
+
+            # Handle quitting or skipping
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN and event.key in [pygame.K_RETURN, pygame.K_SPACE]:
+                    cap.release()
+                    return  # Skip video
+
+            clock.tick(fps)
+
+        cap.release() 
 
     def play_music(self, music_file, resume_from=0):
         """Plays a new music track, resuming from the appropriate position."""
@@ -226,6 +234,7 @@ class Game:
         self.main_screen.blit(self.right_screen, ((FULL_WIDTH + MIDDLE_WIDTH) // 2, 0))
     
     def run(self):
+        self.play_intro_video("./data/video/wncc.mp4")
         while True:
             self.render_game_screen()  # Always render the middle screen
 

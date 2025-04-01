@@ -1,5 +1,7 @@
 import pygame
 from scripts.game_config import *
+import random
+import math
 
 class Decoration:
     def entry_text(self):
@@ -190,3 +192,36 @@ class Decoration_Right:
         name = self.team_name2
         text = font.render(f'{name}',True,(255,255,255))
         self.right_screen.blit(text,(FULL_WIDTH*(0.16-0.0055*len(name)),FULL_HEIGHT*0.080))
+
+class Firework:
+    def __init__(self, x, y, color, num_particles=30):
+        self.particles = []
+        for _ in range(num_particles):
+            angle = random.uniform(0, 2 * math.pi)
+            speed = random.uniform(3, 7)  # Faster explosion effect
+            dx = speed * math.cos(angle)
+            dy = speed * math.sin(angle)
+            size = random.randint(2, 5)  # Random sizes
+            self.particles.append([x, y, dx, dy, 255, size])  # (x, y, dx, dy, alpha, size)
+        self.color = color
+
+    def update(self):
+        """Update positions, apply gravity, and fade out."""
+        for particle in self.particles:
+            particle[0] += particle[2]  # Move X
+            particle[1] += particle[3]  # Move Y
+            particle[3] += 0.1  # Simulate gravity
+            particle[4] -= random.randint(3, 7)  # Faster fade
+            particle[5] = max(1, particle[5] - 0.1)  # Shrink over time
+        self.particles = [p for p in self.particles if p[4] > 0]  # Remove faded particles
+
+    def draw(self, screen):
+        """Draw glowing particles."""
+        for particle in self.particles:
+            color = (
+                min(255, self.color[0] + random.randint(-20, 20)),
+                min(255, self.color[1] + random.randint(-20, 20)),
+                min(255, self.color[2] + random.randint(-20, 20)),
+                particle[4]
+            )
+            pygame.draw.circle(screen, color, (int(particle[0]), int(particle[1])), int(particle[5]))

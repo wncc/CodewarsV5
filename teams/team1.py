@@ -1,32 +1,10 @@
-# from teams.helper_function import Troops, Utils
-
-# team_name = "MUMBAI"
-# troops = [Troops.prince,Troops.minion,Troops.archer,Troops.giant,Troops.dragon,Troops.skeleton,Troops.balloon,Troops.barbarian]
-# deploy_list = Troops([])
-# team_signal = "h"
-
-# def deploy(arena_data:dict):
-#     """
-#     DON'T TEMPER DEPLOY FUCNTION
-#     """
-#     deploy_list.list_ = []
-#     logic(arena_data)
-#     return deploy_list.list_, team_signal
-
-# def logic(arena_data:dict):
-#     global team_signal
-#     deploy_list.deploy_prince((-16,0))
-#     """
-#     WRITE YOUR CODE HERE 
-#     """
-
 import random
 from teams.helper_function import Troops, Utils
 
-team_name = "bioHAZARD"
+team_name = "Pratyaksh"
 troops = [
-    Troops.wizard, Troops.skeleton, Troops.archer, Troops.prince,
-    Troops.dragon, Troops.minion, Troops.valkyrie, Troops.barbarian
+    Troops.wizard, Troops.minion, Troops.archer, Troops.musketeer,
+    Troops.dragon, Troops.skeleton, Troops.valkyrie, Troops.barbarian
 ]
 deploy_list = Troops([])
 team_signal = "h, Prince, Knight, Barbarian, Princess"
@@ -44,6 +22,7 @@ def deploy(arena_data: dict):
 
 def logic(arena_data: dict):
     global team_signal
+    troops_data = Troops.troops_data
     my_tower = arena_data["MyTower"]
     opp_troops = arena_data["OppTroops"]
     
@@ -75,18 +54,17 @@ def logic(arena_data: dict):
     deployable = my_tower.deployable_troops
     # Define base scores and categories for our troops.
     troop_data = {
-        Troops.wizard:    {"score": 0, "category": "ground",    "name": "Wizard"},
-        Troops.skeleton:    {"score": 7, "category": "ground",    "name": "Skeleton"},
-        Troops.archer:    {"score": 12, "category": "ground", "name": "Archer"},
-        Troops.prince:     {"score": 10, "category": "ground", "name": "Prince"},
-        Troops.dragon:    {"score": 10, "category": "air",    "name": "Dragon"},
-        Troops.minion:  {"score": 12, "category": "air", "name": "Minion"},
-        Troops.valkyrie:   {"score": 0, "category": "ground",    "name": "Valkyrie"},
-        Troops.barbarian: {"score": 10, "category": "ground", "name": "Barbarian"},
-        Troops.knight: {"score": 7, "category": "ground", "name": "Knight"}
+        Troops.wizard:    {"score": 3, "category": "air",    "name": "Wizard"},
+        Troops.minion:    {"score": 2, "category": "air",    "name": "Minion"},
+        Troops.archer:    {"score": 4, "category": "ground", "name": "Archer"},
+        Troops.musketeer:     {"score": 3, "category": "ground", "name": "Musketeer"},
+        Troops.dragon:    {"score": 5, "category": "air",    "name": "Dragon"},
+        Troops.skeleton:  {"score": 2, "category": "ground", "name": "Skeleton"},
+        Troops.valkyrie:   {"score": 4, "category": "air",    "name": "Valkyrie"},
+        Troops.barbarian: {"score": 3, "category": "ground", "name": "Barbarian"}
     }
     
-    bonus = 0  # Bonus for matching the recommended counter strategy.
+    bonus = 3  # Bonus for matching the recommended counter strategy.
     best_troop = None
     best_score = -1
     
@@ -100,82 +78,18 @@ def logic(arena_data: dict):
         if score > best_score:
             best_score = score
             best_troop = troop
-    wizard_counter = ["Prince", "Valkyrie","Skeleton"]
-    wizard_support =["Knight","Valkyrie","Skeleton","Barbarian","Prince","Dragon","Minion","Wizard"]
-    baby_dragon = ["Wizard","Dragon","Musketeer","Archer"]
-    
+
     # --- Deployment Position ---
-    #attack
-    def attack():
-        for i in arena_data["MyTroops"]:
-            if i.name=="Wizard":        
-                for j in wizard_support:
-                    if j in deployable:
-                        deploy_list.list_.append((j,(i.position[0],min(i.position[1]+5,50))))
-                    
-        for i in troops:
-            if i is Troops.wizard and i in deployable:
-                deploy_list.list_.append((i,(0,10)))
-           
-    # --- cycle --- 
-    def cycle(elixir=7):   
-        
-        if arena_data["MyTower"].total_elixir >elixir:    
-            bonus = 10  # Bonus for matching the recommended counter strategy.
-            best_troop = None
-            best_score = -1
-            
-            # Loop over our full troop list, but only consider those that are deployable.
-            for troop in troops:
-                if troop not in deployable:
-                    continue
-                base = troop_data[troop]["score"]
-                cat = troop_data[troop]["category"]
-                score = base + (bonus if recommended_counter and cat == recommended_counter else 0)
-                if score > best_score:
-                    best_score = score
-                    best_troop = troop
-
-            
-            if best_troop is not None:
-                
-                deploy_position = (0, 10)
-                deploy_list.list_.append((best_troop, deploy_position))
-            else:
-                # Fallback: If no deployable troop meets criteria, deploy the first available troop.
-                if deployable:
-                    deploy_list.list_.append((deployable[0], (0, 0)))
-
-        
-    def defense_dragon():
-        for i in arena_data["OppTroops"]:
-            if i.name == "Dragon":
-                for j in baby_dragon:
-                    deploy_list.list_.append((j,(i.position[0],i.position[1])))
-    def defense_wizard():                  
-        for i in arena_data["OppTroops"]:
-            if i.name == "Wizard":
-                for j in wizard_counter:
-                    deploy_list.list_.append((j,i.position))                
-        
-    # def tower_defense():
-    #     for i in arena_data["OppTroops"]:
-    #         if i.position[1]<-30:
-    #             deploy_list.list_.append()
-    
-    if len(arena_data["OppTroops"])!=0:
-        for i in arena_data["OppTroops"] : 
-            if(i.position[1]<20):
-                cycle(0)
-    
-    defense_wizard()
-    attack() 
-    defense_dragon() 
-    cycle()
-    
-    if arena_data["OppTower"].health <arena_data["MyTower"].health-500:
-        #tower_defense()
-        return
-              
-def rescale(x):
-    return (x[0],x[1]/2+50)
+    if best_troop is not None:
+        selected_category = troop_data[best_troop]["category"]
+        if selected_category == "air":
+            # Deploy air units further forward.
+            deploy_position = (random_x(-25, 25), 0)
+        else:
+            # Deploy ground units slightly closer for support.
+            deploy_position = (random_x(-10, 10), 0)
+        deploy_list.list_.append((best_troop, deploy_position))
+    else:
+        # Fallback: If no deployable troop meets criteria, deploy the first available troop.
+        if deployable:
+            deploy_list.list_.append((deployable[0], (0, 0)))
